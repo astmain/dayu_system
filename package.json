@@ -9,9 +9,12 @@
   "scripts": {
     "render": "pnpm --filter render_admin   dev",
     "api": "pnpm    --filter api_admin      dev",
-    "aaa": "==========================================================",
+    "操作pnpm": "==========================================================",
     "pnpm_remove": "pnpm store prune",
     "pnpm_init": "pnpm i",
+    "操作数据库": "==========================================================",
+    "db_push": "pnpm    --filter api_admin     db_push ",
+    "db_generate": "pnpm    --filter api_admin     db_generate ",
     "zzz": "zzz"
   },
   "dependencies": {
