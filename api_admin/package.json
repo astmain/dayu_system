@@ -5,9 +5,15 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node prisma/data.ts"
+  },
   "scripts": {
-    "db_init": "npx prisma generate   --schema prisma/schema.prisma",
-    "db_push": "npx prisma db  push   --schema prisma/schema.prisma   ",
+    "db_init": "npx prisma db push",
+    "db_push": "npx prisma generate",
+    "db_init111": "npx prisma generate   --schema prisma/schema.prisma",
+    "db_push111": "npx prisma db  push   --schema prisma/schema.prisma   ",
+    "data": "ts-node prisma/data.js",
     "aaaa": "============================================",
     "dev": "nest start --watch",
     "build": "nest build",
@@ -36,9 +42,6 @@
   },
   "devDependencies": {
     "@prisma/client": "^6.6.0",
-
-
-
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",

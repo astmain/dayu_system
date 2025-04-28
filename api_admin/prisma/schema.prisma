@@ -16,8 +16,9 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model tb_user {
+model tb_account {
   id          Int     @id @default(autoincrement())
+  uid         String  @unique
   username    String  @unique
   password    String
   nickname    String
@@ -28,6 +29,6 @@ model tb_user {
   online      Boolean
   update_time String
   create_time String
-  is_del      String
+  is_del      Boolean @default(false)
   kind        String
 }

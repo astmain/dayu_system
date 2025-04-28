@@ -6,9 +6,9 @@ import {CreateVehicleDto} from './CreateVehicleDto';
 // import aaa from "../prisma/tb_account"
 let tb_account: any;
 // tb_user = require("../prisma/tb_user");
-tb_user = require("../prisma/tb_user.js");
+// tb_user = require("../prisma/tb_user.js");
 
-// import tb_account from '../prisma/tb_user.js';
+import tb_user from '../prisma/tb_user.js';
 
 @ApiTags('测试接口')
 @ApiBearerAuth('Authorization')
