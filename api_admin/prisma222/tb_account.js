@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client")
+const {PrismaClient} = require("@prisma/client")
 const path = require("path")
 let table = 'tb_account'
 let db = new PrismaClient()
@@ -10,10 +10,6 @@ let tb_account = class {
         console.log(`tb_account---find_all:`, list)
         return list
     }
-
-
-
-
 
 
 }
