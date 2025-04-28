@@ -1,0 +1,21 @@
+{
+  "name": "dayu_system",
+  "private": true,
+  "version": "0.0.0",
+  "aaa": "   npm run render      npm run desktop                                 ",
+  "安装包": "    pnpm -F     electron_desktop_00                    add           tool_js_spider        -S            ",
+  "卸载包": "    pnpm -F     electron_desktop_00    remove         electron-win-state@8.0.0                         ",
+  "main": "desktop/desktop.js",
+  "scripts": {
+    "render": "pnpm --filter render_admin dev",
+    "api": "pnpm --filter api_admin dev",
+    "aaa": "==========================================================",
+    "pnpm_remove": "pnpm store prune",
+    "pnpm_init": "pnpm i",
+    "zzz": "zzz"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

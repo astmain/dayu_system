@@ -1,0 +1,17 @@
+{
+  "name": "tool_vue",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "push": "",
+    "test": ""
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "element-plus": "2.9.9",
+    "pinia": "3.0.1",
+    "pinia-plugin-persist": "1.0.0",
+    "pinyin-pro": "3.24.2"
+  }
+}
