@@ -1,12 +1,13 @@
 const {PrismaClient} = require("@prisma/client")
 const path = require("path")
-let table = 'tb_account'
+let table = 'tb_user'
 let db = new PrismaClient()
 // console.log(`111---db:`,     db        )
 let tb = db[table]
-let tb_account = class {
+let tb_user = class {
     static async find_all() {
         // let list = await tb.findMany({orderBy: {order: 'asc'}})  //asc从小到大  desc从大到小
+        console.log(`111---tb:`,     tb        )
         let list = await tb.findMany()  //asc从小到大  desc从大到小
         console.log(`tb_account---find_all:`, list)
         return list
@@ -14,8 +15,7 @@ let tb_account = class {
 
 
 }
-module.exports = tb_account
+module.exports = tb_user
 // export default  tb_user
-
-tb_account.find_all()
+// tb_user.find_all()
 // tb_user.save_one()

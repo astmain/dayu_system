@@ -38,7 +38,7 @@ data = [{
 
 async function run() {
     try {
-        let result = await prisma.tb_account.createMany({data: data})
+        let result = await prisma.tb_user.createMany({data: data})
         console.log(`成功创建了 ${result.count} 条记录`);
     } catch (error) {
         console.error('批量创建记录时出错:');
