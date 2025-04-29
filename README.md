@@ -17,12 +17,22 @@ npx prisma generate                   生成代码
 
 
 # 课程
-prisma       https://space.bilibili.com/2099023502/search?keyword=prisma
-nestjs       https://www.bilibili.com/video/BV1JViRYJEGH?p=13
+prisma                                     https://space.bilibili.com/2099023502/search?keyword=prisma
+nestjs                                     https://www.bilibili.com/video/BV1JViRYJEGH?p=13
+vben前端框架整体功能讲得很合理都有函数注册     https://www.bilibili.com/video/BV1JViRYJEGH?p=25
 
 
 
 # 官方文档 
 nestjs中文文档        https://docs.nestjs.cn/9/controllers?id=路由                    https://www.nestjs.com.cn/first-steps
 nestjs英文文档        https://docs.nestjs.com/
+
+
+
+# orm
+使用typeorm
+https://docs.nestjs.cn/9/techniques?id=数据
+https://www.bilibili.com/video/BV1JViRYJEGH?p=21
+
+
 

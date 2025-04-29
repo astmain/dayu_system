@@ -20,23 +20,36 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),
+            '@src': fileURLToPath(new URL('./src', import.meta.url)),
             '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
             '@Layout': fileURLToPath(new URL('./src/Layout', import.meta.url)),
             '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
         },
     },
+    // server: {
+    //     host: "0.0.0.0",
+    //     https: false, // 是否开启 https
+    //     port: 4000, //指定端口号,
+    //     open: false, //打开浏览器
+    //     changeOrigin: true, //改变 请求头Origin头
+    //     //代理             https://www.bilibili.com/video/BV1GN4y1M7P5/?p=34
+    //     proxy: {
+    //         "/api": {
+    //             target: "http://xxx.xxxxx.xxx/",
+    //             changeOrigin: true,
+    //             rewrite: (path) => path.replace(/^\/api/, ""),
+    //         },
+    //     },
+    // },
     server: {
         host: "0.0.0.0",
-        https: false, // 是否开启 https
-        port: 4000, //指定端口号,
-        open: false, //打开浏览器
-        changeOrigin: true, //改变 请求头Origin头
-        //代理             https://www.bilibili.com/video/BV1GN4y1M7P5/?p=34
+        port: 4000,
         proxy: {
-            "/api": {
-                target: "http://xxx.xxxxx.xxx/",
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, ""),
+            // 以 /api 开头的请求将被代理到目标服务器
+            '/api': {
+                target: 'http://localhost:3000', // 后端服务器地址
+                changeOrigin: true, // 允许跨域
+                rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径，去掉 /api 前缀
             },
         },
     },

@@ -19,6 +19,7 @@ export default class controller {
     @Get("/get:id")
     get(@Param("id", ParseIntPipe) id: number): Object {
         console.log(`111---id:`, id, typeof (id))
+        console.log(`111---222:`,     333        )
         return {code: 200, msg: '成功/index', result: 111};
     }
 

@@ -21,7 +21,7 @@ console.log(`111---222:`, {aaa})
 console.log(`222---222:`, {aaa: aaa})
 
 
-console.log(`111---222:`,     Number.isInteger        )
+console.log(`111---222:`, Number.isInteger)
 
 
 var urlEncoded = "/get_params/%E6%88%91%E7%9A%84";
@@ -30,6 +30,29 @@ const decoded = decodeURI(urlEncoded);
 console.log(decoded);
 
 
+aaa = {username: "小许", password: "123456", role: 'admin', nickname: "瘾大技术差", avatar: "https://gitee.com/astmain/static/raw/master/avatar/pikaqiu_01.jpg"}
+console.log(JSON.stringify(    aaa    )              )
+
+
+// @IsNotEmpty()
+// @IsString()
+// username: string;
+//
+// @IsNotEmpty()
+// @IsString()
+// password: string;
+//
+// @IsNotEmpty()
+// @IsString()
+// role: string;
+//
+// @IsNotEmpty()
+// @IsString()
+// nickname: string;
+//
+// @IsNotEmpty()
+// @IsString()
+// avatar: string;
 
 
 // {"aaa":111}
