@@ -1,7 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 
 @Injectable()
-export class AppService {
+export default class Service {
     getHello(): string {
         return 'Hello World!';
     }

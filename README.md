@@ -3,12 +3,12 @@
 # prisma教程
 pnpm install     prisma --save-dev    安装包        pnpm i @prisma/client@6.6.0 --silent  pnpm add prisma typescript ts-node @types/node --save-dev
 pnpm install     @prisma/client       安装包        pnpm i @prisma/client@6.6.0 --silent  pnpm add prisma typescript ts-node @types/node --save-dev
-npx prisma init                    初始化一次
-schema.prisma                      拷贝以前的模版
+npx prisma init                       初始化一次
+schema.prisma                         拷贝以前的模版
 
 # 创建数据库和生成代码
-npx prisma db push                 创建数据库
-npx prisma generate                生成代码
+npx prisma db push                    创建数据库
+npx prisma generate                   生成代码
 
 # 测试链接数据库
 // prisma/schema.prisma    公司     D:\AAA\dayu_system_01\api_admin\prisma\dev.db
@@ -19,6 +19,7 @@ npx prisma generate                生成代码
 # 课程
 prisma       https://space.bilibili.com/2099023502/search?keyword=prisma
 nestjs       https://www.bilibili.com/video/BV1JViRYJEGH?p=13
+
 
 
 # 官方文档 
