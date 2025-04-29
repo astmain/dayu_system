@@ -11,6 +11,7 @@
   "dependencies": {
     "element-plus": "2.9.9",
     "tool_vue": "workspace:^",
+    "tool_web": "workspace:^",
     "pinyin-pro": "3.24.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1"

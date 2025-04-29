@@ -9,6 +9,8 @@ tool_vue.config_pinia({app: app, name: BUS.name, state: BUS.state, persist: BUS.
 
 
 // 注册axios拦截器               功能:全局axios,错误响应,取消网络请求 todo
+let tool_web = require("tool_web")
+tool_web.config_axios_api({name: 'axios_api', baseURL: 'http://127.0.0.1:3000', debug: false, timeout: 30000})
 
 // 注册全局组件
 

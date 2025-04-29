@@ -19,13 +19,13 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item label="验证码">
-          <el-input v-model="loginForm.img_code">
-            <template #suffix>
-              <el-image style="overflow: visible; position: relative; left: 16px" :src="loginForm.img_src" @click="click_img_code()"/>
-            </template>
-          </el-input>
-        </el-form-item>
+<!--        <el-form-item label="验证码">-->
+<!--          <el-input v-model="loginForm.img_code">-->
+<!--            <template #suffix>-->
+<!--              <el-image style="overflow: visible; position: relative; left: 16px" :src="loginForm.img_src" @click="click_img_code()"/>-->
+<!--            </template>-->
+<!--          </el-input>-->
+<!--        </el-form-item>-->
 
         <div style="display: flex; justify-content: space-between; align-items: center">
           <el-checkbox v-model="loginForm.rememberMe" label="记住我" size="large"/>
