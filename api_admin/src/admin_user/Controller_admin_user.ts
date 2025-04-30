@@ -13,7 +13,7 @@ import {Int32} from "typeorm";
 @ApiTags('admin用户管理')
 @ApiBearerAuth('Authorization')
 @Controller("admin_user")
-export default class controller_admin_user {
+export default class Controller_admin_user {
     constructor(
         private readonly user_service: User_service,
     ) {
