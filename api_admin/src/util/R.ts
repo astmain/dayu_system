@@ -1,3 +1,5 @@
+import util from "./index";
+
 const R = {
 
 
@@ -6,7 +8,10 @@ const R = {
     },
     err: function ({msg, data}) {
         return {code: 400, kind: "err", msg: msg, data: data,}
-
+    },
+    wrapper_response: function (promise, msg) {
+        return promise.then(data => this.ok({msg: msg, data: data}))
+            .catch(err => this.err({msg: err.msg, data: err}))
     }
 }
 

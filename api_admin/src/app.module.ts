@@ -16,9 +16,11 @@ import orm_type from './orm_type';
     imports: [
         // 测试开发和orm_type========================
         orm_type,
-        admin_user,
         // 正规开发=================================
-        module_user, auth, book
+        auth,
+        admin_user,
+        module_user,
+        book,
     ],
     controllers: [AppController],
     providers: [AppService],

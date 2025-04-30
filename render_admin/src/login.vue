@@ -66,9 +66,7 @@ export default {
       console.log('res   :', res)
       if (res?.code === 200) {
         console.log('🚀 成功:登陆                :', res)
-        BUS.user_info = res.data.user_info
-        BUS.menu_list = res.data.menu_list
-        BUS.Atoken = res.data.Atoken
+        localStorage.setItem("token", res?.data?.token)
         this.$router.push('/home')
       } else {
         console.log('🚀 失败:登陆                :', res)

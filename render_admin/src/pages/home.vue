@@ -1,9 +1,9 @@
 <template>
-<div>
-   <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
-      <el-button @click="met1()">met1</el-button>
+  <div>
+    <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
+    <el-button @click="met1()">met1</el-button>
 
-</div>
+  </div>
 </template>
 
 <script>
@@ -20,9 +20,9 @@ export default {
 
   methods: {
     async met1() {
-      console.log('met1      :', 111)
-
-
+      var config = {method: 'get', url: '/admin_user/get_user_by_token',}
+      let res = await axios_api(config)
+      console.log(`111---res:`, res)
     },//
 
   },////
@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style  scoped></style>
+<style scoped></style>
 
 
 

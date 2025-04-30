@@ -7,6 +7,7 @@ import {APP_GUARD} from "@nestjs/core";
 import Controller_Auth from './Controller_Auth';
 import service from './Service_auth';
 import {AuthGuard} from './AuthGuard';
+import {const_jwt} from './const_jwt';
 
 
 import {manifest as manifest_admin_user} from '../admin_user/manifest';
@@ -15,8 +16,8 @@ import {manifest as manifest_admin_user} from '../admin_user/manifest';
 @Module({
     imports: [manifest_admin_user, JwtModule.register({
         global: true,
-        secret: "abcdefg",//私钥
-        signOptions: {expiresIn: 24 * 60 * 60 * 30 + 's'}, //24小时*30天
+        secret: const_jwt.secret,//私钥
+        signOptions: const_jwt.signOptions, //24小时*30天
     })],
     controllers: [Controller_Auth],
     providers: [

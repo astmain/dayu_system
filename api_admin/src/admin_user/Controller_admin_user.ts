@@ -1,10 +1,10 @@
-import {Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters, ParseIntPipe} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters, ParseIntPipe, Req} from '@nestjs/common';
 import {Put, Param, Delete, HttpCode} from '@nestjs/common';
 import {ApiTags, ApiOperation, ApiResponse} from '@nestjs/swagger';
 import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 import User_service from "./User_service";
 import {dto_create} from "./dto_create";
-import {Int32} from "typeorm";
+import util from '../util/index.js';
 
 
 // http://127.0.0.1:3000/admin_user/index
@@ -19,13 +19,12 @@ export default class Controller_admin_user {
     ) {
     }
 
-    @ApiOperation({summary: '得到用户2'})
-    @Get("/get2")
-    async get2() {
-        let res = await this.user_service.findOne(11)
-        return this.user_service.findOne(11);
-        // console.log(`111---res:`, res)
-        // return {code: 200, msg: '成功/index', result: 111};
+
+    @ApiOperation({summary: '得到用户token'})
+    @Get("/get_user_by_token")
+    async get_user_by_token(@Req() request) {
+        console.log(`get_user_by_token---request["user"]:`, request["user"])
+        return util.R.ok({msg: "成功", data: request["user"]})
     }
 
 

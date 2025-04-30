@@ -22,6 +22,11 @@ globalThis.config_axios_api = function config_axios_api({name = "axios_api", bas
         // console.log(` config?.headers?.custom_headers  :`,     config?.headers?.custom_headers       )
         // }
 
+        let token = localStorage.getItem("token")
+        if (token) {
+            config.headers['token'] = token
+        }
+
 
         if (config?.headers_custom) {
             config.headers['headers_custom'] = JSON.stringify(config.headers_custom)

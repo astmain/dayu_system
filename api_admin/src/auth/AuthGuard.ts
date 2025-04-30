@@ -6,17 +6,21 @@ import {Injectable, CanActivate, ExecutionContext, UnauthorizedException} from '
 import {Observable} from "rxjs";
 import {Reflector} from "@nestjs/core";
 import {IS_PUBLIC_KEY} from "./public.decorator";
+import {JwtService} from "@nestjs/jwt";
+import {const_jwt} from "./const_jwt";
 
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    constructor(private reflector: Reflector) {
+    constructor(private reflector: Reflector,
+                private jwt_service: JwtService,
+    ) {
 
     }
 
 
     // canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-    canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+    async canActivate(context: ExecutionContext): Promise<boolean> {
         // console.log(`111---context:`, context)
         const isPublic = this.reflector.getAllAndOverride(IS_PUBLIC_KEY, [
             context.getHandler(),
@@ -30,18 +34,44 @@ export class AuthGuard implements CanActivate {
         }
         const request = context.switchToHttp().getRequest();
         const token = extractTokenFromHeader(request);
-        console.log(`AuthGuard---request:`, request)
+        // console.log(`AuthGuard---request:`, request)
         console.log(`AuthGuard---token:`, token)
+        if (!token) {
+            console.log(`AuthGuard---token---空:`, token)
+            throw new UnauthorizedException()
+        }
 
 
-        return false;
+        try {
+            let payload = await this.jwt_service.verifyAsync(token, {secret: const_jwt.secret,})
+            console.log(`AuthGuard---payload:`, payload)
+            request["user"] = payload
+        } catch (error) {
+            throw new UnauthorizedException()
+        }
+
+
+        return true;//放行
     }
 
 }
 
 
 function extractTokenFromHeader(request) {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : '';
+    // const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    // return type === 'Bearer' ? token : '';
+
+
+    const token = request.headers?.token
+    console.log(`111---token:`, token)
+    return token;
+
+    // if (token){
+    //
+    // }else{
+    //     throw  new UnauthorizedException()
+    // }
+
+
 }
 

@@ -32,11 +32,10 @@ export default class Controller_Auth {
     @Public()
     @Post("/login")
     async login(@Body() dto_user: Dto_user) {
-        return this.auth_service.login(dto_user.username, dto_user.password)
-            .then(data => util.R.ok({msg: "登陆成功", data: data}))
-            .catch(err => util.R.err({msg: "登陆成功", data: err}))
-
-        // .catch(err => util.R.error({msg: "登陆失败", data: err})
+        return util.R.wrapper_response(this.auth_service.login(dto_user.username, dto_user.password), "登陆成功")
+        // return this.auth_service.login(dto_user.username, dto_user.password)
+        //     .then(data => util.R.ok({msg: "登陆成功", data: data}))
+        //     .catch(err => util.R.err({msg: "登陆失败", data: err}))
 
 
         // console.log(`login---body:`, dto_user)

@@ -15,6 +15,9 @@ export default class controller {
     }
 
 
+
+
+
     @ApiOperation({summary: '得到用户'})
     @Get("/get:id")
     get(@Param("id", ParseIntPipe) id: number): Object {

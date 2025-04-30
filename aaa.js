@@ -1,23 +1,16 @@
-axios = require("axios")
+ax2_test()
 
-fun1()
+async function ax2_test() {
+    let axios = require("axios")
+    var data = '';
 
-async function fun1() {
-    var data = JSON.stringify({
-        "username": "admin",
-        "password": "123456"
-    });
     var config = {
-        method: 'post',
-        url: 'http://127.0.0.1:3000/api/auth/login',
-        headers: {
-            'Request-Origion': 'Knife4j',
-            'Content-Type': 'application/json'
-        },
-        data: data
+        method: 'get', url: 'http://127.0.0.1:3000/admin_user/get_user_by_token', headers: {
+            'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOjEyLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDU5ODU1NjksImV4cCI6MTc0ODU3NzU2OX0.tvUU4m56_03ODEL0U0ZzY_vh87N2kphChinRUcCU3oo',
+        }, data: data
     };
+
+
     let res = await axios(config)
-
     console.log('res.data---', res.data)
-
 }
