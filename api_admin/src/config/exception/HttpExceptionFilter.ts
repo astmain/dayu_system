@@ -14,7 +14,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
             status: status,
             msg: exception,
             err: exception,
-            url: decodeURI(request.url),//中文乱码处理
+            url: decodeURI(request.url),//url解码,中文乱码处理
             timestamp: new Date().toISOString(),
         });
     }

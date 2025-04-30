@@ -1,5 +1,11 @@
 let pages = [
     {
+        path: '/home', name: '首页',
+        component: () => import('@pages/home.vue'),
+    },
+
+
+    {
         path: '/system', name: '权限管理',
         component: () => import('@Layout/LayoutView.vue'),
         children: [

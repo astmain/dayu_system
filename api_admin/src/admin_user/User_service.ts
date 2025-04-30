@@ -1,4 +1,4 @@
-import {Injectable, HttpException, HttpStatus} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 // 引入数据orm连接注入service
 import {InjectRepository} from "@nestjs/typeorm";
 import {DeleteResult, Repository} from "typeorm";
@@ -7,7 +7,7 @@ import {dto_create} from './dto_create';
 
 
 @Injectable()
-export default class Service {
+export default class User_service {
     constructor(
         @InjectRepository(admin_user)
         private readonly usersRepository: Repository<admin_user>,
@@ -38,6 +38,11 @@ export default class Service {
 
     delete(id: number): Promise<DeleteResult> {
         return this.usersRepository.delete(id);
+    }
+
+
+    findByUsername(username) {
+        return this.usersRepository.findOneBy({username});
     }
 
 

@@ -2,8 +2,7 @@ import {ValidationPipe} from '@nestjs/common';
 import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {knife4jSetup} from 'nest-knife4j';
 
-export function config_docs(app: any) {
-    const port = 3000;
+export function config_docs(app: any, port: number) {
     const name = 'config_docs';
     const version = '1.0.0';
 

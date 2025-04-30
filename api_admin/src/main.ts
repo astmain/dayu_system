@@ -4,9 +4,19 @@ import {config_docs} from "./config_docs"
 
 
 async function bootstrap() {
-    let app = await NestFactory.create(AppModule)
-    let main = config_docs(app)
+    let app_http = await NestFactory.create(AppModule, {cors: true})
+    let main = config_docs(app_http, 3000)
     await main.app.listen(main.port);
+
+
+
+
+    // 使用证书
+    // const httpApp = await NestFactory.create(AppModule, {cors: true});
+    // const httpsApp = await NestFactory.create(AppModule, {cors: true, httpsOptions});
+    // await httpApp.listen(3000); // http service
+    // await httpsApp.listen(4000); // https service
+
 
 }
 

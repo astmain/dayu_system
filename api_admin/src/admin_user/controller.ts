@@ -2,7 +2,7 @@ import {Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters, Pars
 import {Put, Param, Delete, HttpCode} from '@nestjs/common';
 import {ApiTags, ApiOperation, ApiResponse} from '@nestjs/swagger';
 import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
-import service from "./service";
+import User_service from "./User_service";
 import {dto_create} from "./dto_create";
 import {Int32} from "typeorm";
 
@@ -14,15 +14,16 @@ import {Int32} from "typeorm";
 @ApiBearerAuth('Authorization')
 @Controller("admin_user")
 export default class controller_admin_user {
-    constructor(private readonly appService: service,
+    constructor(
+        private readonly user_service: User_service,
     ) {
     }
 
     @ApiOperation({summary: '得到用户2'})
     @Get("/get2")
     async get2() {
-        let res = await this.appService.findOne(11)
-        return this.appService.findOne(11);
+        let res = await this.user_service.findOne(11)
+        return this.user_service.findOne(11);
         // console.log(`111---res:`, res)
         // return {code: 200, msg: '成功/index', result: 111};
     }
@@ -32,7 +33,7 @@ export default class controller_admin_user {
     @Get("/get:id")
     async get(@Param("id", ParseIntPipe) id: number) {
         console.log(`get---id:`, id)
-        let res = await this.appService.findOne(id)
+        let res = await this.user_service.findOne(id)
         console.log(`get---res:`, res)
         return res
     }
@@ -41,7 +42,7 @@ export default class controller_admin_user {
     @Get("/list")
     async list() {
         // console.log(`get---id:`, id)
-        let result = await this.appService.findAll()
+        let result = await this.user_service.findAll()
         console.log(`get---result:`, result)
         return {code: 200, msg: '成功/index', result: result};
     }
@@ -53,7 +54,7 @@ export default class controller_admin_user {
     @Put("/create")
     async create(@Body() dto: dto_create) {
         // console.log(`create---dto:`, dto)
-        let result = await this.appService.create(dto)
+        let result = await this.user_service.create(dto)
         console.log(`get---result:`, result)
         return {code: 200, msg: '成功/index', result: result};
     }
@@ -68,7 +69,7 @@ export default class controller_admin_user {
     @Get("/delete:id")
     async delete(@Param("id", ParseIntPipe) id: number) {
         console.log(`delete---id:`, id, typeof (id))
-        let result = await this.appService.delete(id)
+        let result = await this.user_service.delete(id)
         console.log(`get---result:`, result)
         return {code: 200, msg: '成功/index', result: result};
     }

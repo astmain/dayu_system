@@ -19,13 +19,13 @@
           </el-input>
         </el-form-item>
 
-<!--        <el-form-item label="验证码">-->
-<!--          <el-input v-model="loginForm.img_code">-->
-<!--            <template #suffix>-->
-<!--              <el-image style="overflow: visible; position: relative; left: 16px" :src="loginForm.img_src" @click="click_img_code()"/>-->
-<!--            </template>-->
-<!--          </el-input>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="验证码">-->
+        <!--          <el-input v-model="loginForm.img_code">-->
+        <!--            <template #suffix>-->
+        <!--              <el-image style="overflow: visible; position: relative; left: 16px" :src="loginForm.img_src" @click="click_img_code()"/>-->
+        <!--            </template>-->
+        <!--          </el-input>-->
+        <!--        </el-form-item>-->
 
         <div style="display: flex; justify-content: space-between; align-items: center">
           <el-checkbox v-model="loginForm.rememberMe" label="记住我" size="large"/>
@@ -45,7 +45,7 @@
 export default {
   data() {
     return {
-      loginForm: {username: 'zs', password: '123456', img_code: '', img_src: '', rememberMe: undefined},
+      loginForm: {username: 'admin', password: '123456', img_code: '', img_src: '', rememberMe: undefined},
     }
   }, ////
 
@@ -53,14 +53,18 @@ export default {
     async handleLogin() {
       console.log(`handleLogin      : `, JSON.parse(JSON.stringify(this.loginForm)))
       let config = {
-        method: 'get',
-        url: `/controller_MAIN/login?username=${this.loginForm.username}&password=${this.loginForm.password}&img_code=${this.loginForm.img_code}`,
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        method: 'post',
+        url: 'http://127.0.0.1:3000/auth/login',
+        data: JSON.stringify(this.loginForm),
+        headers: {
+          'Request-Origion': 'Knife4j',
+          'Content-Type': 'application/json'
+        },
       }
       console.log(`config      : `, config)
       let res = await axios_api(config)
       console.log('res   :', res)
-      if (res.data.code === 200) {
+      if (res?.code === 200) {
         console.log('🚀 成功:登陆                :', res)
         BUS.user_info = res.data.user_info
         BUS.menu_list = res.data.menu_list

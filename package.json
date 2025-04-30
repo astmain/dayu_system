@@ -7,6 +7,7 @@
   "卸载包": "    pnpm -F     electron_desktop_00    remove         electron-win-state@8.0.0                         ",
   "main": "desktop/desktop.js",
   "scripts": {
+    "安装": "pnpm -F     api_admin                    add          md5   -S     ",
     "render": "pnpm --filter render_admin   dev",
     "api": "pnpm    --filter api_admin      dev",
     "操作pnpm": "==========================================================",
@@ -18,6 +19,7 @@
     "zzz": "zzz"
   },
   "dependencies": {
+    "axios": "1.8.4"
   },
   "devDependencies": {
   }

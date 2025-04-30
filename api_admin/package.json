@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "安装": "pnpm -F     api_admin                    add          @nestjs/jwt      -S  ",
     "db_push": "npx prisma db push   ",
     "db_generate": "npx prisma generate",
     "db_init111": "npx prisma generate   --schema prisma/schema.prisma",
@@ -29,10 +30,12 @@
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.0",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "md5": "^2.3.0",
     "mysql2": "^3.14.1",
     "prisma": "^6.6.0",
     "reflect-metadata": "^0.2.2",
