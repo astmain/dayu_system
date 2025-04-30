@@ -1,16 +1,28 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 
 import {pinyin} from "pinyin-pro"
-import pages from "./pages"
+
+
+let pages = [
+    {
+        path: '/system', name: '权限管理',
+        component: () => import('@Layout/LayoutView.vue'),
+        children: [
+            {path: '/system/menu', name: '菜单管理', component: () => import('@pages/system/menu.vue')}, //
+            {path: '/system/role', name: '角色管理', component: () => import('@pages/system/role.vue')}, //
+            {path: '/system/user', name: '用户管理', component: () => import('@pages/system/user.vue')}, //
+        ],
+    },
+]
 
 
 const routes = [//
     //重定向****************************
     // {path: '', redirect: '/login'}, //重定向
     {path: '', redirect: '/system/user'}, //重定向
-    {path: '/login', name: '登陆页', component: () => import('@src/login.vue')}, //登陆页
+    {path: '/login', name: '登陆页', component: () => import('./login.vue')}, //登陆页
     // {path: '/settings', name: '设置', component: () => import('./pages/settings/settings.vue')}, //登陆页
-    {path: '/:catchAll(.*)', name: 'NotFound', component: () => import('@src/NotFound.vue')}, //没有发现页面
+    {path: '/:catchAll(.*)', name: 'NotFound', component: () => import('./NotFound.vue')}, //没有发现页面
     ...pages
 ]
 
@@ -22,14 +34,6 @@ const router = createRouter({
     history: createWebHashHistory(),//
     routes: routes_new,//
 })
-
-
-router.beforeEach((to,from,next)=>{
-    console.log(`router---to:`,     to        )
-    console.log(`router---from:`,     from        )
-    next()
-})
-
 
 export default router
 

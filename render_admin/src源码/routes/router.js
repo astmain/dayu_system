@@ -24,13 +24,6 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to,from,next)=>{
-    console.log(`router---to:`,     to        )
-    console.log(`router---from:`,     from        )
-    next()
-})
-
-
 export default router
 
 

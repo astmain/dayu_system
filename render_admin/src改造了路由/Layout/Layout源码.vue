@@ -10,8 +10,7 @@
           <!--顶部-->
           <div style="align-items: start; width: 100%">
             <el-menu style="border:0px;border: 0px;-webkit-user-select: none; -moz-user-select:none; -ms-user-select:none;user-select:none;" router :default-active="$route.path" active-text-color="#ffd04b" background-color="#24292E" text-color="#fff" @open="1" @close="1">
-              <!--              <template v-for="ele in $router.options.routes.filter(o=>o.name   &&   !o?.kind?.includes('bottom')).children ">-->
-              <template v-for="ele in $router.options.routes.find(o => o.name==='main'  ).children ">
+              <template v-for="ele in $router.options.routes.filter(o=>o.name   && o.name==='main'   &&   !o?.kind?.includes('bottom')) ">
                 <el-sub-menu class="拥有子菜单" v-if="ele.name &&     ele.children && ele.children.length >= 1" :index="ele.path">
                   <template #title>
                     <span>{{ ele.name }}</span>
@@ -29,7 +28,26 @@
             </el-menu>
 
           </div>
-
+          <!--底部-->
+          <div style="align-items: flex-end; width: 100%">
+            <el-menu style="border:0px;border: 0px;-webkit-user-select: none; -moz-user-select:none; -ms-user-select:none;user-select:none;" router :default-active="$route.path" active-text-color="#ffd04b" background-color="#24292E" text-color="#fff" @open="1" @close="1">
+              <template v-for="ele in $router.options.routes.filter(o=>o.name &&   o?.kind?.includes('bottom')) ">
+                <el-sub-menu class="拥有子菜单" v-if="ele.name &&     ele.children && ele.children.length >= 1" :index="ele.path">
+                  <template #title>
+                    <span>{{ ele.name }}</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item v-for="item in ele.children" :index="item.path">
+                      <span>{{ item.name }}</span>
+                    </el-menu-item>
+                  </el-menu-item-group>
+                </el-sub-menu>
+                <el-menu-item class="没有子菜单" v-else :index="ele.path">
+                  <span>{{ ele.name }}</span>
+                </el-menu-item>
+              </template>
+            </el-menu>
+          </div>
 
         </div>
 

@@ -1,8 +1,7 @@
 <template>
   <div>
-
+    <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
     <el-button @click="met1()">met1</el-button>
-
   </div>
 </template>
 
@@ -13,16 +12,14 @@ export default {
   data() {
     return {
       name: "数据1",
+
     }
-
-
   },
 
   methods: {
     async met1() {
-      console.log('met1      :', 111)
-      let view = this.$router.options.routes.find(o => o.name==='main').children
-      console.log(`111---view:`, view)
+      console.log('met1      :', 1111)
+
 
     },//
 
@@ -36,6 +33,3 @@ export default {
 </script>
 
 <style scoped></style>
-
-
-
