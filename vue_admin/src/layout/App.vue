@@ -3,20 +3,14 @@
         <!-- 头部 -->
         <el-header class="header"
             style="background-color: #24292E; color: #fff;  display: flex;align-items: center;justify-content: space-between;">
-            <div>admin</div>
+            <div>{{ BUS.user.username ? BUS.user.username : '未登录' }}</div>
             <div @click="Logout">Logout</div>
         </el-header>
         <el-container>
             <!-- 菜单    -->
-            <el-aside width="200px">
+            <el-aside width="180px">
                 <el-menu :default-active="$route.path" background-color="#24292E" active-text-color="#ffd04b"
                     text-color="#fff" class="menu_height" router>
-                    <!-- <el-menu-item index="/home">
-              <span>Home</span>
-            </el-menu-item>
-            <el-menu-item index="/about">
-              <span>About</span>
-            </el-menu-item> -->
                     <template v-for="ele in $router.options.routes.find(o => o.name === 'main').children">
                         <el-menu-item class="没有子菜单" v-if="!ele.children" :index="ele.path">
                             <span>{{ ele.name }}</span>
@@ -73,6 +67,9 @@ export default {
             localStorage.removeItem('token')
             this.$router.push('/login')
         },//
+
+
+
 
     },////
 
