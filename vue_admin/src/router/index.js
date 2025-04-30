@@ -7,7 +7,8 @@ const pages = [
     { path: '/about', name: '关于', component: () => import('@src/views/about.vue') },
     {
         path: '/system', name: '权限管理', children: [
-            { path: '/system/user', name: '用户管理', component: () => import('@src/views/system/user.vue') }
+            { path: '/system/user', name: '用户管理', component: () => import('@src/views/system/user.vue') },
+            { path: '/system/menu', name: '菜单管理', component: () => import('@src/views/system/menu.vue') }
         ]
     },
 ]

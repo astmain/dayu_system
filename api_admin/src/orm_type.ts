@@ -14,7 +14,7 @@ let orm = TypeOrmModule.forRoot({
     // entities: [admin_user],
     autoLoadEntities: true,//自动价值entities
     // synchronize: true,
-    logging: true,
+    // logging: true,
 })
 
 
