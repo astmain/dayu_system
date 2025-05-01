@@ -1,10 +1,9 @@
 {
-  "name": "api_admin",
+  "name": "api_server",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "安装": "pnpm -F     api_admin                    add          @nestjs/jwt      -S  ",
     "db_push": "npx prisma db push   ",
