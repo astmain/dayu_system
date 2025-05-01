@@ -16,6 +16,10 @@ require('./config_pinia')({app: app, name: BUS.name, state: BUS.state, persist: 
 // 注册多语言配置
 
 
+//插件
+require('./plugins/VueSimpleContextMenu')(app)
+require('./plugins/dom_open.js')(app)
+
 app.mount('#app')
 
 
