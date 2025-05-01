@@ -19,16 +19,19 @@ tb_menu = [
     {menu: "关于", path: "/about", parent: ""},
     {menu: "订单管理", path: "/order_manage", parent: ""},
     {menu: "权限管理", path: "/system", parent: ""},
-    {menu: "用户管理", path: "/system/user", parent: "权限管理"},
-    {menu: "菜单管理", path: "/system/menu", parent: "权限管理"},
+    {menu: "用户管理", path: "/system/user/user", parent: "权限管理"},
+    {menu: "菜单管理", path: "/system/menu/menu", parent: "权限管理"},
+    {menu: "角色管理", path: "/system/role/role", parent: "权限管理"},
 ]
 //关联-角色_菜单
 role_menu = [
     {role: "管理员", menu: "首页"},
     {role: "管理员", menu: "关于"},
+    {role: "管理员", menu: "订单管理"},
     {role: "管理员", menu: "权限管理"},
     {role: "管理员", menu: "用户管理"},
     {role: "管理员", menu: "菜单管理"},
+    {role: "管理员", menu: "角色管理"},
     {role: "用户", menu: "首页"},
     {role: "用户", menu: "关于"},
     {role: "商家", menu: "订单管理"},

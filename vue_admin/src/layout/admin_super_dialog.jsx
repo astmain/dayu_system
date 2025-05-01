@@ -30,8 +30,6 @@ const virtual_node = defineComponent({
       console.log('res:', res)
       localStorage.setItem('token', res.result.token)
       BUS.user = res.result
-
-
     }
 
     get_user_list()

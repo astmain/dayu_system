@@ -46,6 +46,7 @@ export class AuthGuard implements CanActivate {
         try {
             let payload = await this.jwt_service.verifyAsync(token, {secret: const_jwt.secret,})
             // console.log(`AuthGuard---payload:`, payload)
+            // 请求全局参数   @Req() request   调用   request["user"]
             request["user"] = payload
         } catch (error) {
             throw new UnauthorizedException()

@@ -3,26 +3,28 @@
         <!-- 头部 -->
         <el-header class="header"
             style="background-color: #24292E; color: #fff;  display: flex;align-items: center;justify-content: space-between;">
-            <el-button v-if="BUS.user.username ==='admin'"  @click="admin_super_dialog()">{{ BUS.user.username ? BUS.user.username+'2' : '未登录' }}</el-button>
-            <div v-else>{{ BUS.user.username ? BUS.user.username+'1' : '未登录' }}</div>
+            <el-button v-if="BUS.user.username === 'admin'" @click="admin_super_dialog()">{{ BUS.user.username ?
+                BUS.user.username + '2' : '未登录' }}</el-button>
+            <div v-else>{{ BUS.user.username ? BUS.user.username + '1' : '未登录' }}</div>
             <div @click="Logout">Logout</div>
+            <div @click="get_pages">get_pages</div>
         </el-header>
         <el-container>
             <!-- 菜单    -->
             <el-aside width="180px">
                 <el-menu :default-active="$route.path" background-color="#24292E" active-text-color="#ffd04b"
                     text-color="#fff" class="menu_height" router>
-                    <template v-for="ele in $router.options.routes.find(o => o.name === 'main').children">
-                        <el-menu-item class="没有子菜单" v-if="!ele.children" :index="ele.path">
-                            <span>{{ ele.name }}</span>
+                    <template v-for="ele in BUS.user.menu_tree">
+                        <el-menu-item class="没有子菜单" v-if="!ele.children || ele?.children?.length === 0" :index="ele.path">
+                            <span>{{ ele.menu? ele.menu : ele.name }}</span>
                         </el-menu-item>
                         <el-sub-menu class="拥有子菜单" v-else :index="ele.path">
                             <template #title>
-                                <span>{{ ele.name }}</span>
+                                <span>{{ ele.menu? ele.menu : ele.name }}</span>
                             </template>
                             <el-menu-item-group>
                                 <el-menu-item v-for="item in ele.children" :index="item.path">
-                                    <span>{{ item.name }}</span>
+                                    <span>{{ item.menu? item.menu : item.name }}</span>
                                 </el-menu-item>
                             </el-menu-item-group>
                         </el-sub-menu>
@@ -36,7 +38,6 @@
         </el-container>
     </el-container>
 
-
     <!-- 2222 -->
     <el-container v-else style="min-height: 100vh;">
         <router-view />
@@ -46,6 +47,8 @@
 
 <script>
 
+
+let menu_list = require('@src/router/index.js').menu_list
 
 export default {
     computed: {
@@ -58,6 +61,8 @@ export default {
     data() {
         return {
             name: "数据1",
+            // menu_tree: menu_list,
+            menu_tree: BUS.user.menu_tree,
         }
 
 
@@ -69,11 +74,19 @@ export default {
             this.$router.push('/login')
         },//
 
-            // 添加子菜单
+        // 添加子菜单
         async admin_super_dialog() {
             console.log('admin_super_dialog')
-        require('./admin_super_dialog.jsx')({ data: {aaa:111}, that: this })
+            require('./admin_super_dialog.jsx')({ data: { aaa: 111 }, that: this })
         },
+
+        async get_pages(){
+            console.log('get_pages')
+           let pages= this.$router.options.routes.find(o => o.name === 'main').children
+           console.log('111---pages:', JSON.parse(JSON.stringify(pages)))
+           this.menu_tree = BUS.user.menu_tree
+           console.log('333---menu_tree:',  JSON.parse(JSON.stringify(this.menu_tree)))
+        }
 
 
 

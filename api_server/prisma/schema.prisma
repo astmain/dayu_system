@@ -38,9 +38,9 @@ model tb_user {
 
 model tb_menu {
   id     Int    @id @default(autoincrement())
-  menu   String
-  path   String
-  parent String
+  menu   String @unique
+  path   String @unique
+  parent String @default("")
 }
 
 model tb_role {
