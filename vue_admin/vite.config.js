@@ -7,6 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 
 //扩展插件
+import vueJsx from "@vitejs/plugin-vue-jsx";
 import requireTransform from "vite-plugin-require-transform";
 import ReactivityTransform from "@vue-macros/reactivity-transform/vite"; // npm install @vue-macros/reactivity-transform -D
 
@@ -14,6 +15,7 @@ export default defineConfig({
     plugins: [
         vue(),
         vueDevTools(),
+        vueJsx(),
         requireTransform({fileRegex: /(.vue|.js?|.jsx?|.tsx?)$/}),
         ReactivityTransform(), //child111_$ref_省略点value
     ],

@@ -2,7 +2,7 @@ import {IsNotEmpty, IsString} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class Dto_user {
-    @ApiProperty({description: '用户名', example: 'admin'})
+    @ApiProperty({description: '账号', example: 'admin'})
     @IsNotEmpty()
     @IsString()
     username: string;

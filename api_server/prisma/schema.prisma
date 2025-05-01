@@ -35,3 +35,27 @@ model tb_user {
   kind        String
   role        String
 }
+
+model tb_menu {
+  id     Int    @id @default(autoincrement())
+  menu   String
+  path   String
+  parent String
+}
+
+model tb_role {
+  id   Int    @id @default(autoincrement())
+  role String
+}
+
+model role_menu {
+  id   Int    @id @default(autoincrement())
+  role String
+  menu String
+}
+
+model role_user {
+  id       Int    @id @default(autoincrement())
+  username String
+  role     String
+}

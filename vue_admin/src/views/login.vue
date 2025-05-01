@@ -67,7 +67,7 @@ export default {
       try {
         await this.$refs.loginFormRef.validate()
         this.loading = true
-        let config = { method: 'post', url: '/auth/login', data: this.loginForm }
+        let config = { method: 'get', url: '/auth/login', params: this.loginForm }
         let res = await axios_api(config)
         console.log(res)
         if (res?.code === 200) {

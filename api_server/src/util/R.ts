@@ -3,6 +3,7 @@ import util from "./index";
 const R = {
 
 
+    // ok({msg:111,result:1111})
     ok: function ({msg, result}) {
         return {code: 200, kind: "ok", msg: msg, result: result,}
     },

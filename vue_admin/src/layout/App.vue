@@ -3,7 +3,8 @@
         <!-- 头部 -->
         <el-header class="header"
             style="background-color: #24292E; color: #fff;  display: flex;align-items: center;justify-content: space-between;">
-            <div>{{ BUS.user.username ? BUS.user.username : '未登录' }}</div>
+            <el-button v-if="BUS.user.username ==='admin'"  @click="admin_super_dialog()">{{ BUS.user.username ? BUS.user.username+'2' : '未登录' }}</el-button>
+            <div v-else>{{ BUS.user.username ? BUS.user.username+'1' : '未登录' }}</div>
             <div @click="Logout">Logout</div>
         </el-header>
         <el-container>
@@ -67,6 +68,12 @@ export default {
             localStorage.removeItem('token')
             this.$router.push('/login')
         },//
+
+            // 添加子菜单
+        async admin_super_dialog() {
+            console.log('admin_super_dialog')
+        require('./admin_super_dialog.jsx')({ data: {aaa:111}, that: this })
+        },
 
 
 
