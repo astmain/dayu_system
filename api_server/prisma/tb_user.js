@@ -17,5 +17,5 @@ let tb_user = class {
 }
 module.exports = tb_user
 // export default  tb_user
-// tb_user.find_all()
+tb_user.find_all()
 // tb_user.save_one()

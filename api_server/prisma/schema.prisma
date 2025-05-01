@@ -4,6 +4,8 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// D:\AAA\dayu_system_01\api_server\prisma\dev.db
+
 generator client {
   provider = "prisma-client-js"
   // output   = "../generated/prisma"
@@ -31,4 +33,5 @@ model tb_user {
   create_time String
   is_del      Boolean @default(false)
   kind        String
+  role        String
 }

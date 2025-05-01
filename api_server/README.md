@@ -13,3 +13,5 @@ npx prisma generate                生成代码
 # 测试链接数据库
 // prisma/schema.prisma    公司     D:\AAA\dayu_system_01\api_admin\prisma\dev.db
 // prisma/schema.prisma    家里     E:\AAA\react18_electron_preload\api_end\prisma\dev.db
+
+

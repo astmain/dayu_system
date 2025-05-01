@@ -1,51 +1,30 @@
-import {Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters, ParseIntPipe} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters, ParseIntPipe, Query} from '@nestjs/common';
 import {Put, Param, Delete, HttpCode} from '@nestjs/common';
-import {ApiTags, ApiOperation, ApiResponse} from '@nestjs/swagger';
+import {ApiTags, ApiOperation, ApiResponse, ApiQuery} from '@nestjs/swagger';
 import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 import {Service_auth} from "./Service_auth";
+import util from "../util/index";
+import {Public} from "./public.decorator";
+import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 
-
-// http://127.0.0.1:3000/user/index
 
 @ApiTags('权限管理')
 @ApiBearerAuth('Authorization')
-@Controller("test")
+@Controller("auth")
 export class Controller_auth {
     constructor(private readonly service_auth: Service_auth) {
     }
 
 
-    @ApiOperation({summary: '得到数据'})
-    @Get("/get:id")
-    get(@Param("id", ParseIntPipe) id: number): Object {
-        console.log(`111---id:`, id, typeof (id))
-        console.log(`111---222:`, 333)
-        return {code: 200, msg: '成功/index', result: 111};
-    }
-
-    @ApiOperation({summary: '得到列表'})
-    @Get("/list")
-    list(): Object {
-        return {code: 200, msg: '成功/index', result: 111};
-    }
-
-    @Get("/add")
-    @ApiOperation({summary: '添加'})
-    add(): Object {
-        return {code: 200, msg: '成功/index', result: 111};
-    }
-
-
-    @Get("/update")
-    @ApiOperation({summary: '更新'})
-    update(): Object {
-        return {code: 200, msg: '成功/index', result: 111};
-    }
-
-    @Get("/delete")
-    @ApiOperation({summary: '删除'})
-    delete(): Object {
-        return {code: 200, msg: '成功/index', result: 111};
+    @ApiOperation({summary: '登陆'})
+    @UseFilters(new HttpExceptionFilter())
+    @Public()
+    @Get("/login")
+    @ApiQuery({name: 'username', default: "admin", type: String})
+    @ApiQuery({name: 'password', default: "123456", type: String})
+    async login(@Query("username") username: string, @Query("password",) password: string) {
+        console.log(`111---222:`,     333        )
+        return util.R.wrapper_response(this.service_auth.login("admin", "password"), "登陆成功")
     }
 
 
