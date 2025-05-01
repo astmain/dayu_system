@@ -19,6 +19,8 @@ require('./config_pinia')({app: app, name: BUS.name, state: BUS.state, persist: 
 //插件
 require('./plugins/VueSimpleContextMenu')(app)
 require('./plugins/dom_open.js')(app)
+require('./plugins/dom_open_data.js')(app)
+
 
 app.mount('#app')
 

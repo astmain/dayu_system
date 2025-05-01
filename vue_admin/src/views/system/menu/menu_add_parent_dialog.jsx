@@ -7,10 +7,12 @@ const virtual_node = defineComponent({
     // 基础数据
     let show = $ref(false) //显示隐藏
     let form = $ref({ menu: '', path: '' }) // 表单数据
+    let that = () => 0
 
     ctx.expose({
-      open: async () => {
+      open: async (data, that_this) => {
         show = true
+        that = that_this
       },
     }) // 暴露方法-open
 
@@ -26,9 +28,8 @@ const virtual_node = defineComponent({
       console.log('res:', res)
       if (res.code == 200) {
         ElMessage.success({ message: `添加成功`, duration: 3 * 1000, showClose: true })
+        await that.find_list()
         show = false // 关闭弹窗
-
-        // props.that.find_menu_list() //父组件,重新搜索
       }
     }
 
@@ -62,5 +63,5 @@ const virtual_node = defineComponent({
 })
 
 export default function menu_add_parent_dialog({ data, that }) {
-  dom_open({ ui_id: 'menu_add_parent_dialog', virtual_node, data, that })
+  dom_open_data({ ui_id: 'menu_add_parent_dialog', virtual_node, data, that })
 }

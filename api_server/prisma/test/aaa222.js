@@ -18,6 +18,7 @@ let tb_menu = [
     {id: 4, menu: "权限管理", path: "/system", parent: ""},
     {id: 5, menu: "用户管理", path: "/system/user", parent: "权限管理"},
     {id: 6, menu: "菜单管理", path: "/system/menu", parent: "权限管理"},
+    {id: 6, menu: "111", path: "/111", parent: ""},
 ]
 //关联-角色_菜单
 let role_menu = [
@@ -48,18 +49,23 @@ let username = "admin"
 
 
 export default function make_menu_tree({username, tb_role, tb_menu, role_user, role_menu,}) {
-    const userRoles = role_user.filter(ru => ru.username === username).map(ru => ru.role);
+    let userRoles = role_user.filter(ru => ru.username === username).map(ru => ru.role)
     // console.log(`111---userRoles:`, userRoles)
-    const userMenus = role_menu.filter(rm => userRoles.includes(rm.role)).map(rm => rm.menu);
+    let userMenus = role_menu.filter(rm => userRoles.includes(rm.role)).map(rm => rm.menu)
     // console.log(`222---userMenus:`, userMenus)
-    const menus = tb_menu.filter(m => userMenus.includes(m.menu));
+    let menus = tb_menu.filter(m => userMenus.includes(m.menu))
 
-    // console.log(`333---fullMenus:`, fullMenus)
+    // 如果是超级管理查看全部菜单
+    if (username === "admin") menus = tb_menu
+
 
     function buildMenuTree(menus, parent = "") {
         return menus.filter(item => item.parent === parent)
             .map(item => ({
-                menu: item.menu, path: item.path, children: buildMenuTree(menus, item.menu)
+                id: item.id,
+                menu: item.menu,
+                path: item.path,
+                children: buildMenuTree(menus, item.menu)
             }))
             .filter(item => item !== null);
     }

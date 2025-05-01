@@ -1,11 +1,13 @@
 export default function make_menu_tree({username, tb_role, tb_menu, role_user, role_menu,}) {
-    const userRoles = role_user.filter(ru => ru.username === username).map(ru => ru.role);
+    let userRoles = role_user.filter(ru => ru.username === username).map(ru => ru.role)
     // console.log(`111---userRoles:`, userRoles)
-    const userMenus = role_menu.filter(rm => userRoles.includes(rm.role)).map(rm => rm.menu);
+    let userMenus = role_menu.filter(rm => userRoles.includes(rm.role)).map(rm => rm.menu)
     // console.log(`222---userMenus:`, userMenus)
-    const menus = tb_menu.filter(m => userMenus.includes(m.menu));
+    let menus = tb_menu.filter(m => userMenus.includes(m.menu))
 
-    // console.log(`333---fullMenus:`, fullMenus)
+    // 如果是超级管理查看全部菜单
+    if (username === "admin") menus = tb_menu
+
 
     function buildMenuTree(menus, parent = "") {
         return menus.filter(item => item.parent === parent)
@@ -17,6 +19,6 @@ export default function make_menu_tree({username, tb_role, tb_menu, role_user, r
             }))
             .filter(item => item !== null);
     }
+
     return buildMenuTree(menus)
 }
-

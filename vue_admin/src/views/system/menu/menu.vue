@@ -5,7 +5,7 @@
 
 
   <!-- 搜索表单 -->
-  <el-form :model="form" :inline="true" size="default">
+  <el-form :model="form" :inline="true">
     <el-form-item class="left">
       <el-input v-model="form.menu" @keyup.enter="find()">
         <template #prepend>
@@ -15,7 +15,7 @@
     </el-form-item>
     <el-form-item style="position: absolute; right: 0; margin-right: 0px">
       <el-button-group>
-        <el-button type="primary" plain @click="find()">搜索</el-button>
+        <el-button type="primary" plain @click="find_list()">搜索</el-button>
         <!-- <el-button type="default" plain @click="; (form_find.menu = ''), find_menu_list()">清空</el-button> -->
         <el-button type="success" plain @click="menu_add_parent_dialog()">添加</el-button>
       </el-button-group>
@@ -105,28 +105,46 @@ export default {
       require('./menu_add_parent_dialog.jsx')({ data: '空', that: this })
     },//
 
-    async find() {
+    async find_list() {
       let config = { method: 'get', url: '/menu/find_list', params: { menu: this.form.menu } }
       let res = await axios_api(config)
       console.log('res      :', res)
       this.tree.data = res.result
     },//
 
+    /** 删除菜单*/
+    async delete_menu(menu) {
+      console.log('🚀 menu   :', menu)
+      let confirm = await ElMessageBox.confirm('确定删除吗', '删除提示', { cancelButtonText: '取消', confirmButtonText: '删除' })
+      if (confirm != 'confirm') return
+      let config = { method: 'get', url: `/controller_MAIN/menu/delete_menu?` + `menu=${menu}` }
+      let res = await axios_api(config)
+      console.log('res:', res)
+      await this.find_list()
+      if (res.data.code == 200) {
+        await this.find_menu_list()
+      }
+    }, //
+
+
 
     async menu_opt_click({ option, item, }) {
-      console.log(`menu_opt_click---option:`, option)
-      console.log(`menu_opt_click---item:`, item)
       if (option.name == '删除') {
-        this.delete_menu(item.menu)
+        console.log(' item   :', item)
+        let confirm = await ElMessageBox.confirm('确定删除吗', '删除提示', { cancelButtonText: '取消', confirmButtonText: '删除' })
+        if (confirm != 'confirm') return
+        let config = { method: 'get', url: `/menu/delete?`, params: { id: item.id } }
+        let res = await axios_api(config)
+        console.log('res:', res)
       }
       if (option.name == '编辑') {
         this.menu_edit_dialog(item)
       }
 
       if (option.name == '添加子菜单') {
-        console.log('添加子菜单---item',item)
-        console.log('添加子菜单---item.menu',item.menu)
-        require('./menu_add_child_dialog.jsx')({ data:{parent:item.menu}, that: this })
+        console.log('添加子菜单---item', item)
+        console.log('添加子菜单---item.menu', item.menu)
+        require('./menu_add_child_dialog.jsx')({ data: { parent: item.menu }, that: this })
       }
 
     },
@@ -150,6 +168,8 @@ export default {
 
   async mounted() {
 
+
+    await this.find_list()
   },////
 
 }
