@@ -4,7 +4,7 @@ import {ApiTags, ApiOperation, ApiResponse, ApiQuery} from '@nestjs/swagger';
 import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 import {Service_auth} from "./Service_auth";
 import util from "../util/index";
-import {Public} from "./public.decorator";
+import {Dec_public} from "./Dec_public";
 import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 import {Dto_user} from "./Dto_user";
 
@@ -21,7 +21,7 @@ export class Controller_auth {
     @ApiQuery({name: 'username', default: "admin", type: String})
     @ApiQuery({name: 'password', default: "123456", type: String})
     @UseFilters(new HttpExceptionFilter())
-    @Public()
+    @Dec_public()
     @Get("/login")
     async login(@Query("username") username: string, @Query("password",) password: string) {
         console.log(`111---222:`, 333)
@@ -32,7 +32,7 @@ export class Controller_auth {
     @ApiOperation({summary: '登陆2'})
     @ApiBody({type: Dto_user})
     @UseFilters(new HttpExceptionFilter())
-    @Public()
+    @Dec_public()
     @Post("/login2")
     async login2(@Body() data: Dto_user) {
         return util.R.wrapper_response(this.service_auth.login(data.username, data.password), "登陆成功")
