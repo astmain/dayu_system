@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// D:\AAA\dayu_system_01\api_server\prisma\dev.db
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model tb_user {
+  id          Int     @id @default(autoincrement())
+  uid         String  @unique
+  username    String  @unique
+  password    String
+  nickname    String
+  avatar      String
+  email       String  @unique
+  tel         String  @unique
+  order       Int     @default(0)
+  online      Boolean
+  update_time String
+  create_time String
+  is_del      Boolean @default(false)
+  kind        String
+  role        String
+}
+
+model tb_menu {
+  id     Int    @id @default(autoincrement())
+  menu   String @unique
+  path   String @unique
+  parent String @default("")
+}
+
+model tb_role {
+  id   Int    @id @default(autoincrement())
+  role String
+}
+
+model role_menu {
+  id   Int    @id @default(autoincrement())
+  role String
+  menu String
+}
+
+model role_user {
+  id       Int    @id @default(autoincrement())
+  username String
+  role     String
+}
