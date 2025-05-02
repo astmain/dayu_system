@@ -17,5 +17,6 @@ window.ElMessageBox = ElMessageBox
 import { defineAsyncComponent } from 'vue'
 window.defineAsyncComponent = defineAsyncComponent
 
+import "./css_toolbar1.css"
 
 export default app

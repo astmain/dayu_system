@@ -14,16 +14,16 @@
             <el-aside width="180px">
                 <el-menu :default-active="$route.path" background-color="#24292E" active-text-color="#ffd04b"
                     text-color="#fff" class="menu_height" router>
-                    <template v-for="ele in BUS.user.menu_tree">
-                        <el-menu-item class="没有子菜单" v-if="!ele.children || ele?.children?.length === 0" :index="ele.path">
+                    <template v-for="ele in BUS.user.menus_tree">
+                        <el-menu-item class="没有子菜单" v-if="!ele.children || ele?.children?.length === 0" :index="ele.path_full">
                             <span>{{ ele.menu? ele.menu : ele.name }}</span>
                         </el-menu-item>
-                        <el-sub-menu class="拥有子菜单" v-else :index="ele.path">
+                        <el-sub-menu class="拥有子菜单" v-else :index="ele.path_full">
                             <template #title>
                                 <span>{{ ele.menu? ele.menu : ele.name }}</span>
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item v-for="item in ele.children" :index="item.path">
+                                <el-menu-item v-for="item in ele.children" :index="item.path_full">
                                     <span>{{ item.menu? item.menu : item.name }}</span>
                                 </el-menu-item>
                             </el-menu-item-group>
@@ -62,7 +62,7 @@ export default {
         return {
             name: "数据1",
             // menu_tree: menu_list,
-            menu_tree: BUS.user.menu_tree,
+            menu_tree: BUS.user.menus_tree,
         }
 
 
@@ -81,11 +81,8 @@ export default {
         },
 
         async get_pages(){
-            console.log('get_pages')
-           let pages= this.$router.options.routes.find(o => o.name === 'main').children
-           console.log('111---pages:', JSON.parse(JSON.stringify(pages)))
-           this.menu_tree = BUS.user.menu_tree
-           console.log('333---menu_tree:',  JSON.parse(JSON.stringify(this.menu_tree)))
+
+  
         }
 
 

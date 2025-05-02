@@ -53,7 +53,7 @@ let id = 1 //     admin 1 二狗 2 张三 3 李四 4
 
 
 // 菜单扁平根据用户id
-function get_menu_flat_by_user_id({tb_menu, user_id}) {
+function menu_get_menus_flat_by_user_id({tb_menu, user_id}) {
     // 1. 获取用户的所有角色ID
     const userRoles = role_user
         .filter(ru => ru.user_id === user_id)
@@ -67,23 +67,34 @@ function get_menu_flat_by_user_id({tb_menu, user_id}) {
     console.log("menuIds-------------------", menuIds)
 
     // 3. 获取对应的菜单项
-    const menus = tb_menu.filter(menu => menuIds.includes(menu.id));
+    const menus_flat = tb_menu.filter(menu => menuIds.includes(menu.id));
     // console.log("menus-------------------", menus)
-    return menus 
+    return menus_flat 
 }
 
 
-let menu_flat=get_menu_flat_by_user_id({tb_menu:tb_menu, user_id:id})
-console.log("menu_flat-------------------", menu_flat)
+let menus_flat=menu_get_menus_flat_by_user_id({tb_menu,role_user,role_menu, user_id:id})
+console.log("menus_flat-------------------", menus_flat)
 
 
 // 生成菜单树
-function get_menu_tree({menus, parentId = 0}) {
+function menu_get_menus_tree({menus, parentId = 0, parentPath = ''}) {
     const menu_tree = []
     for (const o of menus) {
         if (o.parent_id === parentId) {
-            const children = get_menu_tree({menus, parentId:o.id});
-            if (children.length > 0) o.children = children 
+            const children = menu_get_menus_tree({menus, parentId:o.id, parentPath: o.path});
+            if (children.length > 0) {
+                o.children = children;
+                o.children.forEach(child => {
+                    //自定义children中的字段
+                    child.parent_id = o.id;
+                    child.parent_menu = o.menu;
+                    child.parent_name = o.name;
+                    child.parent_path = o.path;
+      
+                });
+            }
+            //自定义children中的字段
             o.name = o.menu;
             menu_tree.push(o);
         }
@@ -91,7 +102,7 @@ function get_menu_tree({menus, parentId = 0}) {
     return menu_tree;
 }
 
-const menuTree = get_menu_tree({menus:menu_flat});
+const menuTree = menu_get_menus_tree({menus:menus_flat});
 console.log("menuTree-------------------", JSON.stringify(menuTree, null, 2))
 
 

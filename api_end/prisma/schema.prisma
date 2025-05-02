@@ -4,7 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-// D:\AAA\dayu_system_01\api_server\prisma\dev.db
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db
 
 generator client {
   provider = "prisma-client-js"
@@ -34,28 +34,33 @@ model tb_user {
   is_del      Boolean @default(false)
   kind        String
   role        String
+  remark      String  @default("")
 }
 
 model tb_menu {
-  id     Int    @id @default(autoincrement())
-  menu   String @unique
-  path   String @unique
-  parent String @default("")
+  id        Int    @id @default(autoincrement())
+  menu      String @unique
+  path      String @unique
+  parent_id Int    @default(0)
+  remark    String @default("")
 }
 
 model tb_role {
-  id   Int    @id @default(autoincrement())
-  role String
+  id     Int    @id @default(autoincrement())
+  role   String @unique
+  remark String @default("")
 }
 
 model role_menu {
-  id   Int    @id @default(autoincrement())
-  role String
-  menu String
+  id      Int @id @default(autoincrement())
+  role_id Int
+  menu_id Int
+
+  @@unique([role_id, menu_id])
 }
 
 model role_user {
-  id       Int    @id @default(autoincrement())
-  username String
-  role     String
+  id      Int @id @default(autoincrement())
+  role_id Int
+  user_id Int
 }

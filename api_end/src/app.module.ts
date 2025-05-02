@@ -6,6 +6,7 @@ import {Module_test} from './test/Module_test';
 import {__menu} from './Module/menu';
 import {__user} from './Module/user';
 import {__role} from './Module/role';
+import {__auth} from './Module/auth';
 
 
 @Module({
@@ -15,7 +16,8 @@ import {__role} from './Module/role';
         __menu,
         __user,
         __role,
-        Module_auth,
+        // Module_auth,
+        __auth,
 
     ],
     controllers: [],

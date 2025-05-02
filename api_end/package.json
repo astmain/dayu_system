@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "安装": "pnpm -F     api_admin                    add          @nestjs/jwt      -S  ",
-    "db_push": "npx prisma db push   ",
+    "db_push": "npx prisma db push  ",
     "db_generate": "npx prisma generate",
     "db_init111": "npx prisma generate   --schema prisma/schema.prisma",
     "db_push111": "npx prisma db  push   --schema prisma/schema.prisma",

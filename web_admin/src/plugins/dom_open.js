@@ -1,6 +1,6 @@
 import { createVNode, render } from 'vue'
 
-function dom_open({ ui_id, virtual_node, data }) {
+function dom_open( ui_id, virtual_node, data, that ) {
     //   console.log('open---', { ui_id, virtual_node, data })
     // 删除旧的vn
     document.querySelector(`.${ui_id}`) ? document.querySelector(`.${ui_id}`).remove() : 0
@@ -12,7 +12,7 @@ function dom_open({ ui_id, virtual_node, data }) {
     document.body.appendChild((render(v_node, element_new), element_new))
 
     // 调用vn暴露的方法
-    v_node.component.exposed.open(data)
+    v_node.component.exposed.open(data, that)
 }
 
 
