@@ -60,11 +60,11 @@ function depart_add_dialog(props, ctx) {
 
     console.log('submit---:', JSON.parse(JSON.stringify(data.form)))
 
-    let form = {
+    let form_data = {
       depart: data.form.depart,
       parent_id: data.form.opt_val.at(-1)
     }
-    var config = { method: 'post', url: '/depart/save', data: form }
+    var config = { method: 'post', url: '/depart/save', data: form_data }
     console.log('submit---config:', config)
     let res = await axios_api(config)
     console.log('depart_opt---res.result:', res.result)
