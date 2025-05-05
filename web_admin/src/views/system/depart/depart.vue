@@ -15,9 +15,6 @@
 
       <el-tree ref="ElTree_ref" :data="tree.data" :show-checkbox="false" node-key="id" :props="tree" default-expand-all
         @node-click="tree_click" :expand-on-click-node="false" highlight-current />
-
-
-
     </div>
 
 
@@ -53,7 +50,7 @@ export default {
   data() {
     return {
       name: "数据1",
-      form: { depart: "" ,depart_id:0},
+      form: { depart: "", depart_id: 0 },
       users: [],
       tree: {
         data: [{ menu: '111', children: [{ menu: '222' }] }],
