@@ -71,6 +71,8 @@ model tb_depart {
   id        Int    @id @default(autoincrement())
   depart    String
   parent_id Int
+
+  @@unique([depart, parent_id])
 }
 
 model depart_user {

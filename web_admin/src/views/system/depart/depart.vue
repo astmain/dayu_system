@@ -10,7 +10,7 @@
         </li>
         <el-button type='primary' @click='find_list_depart()'>搜索</el-button>
         <el-button type='' @click="; (form = { menu: '', path: '' }), find_list()">清空</el-button>
-        <el-button type="primary" @click="open_dialog({ kind: 'add', item: {} })">添加</el-button>
+        <el-button type="primary" @click="open_dialog({ kind: 'depart_add', item: {} })">添加</el-button>
       </ul>
 
       <el-tree ref="ElTree_ref" :data="tree.data" :show-checkbox="false" node-key="id" :props="tree" default-expand-all
@@ -83,7 +83,10 @@ export default {
       this.users = res.result.users
     },
 
+
     async open_dialog({ kind, item }) {
+      if (kind == 'depart_add') require('./depart_add_dialog.jsx')({ item: item, that: this, arg: { kind: "depart_add", title: "部门-添加"} })
+
 
     },
   },////

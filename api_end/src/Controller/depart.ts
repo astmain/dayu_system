@@ -25,10 +25,8 @@ export class depart {
     @Post("/find_info")
     async find_info(@Body() data: DTO_depart) {
         console.log(`data---`, data)
-
         let depart_childIds = build_depart_childIds_by_id(await db.tb_depart.findMany(), data.depart_id)
         console.log(`111---depart_childIds:`, depart_childIds)
-
         const depart_user = await db.depart_user.findMany({
             distinct: ['user_id'],
             select: {user_id: true},
@@ -53,10 +51,39 @@ export class depart {
     }
 
 
+    @ApiOperation({summary: '部门选项'})
+    @Post("/depart_opt")
+    async depart_opt(@Body() data: DTO_depart) {
+        console.log(`111---data:`, data)
+        let departs = await db.tb_depart.findMany()
+        console.log(`333---departs:`, departs)
+        let opt_list = build_depart_tree(departs)
+        let opt_val = [1]
+        return {code: 200, msg: '成功/find_list', result: {departs, opt_list, opt_val}};
+    }
+
+
     @ApiOperation({summary: '保存'})
     @Post("/save")
-    async add(@Body() data: DTO_role) {
-        return {code: 200, msg: '成功/add', result: 1};
+    async add(@Body() data: DTO_depart) {
+        console.log(`save---data:`, data)
+        let _data = {depart: data.depart, parent_id: data.parent_id}
+        let res1 = {id: 0}
+        if (data.parent_id) {
+            let res1 = await db.tb_depart.upsert({
+                    where: {depart_parent_id: {depart: _data.depart, parent_id: _data.parent_id,}},
+                    update: _data,
+                    create: _data,
+                }
+            )
+            console.log(`添加---res1:`, res1)
+        } else {
+            // res1 = await db.tb_role.upsert({where: {role: data.role}, update: _data, create: _data})
+            // console.log(`111---res1:`, res1)
+        }
+
+
+        return {code: 200, msg: '成功/save', result: 1};
     }
 
 
@@ -87,6 +114,8 @@ function build_depart_tree(departments) {
     departments.forEach(dept => {
         departMap.set(dept.id, {
             ...dept,
+            value: dept.id,
+            label: dept.depart,
             children: []
         });
     });

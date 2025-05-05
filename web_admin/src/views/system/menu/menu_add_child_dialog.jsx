@@ -46,7 +46,7 @@ const virtual_node = defineComponent({
       return (
         <>
           <ElDialog v-model={show} title="新增子菜单" width="400px" draggable>
-            <ElForm v-model={form} label-width="120px" label-position="left">
+            <ElForm v-model={form} label-width="120px" label-position="left" >
               <ElFormItem label="[父]菜单名称">
                 <ElInput v-model={form.parent_menu} disabled />
               </ElFormItem>

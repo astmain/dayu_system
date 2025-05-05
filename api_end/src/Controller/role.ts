@@ -54,6 +54,7 @@ export class role {
             res1 = await db.tb_role.upsert({where: {id: data.role_id}, update: _data, create: _data})
             console.log(`111---res1:`, res1)
         } else {
+            // 更新角色表
             res1 = await db.tb_role.upsert({where: {role: data.role}, update: _data, create: _data})
             console.log(`111---res1:`, res1)
         }
