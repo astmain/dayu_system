@@ -33,10 +33,10 @@
         <el-button type='' @click="; (form = { menu: '', path: '' }), find_list()">清空</el-button>
         <el-button type="primary" @click="open_dialog({ kind: 'add', item: {} })">添加</el-button>
       </ul>
-      <el-table :data="tableData" style="width: 100%" size="default" border>
+      <el-table :data="users" style="width: 100%" size="default" border highlight-current-row>
         <el-table-column label="序号" type="index" width="60px" />
-        <el-table-column label="role" prop="role" />
-        <el-table-column label="remark" prop="remark" />
+        <el-table-column label="username" prop="username" />
+        <el-table-column label="tel" prop="tel" />
         <el-table-column label="Operations">
           <template #default="scope">
             <el-button type="primary" @click="open_dialog({ kind: 'edit', item: scope.row })"> 编辑</el-button>
@@ -53,8 +53,8 @@ export default {
   data() {
     return {
       name: "数据1",
-      form: { role: "" },
-      tableData: [],
+      form: { depart: "" ,depart_id:0},
+      users: [],
       tree: {
         data: [{ menu: '111', children: [{ menu: '222' }] }],
         menus_chooseed: [],
@@ -78,10 +78,12 @@ export default {
 
     async tree_click(data) {
       console.log('tree_click---data:', JSON.parse(JSON.stringify(data)))
-      let config = { method: 'post', url: '/depart/find_list', data: this.form }
+      this.form.depart_id = data.id
+      let config = { method: 'post', url: '/depart/find_info', data: this.form }
+      console.log('tree_click---config:', JSON.parse(JSON.stringify(config)))
       let res = await axios_api(config)
       console.log('tree_click---res:', res)
-
+      this.users = res.result.users
     },
 
     async open_dialog({ kind, item }) {

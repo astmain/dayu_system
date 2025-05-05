@@ -22,10 +22,24 @@ let db = new PrismaClient()
 export class depart {
     @ApiOperation({summary: '得到数据'})
     @UseFilters(new HttpExceptionFilter())
-    @Get("/find_info")
+    @Post("/find_info")
     async find_info(@Body() data: DTO_depart) {
-        console.log(`111---`, 111)
-        return {code: 200, msg: 'find_info/find_one', result: 1};
+        console.log(`data---`, data)
+
+        let depart_childIds = build_depart_childIds_by_id(await db.tb_depart.findMany(), data.depart_id)
+        console.log(`111---depart_childIds:`, depart_childIds)
+
+        const depart_user = await db.depart_user.findMany({
+            distinct: ['user_id'],
+            select: {user_id: true},
+            where: {depart_id: {in: depart_childIds}},
+        })
+
+        const depart_user_id = depart_user.map(o => o.user_id)
+        console.log(`111---depart_user:`, depart_user)
+        console.log(`111---depart_user_id:`, depart_user_id)
+        const users = await db.tb_user.findMany({where: {id: {in: depart_user_id}}})
+        return {code: 200, msg: 'find_info/find_one', result: {users}};
     }
 
 
@@ -61,4 +75,72 @@ export class depart {
     }
 
 
+}
+
+
+function build_depart_tree(departments) {
+    // 创建一个映射来存储所有部门
+    const departMap = new Map();
+    const tree: any = [];
+
+    // 首先将所有部门放入映射中
+    departments.forEach(dept => {
+        departMap.set(dept.id, {
+            ...dept,
+            children: []
+        });
+    });
+
+    // 构建树结构
+    departments.forEach(dept => {
+        const node = departMap.get(dept.id);
+        if (dept.parent_id === 0) {
+            // 如果是根节点，直接添加到树中
+            tree.push(node);
+        } else {
+            // 如果不是根节点，添加到父节点的children中
+            const parent = departMap.get(dept.parent_id);
+            if (parent) {
+                parent.children.push(node);
+            }
+        }
+    });
+
+    return tree;
+}
+
+
+function build_depart_tree_by_id(departments, parentId) {
+    const tree: any = [];
+
+    // 找到所有直接子部门
+    const children = departments.filter(dept => dept.parent_id === parentId);
+
+    // 递归处理每个子部门
+    for (const child of children) {
+        const node = {
+            ...child,
+            children: build_depart_tree_by_id(departments, child.id)
+        };
+        tree.push(node);
+    }
+
+    return tree;
+}
+
+
+function build_depart_childIds_by_id(depart, departId) {
+    const result = new Set([departId]); // 使用Set来存储唯一的ID
+
+    // 递归查找所有子部门
+    function findChildren(parentId) {
+        const children = depart.filter(item => item.parent_id === parentId);
+        children.forEach(child => {
+            result.add(child.id);
+            findChildren(child.id);
+        });
+    }
+
+    findChildren(departId);
+    return Array.from(result);
 }

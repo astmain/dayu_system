@@ -7,7 +7,7 @@ let tb_user = [
     {id: 2, role: "用户", uid: "2", username: "二狗", password: "123456", nickname: "小狗", avatar: "111", email: "2222222222@qq.com", tel: "15374118112", order: 111, online: true, update_time: "2023-01-01 05:05:05", create_time: "2023-01-01 05:05:05", is_del: false, kind: "user",},
     {id: 3, role: "用户", uid: "3", username: "张三", password: "123456", nickname: "小张", avatar: "111", email: "3333333333@qq.com", tel: "15374118113", order: 111, online: true, update_time: "2023-01-01 05:05:05", create_time: "2023-01-01 05:05:05", is_del: false, kind: "user",},
     {id: 4, role: "商家", uid: "4", username: "李四", password: "123456", nickname: "小李", avatar: "111", email: "4444444444@qq.com", tel: "15374118114", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false, kind: "user",},
-    {id: 5, role: "财务", uid: "5", username: "王无", password: "123456", nickname: "小李", avatar: "111", email: "5555555555@qq.com", tel: "15374118115", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false, kind: "user",},
+    {id: 5, role: "财务", uid: "5", username: "王五", password: "123456", nickname: "小李", avatar: "111", email: "5555555555@qq.com", tel: "15374118115", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false, kind: "user",},
 ]
 // 角色表
 let tb_role = [
@@ -59,15 +59,16 @@ let role_user = [
 
 //部门表
 let tb_depart = [
-    {id: 1000, depart: "大宇三维打印", parent_id: 0},//总公司
-    {id: 1111, depart: "普通用户", parent_id: 0},//普通用户
-    {id: 9999, depart: "技术部", parent_id: 1000},//技术部
+    {id: 1, depart: "大宇三维打印", parent_id: 0},//总公司
+    {id: 2, depart: "技术部", parent_id: 1000},//技术部
+    {id: 3, depart: "普通用户", parent_id: 0},//普通用户
+
     //
-    {id: 2001, depart: "泉州分公司", parent_id: 1000},//泉州分公司
+    {id: 2001, depart: "泉州分公司", parent_id: 1},//泉州分公司
     {id: 20011, depart: "财务部", parent_id: 2001},//财务部
     {id: 20012, depart: "业务部", parent_id: 2001},//业务部
     //
-    {id: 2002, depart: "德化分公司", parent_id: 1000},//德化分公司
+    {id: 2002, depart: "德化分公司", parent_id: 1},//德化分公司
     {id: 20021, depart: "财务部", parent_id: 2002},//财务部
     {id: 20022, depart: "业务部", parent_id: 2002},//业务部
 ]
@@ -75,16 +76,13 @@ let tb_depart = [
 
 //关联-部门_用户        //用户表  admin 1 二狗 2 张三 3 李四 4
 let depart_user = [
-    {id: 1, depart_id: 9999, user_id: 1},//admin
-    {id: 2, depart_id: 1111, user_id: 2},//二狗
-    {id: 3, depart_id: 20011, user_id: 3},//张三
-    {id: 4, depart_id: 20022, user_id: 4},//李四
-    {id: 5, depart_id: 20011, user_id: 5},//王五-------------
-    {id: 6, depart_id: 20012, user_id: 5},//王五
-    {id: 7, depart_id: 20021, user_id: 5},//王五
-    {id: 8, depart_id: 20022, user_id: 5},//王五
-    {id: 9, depart_id: 1111, user_id: 5},//王五
-    {id: 10, depart_id: 9999, user_id: 5},//王五
+    {id: 1, depart_id: 2, user_id: 1},//admin
+    {id: 2, depart_id: 20011, user_id: 2},//二狗
+    {id: 3, depart_id: 20012, user_id: 3},//张三
+    {id: 4, depart_id: 20021, user_id: 4},//李四
+    {id: 5, depart_id: 20022, user_id: 5},//王五-------------
+    {id: 9, depart_id: 2, user_id: 5},//王五
+    {id: 10, depart_id: 3, user_id: 5},//王五
 ]
 
 

@@ -56,15 +56,16 @@ let role_user = [
 
 //部门表
 let tb_depart = [
-    {id: 1000, depart: "大宇三维打印", parent_id: 0},//总公司
-    {id: 1111, depart: "普通用户", parent_id: 0},//普通用户
-    {id: 9999, depart: "技术部", parent_id: 1000},//技术部
+    {id: 1, depart: "大宇三维打印", parent_id: 0},//总公司
+    {id: 2, depart: "技术部", parent_id: 1},//技术部
+    {id: 3, depart: "普通用户", parent_id: 0},//普通用户
+
     //
-    {id: 2001, depart: "泉州分公司", parent_id: 1000},//泉州分公司
+    {id: 2001, depart: "泉州分公司", parent_id: 1},//泉州分公司
     {id: 20011, depart: "财务部", parent_id: 2001},//财务部
     {id: 20012, depart: "业务部", parent_id: 2001},//业务部
     //
-    {id: 2002, depart: "德化分公司", parent_id: 1000},//德化分公司
+    {id: 2002, depart: "德化分公司", parent_id: 1},//德化分公司
     {id: 20021, depart: "财务部", parent_id: 2002},//财务部
     {id: 20022, depart: "业务部", parent_id: 2002},//业务部
 ]
@@ -72,16 +73,13 @@ let tb_depart = [
 
 //关联-部门_用户        //用户表  admin 1 二狗 2 张三 3 李四 4
 let depart_user = [
-    {id: 1, depart_id: 9999, user_id: 1},//admin
-    {id: 2, depart_id: 1111, user_id: 2},//二狗
-    {id: 3, depart_id: 20011, user_id: 3},//张三
-    {id: 4, depart_id: 20022, user_id: 4},//李四
-    {id: 5, depart_id: 20011, user_id: 5},//王五-------------
-    {id: 6, depart_id: 20012, user_id: 5},//王五
-    {id: 7, depart_id: 20021, user_id: 5},//王五
-    {id: 8, depart_id: 20022, user_id: 5},//王五
-    {id: 9, depart_id: 1111, user_id: 5},//王五
-    {id: 10, depart_id: 9999, user_id: 5},//王五
+    {id: 1, depart_id: 2, user_id: 1},//admin
+    {id: 2, depart_id: 20011, user_id: 2},//二狗
+    {id: 3, depart_id: 20012, user_id: 3},//张三
+    {id: 4, depart_id: 20021, user_id: 4},//李四
+    {id: 5, depart_id: 20022, user_id: 5},//王五-------------
+    {id: 9, depart_id: 2, user_id: 5},//王五
+    {id: 10, depart_id: 3, user_id: 5},//王五
 ]
 
 // 获取部门树,根据tb_depart
