@@ -60,7 +60,7 @@ let role_user = [
 //部门表
 let tb_depart = [
     {id: 1, depart: "大宇三维打印", parent_id: 0},//总公司
-    {id: 2, depart: "技术部", parent_id: 1000},//技术部
+    {id: 2, depart: "技术部", parent_id: 1},//技术部
     {id: 3, depart: "普通用户", parent_id: 0},//普通用户
 
     //
