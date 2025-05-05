@@ -31,7 +31,7 @@ export class role {
         console.log(`111---menus_flat:`, menus_flat)
         let menus_chooseed = menus_flat.map(o => o.id)
         console.log(`111---menus_chooseed:`, menus_chooseed)
-        return {code: 200, msg: '成功/find_role_menu', result: {menus_flat: tb_menu, menus_chooseed}};
+        return {code: 200, msg: '成功/find_role_menu', result: {  menus_curr:menus_flat   ,     menus_flat: tb_menu, menus_chooseed}};
     }
 
 

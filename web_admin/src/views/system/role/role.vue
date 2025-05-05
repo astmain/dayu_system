@@ -13,7 +13,7 @@
 
   <!-- 表格 -->
   <el-button type="primary" @click="open_dialog({ kind: 'add', item: {} })">添加</el-button>
-  <el-table :data="tableData" style="width: 100%"  size="default" border>
+  <el-table :data="tableData" style="width: 100%" size="default" border>
     <el-table-column label="序号" type="index" width="60px" />
     <el-table-column label="role" prop="role" />
     <el-table-column label="remark" prop="remark" />
@@ -49,17 +49,7 @@ export default {
     async open_dialog({ kind, item }) {
       if (kind == 'add') require('./role_add_dialog.jsx')({ item: item, that: this })
       if (kind == 'edit') require('./role_edit_dialog.jsx')({ item: item, that: this })
-      if (kind == 'info') 
-      
-      {
-
-      //   let aa=      require('./role_info_dialog.jsx')
-      // let bbb=  require('./role_info_dialog.jsx')({ data: item, that: this })
-            let bbb=  require('./vue_open.jsx')({ item: item, that: this })
-
-      // console.log('aa:', aa)
-      // console.log('bbb:', bbb)
-      }
+      if (kind == 'info') require('./role_info_dialog.jsx')({ item: item, that: this, arg: { kind: "info", title: "详情-角色"} })
 
       if (kind == 'delete') {
         let confirm = await ElMessageBox.confirm('确定删除吗', '删除提示', { cancelButtonText: '取消', confirmButtonText: '删除' })

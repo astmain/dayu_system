@@ -7,6 +7,7 @@ import {__menu} from './Module/menu';
 import {__user} from './Module/user';
 import {__role} from './Module/role';
 import {__auth} from './Module/auth';
+import {__depart} from './Module/depart';
 
 
 @Module({
@@ -18,6 +19,7 @@ import {__auth} from './Module/auth';
         __role,
         // Module_auth,
         __auth,
+        __depart,
 
     ],
     controllers: [],
