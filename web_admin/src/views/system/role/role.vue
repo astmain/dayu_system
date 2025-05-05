@@ -49,8 +49,26 @@ export default {
     async open_dialog({ kind, item }) {
       if (kind == 'add') require('./role_add_dialog.jsx')({ item: item, that: this })
       if (kind == 'edit') require('./role_edit_dialog.jsx')({ item: item, that: this })
-      if (kind == 'info') require('./role_info_dialog.jsx')({ item: item, that: this })
-      if (kind == 'delete') require('./role_delete_dialog.jsx')({ item: item, that: this })
+      if (kind == 'info') 
+      
+      {
+
+      //   let aa=      require('./role_info_dialog.jsx')
+      // let bbb=  require('./role_info_dialog.jsx')({ data: item, that: this })
+            let bbb=  require('./vue_open.jsx')({ item: item, that: this })
+
+      // console.log('aa:', aa)
+      // console.log('bbb:', bbb)
+      }
+
+      if (kind == 'delete') {
+        let confirm = await ElMessageBox.confirm('确定删除吗', '删除提示', { cancelButtonText: '取消', confirmButtonText: '删除' })
+        if (confirm != 'confirm') return
+        let config = { method: 'get', url: `/role/delete?`, params: { id: item.id } }
+        let res = await axios_api(config)
+        console.log('res:', res)
+        res.code == 200 && await this.find_list()
+      }
     },
   },////
 

@@ -1,14 +1,16 @@
 import { defineComponent, createVNode, reactive, render, ref } from 'vue'
 import { ElButton, ElDialog, ElInput, ElForm, ElMessage, ElFormItem, ElTree, ElDrawer, ElCheckboxGroup, ElCheckbox } from 'element-plus'
 
+
 const virtual_node = defineComponent({
   setup(props, ctx) {
     // 基础数据
     let show = $ref(false) //显示隐藏
-    let form = $ref({ role: '产品经理', menu_chooseed: [1], remark: '职责: 负责产品规划、设计、开发、测试、上线、运营等' }) // 表单数据
-    let that = () => 0
+    let form = $ref({ role: '产品经理', menus_chooseed: [1], remark: '职责: 负责产品规划、设计、开发、测试、上线、运营等' }) // 表单数据
+    let that_this = () => 0
 
 
+    let ElTree_ref = ref(null)
     let tree = $ref({
       data: [{ menu: '111', children: [{ menu: '222' }] }],
       data_chooseed: [],
@@ -16,13 +18,13 @@ const virtual_node = defineComponent({
       children: 'children',
     })
 
-    let ElTree_ref = ref(null)
+
 
     // 暴露方法-open
     ctx.expose({
-      open: async (data, that_this) => {
+      open: async ({item, that}) => {
         show = true
-        that = that_this
+        that_this = that
         await get_menus()
       },
     })
@@ -55,18 +57,18 @@ const virtual_node = defineComponent({
     // 提交数据
     async function submit() {
       console.log('ElTree_ref:', ElTree_ref)
-      let menu_chooseed = ElTree_ref.value.getCheckedNodes().map(item => item.id)
-      console.log('menu_chooseed:', menu_chooseed)
+      let menus_chooseed = ElTree_ref.value.getCheckedNodes().map(item => item.id)
+      console.log('menus_chooseed:', menus_chooseed)
       if (!check_form()) return
 
-      let config = { method: 'post', url: `/role/add`, data: JSON.parse(JSON.stringify(form)) }
+      let config = { method: 'post', url: `/role/save`, data: JSON.parse(JSON.stringify(form)) }
       console.log('config   :', config)
       let res = await axios_api(config)
       console.log('res:', res)
       if (res.code == 200) {
         ElMessage.success({ message: `添加成功`, duration: 3 * 1000, showClose: true })
-        // await that.find_list()
-        // show = false // 关闭弹窗
+        await that_this.find_list()
+        show = false // 关闭弹窗
       }
     }
 
@@ -85,26 +87,15 @@ const virtual_node = defineComponent({
             </ElForm>
 
 
-            <ElButton type="primary" plain size="small" onclick={async () => ElTree_ref.value.setCheckedNodes(tree.data)}> 全选</ElButton>
-            <ElButton type="primary" plain size="small" onclick={async () => ElTree_ref.value.setCheckedNodes([])}> 取消</ElButton>
 
+            {/* 全选 取消 */}
+            <div>
+              <ElButton type="primary" plain size="small" onclick={async () => ElTree_ref.value.setCheckedNodes(tree.data)}> 全选</ElButton>
+              <ElButton type="primary" plain size="small" onclick={async () => ElTree_ref.value.setCheckedNodes([])}> 取消</ElButton>
+            </div>
+            {/* 菜单树 */}
             <ElTree ref={ElTree_ref} data={tree.data} show-checkbox node-key="id" props={tree} default-expand-all expand-on-click-node={false} highlight-current />
-
-
-
-
-
-            {/* <!-- 菜单树状结构 --> 
-<el-tree :data="tree.data" show-checkbox node-key="menu" default-expand-all :expand-on-click-node="false">
-    <template #default="{ node, data }">
-      <div style="width: 100%;" @contextmenu.prevent.stop="menu_target_click($event, data, node)"> {{ data.menu }}
-      </div>
-    </template>
-  </el-tree>  */}
-
-
-
-
+            {/* 确定 */}
             <ElButton type="primary" onclick={async () => { submit() }}> 确定</ElButton>
           </ElDialog>
         </>
@@ -114,5 +105,5 @@ const virtual_node = defineComponent({
 })
 
 export default function menu_add_parent_dialog(data, that) {
-  dom_open('role_add_parent_dialog', virtual_node, data, that)
+  dom_open('role_add_dialog', virtual_node, data, that)
 }

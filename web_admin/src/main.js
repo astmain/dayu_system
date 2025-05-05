@@ -20,6 +20,14 @@ require('./config_pinia')({app: app, name: BUS.name, state: BUS.state, persist: 
 require('./plugins/VueSimpleContextMenu')(app)
 require('./plugins/dom_open.js')(app)
 require('./plugins/dom_open_data.js')(app)
+// require('./plugins/vue_open.js')
+
+
+
+
+
+// 工具方法:构造菜单树
+window.utils = require('@src/utils/index.js')
 
 
 app.mount('#app')

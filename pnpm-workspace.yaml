@@ -1,7 +1,7 @@
 packages:
   # 系统模块 =====================================================
   - "api_admin"     #后端接口
-  - "api_server"     #后端接口
+  - "api_server"    #后端接口
   - "render_admin"  #前段页面
   - "vue_admin"     #前段页面
 
@@ -10,7 +10,5 @@ packages:
   - "tool_vue"
   
   
-  - "api_end"  #前段页面
+  - "api_end"       #前段页面
   - "web_admin"     #前段页面
-
-

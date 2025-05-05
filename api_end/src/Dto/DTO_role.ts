@@ -1,6 +1,9 @@
 import {IsArray, IsNotEmpty, IsString} from "class-validator";
 
 export class DTO_role {
+
+    role_id: number;
+
     @IsString()
     @IsNotEmpty()
     role: string;
@@ -10,7 +13,7 @@ export class DTO_role {
     remark: string;
 
     @IsArray()
-    menu_chooseed: [];
+    menus_chooseed: [];
 }
 
 

@@ -20,7 +20,7 @@
     "devDependencies": {
         "@vitejs/plugin-vue": "^5.2.3",
         "@vitejs/plugin-vue-jsx": "^4.1.2",
-        "@vue-macros/reactivity-transform": "^3.0.0-beta.10",
+        "@vue-macros/reactivity-transform": "1.1.6",
         "unplugin-auto-import": "^19.1.2",
         "unplugin-vue-components": "^28.5.0",
         "vite": "^6.2.4",
