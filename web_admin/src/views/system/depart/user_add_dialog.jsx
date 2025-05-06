@@ -73,7 +73,12 @@ const user_add_dialog = defineComponent({
       ElForm_ref.value.validate(async (valid) => {
         if (valid) {
           console.log('submit---form:', form)
-          var config = { method: 'post', url: '/user/add', data: { ...form, depart_id: form.opt_val.at(-1) } }
+          let data={
+            tel: form.tel,
+            username: form.teusernamel,
+            depart_id:  form.opt_val.at(-1)
+          }
+          var config = { method: 'post', url: '/user/add', data: data }
           console.log('submit---config:', config)
           let res = await axios_api(config)
           console.log('depart_opt---res.result:', res.result)

@@ -1,6 +1,13 @@
+import api from "@src/api/api"
+
+
 let name = "BUS"
 let state = {
   user: {},
+  api: api,
+
+
+
   aabb: [],
 
   clazz: new class {
