@@ -23,7 +23,7 @@ export class auth {
 
 
     @ApiOperation({summary: '登陆'})
-    @ApiQuery({name: 'username', default: "15160315110", type: String})
+    @ApiQuery({name: 'tel', default: "15160315110", type: String})
     @ApiQuery({name: 'password', default: "123456", type: String})
     @UseFilters(new HttpExceptionFilter())
     @util.Dec_public()
@@ -32,6 +32,7 @@ export class auth {
         console.log(`login---tel:`, tel, password)
         // 1.查询用户校验密码
         let user = await db.tb_user.findUnique({where: {tel: tel}})
+        console.log(`111---user:`,     user        )
         let md5_password = md5(password).toUpperCase()
         console.log(`login---md5_password:`, md5_password) //todo 数据库密码方案使用md5加密
         if (user?.password !== password) {
