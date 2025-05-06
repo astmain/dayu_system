@@ -75,7 +75,7 @@ const user_add_dialog = defineComponent({
           console.log('submit---form:', form)
           let data={
             tel: form.tel,
-            username: form.teusernamel,
+            username: form.username,
             depart_id:  form.opt_val.at(-1)
           }
           var config = { method: 'post', url: '/user/add', data: data }
