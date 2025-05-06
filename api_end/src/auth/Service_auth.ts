@@ -15,10 +15,10 @@ export class Service_auth {
     ) {
     }
 
-    async login(username, password) {
-        console.log(`login---username:`, username, password)
+    async login(tel, password) {
+        console.log(`login---username:`, tel, password)
         // 查询用户校验密码
-        let user = await db.tb_user.findUnique({where: {username: username}})
+        let user = await db.tb_user.findUnique({where: {tel: tel}})
         let md5_password = md5(password).toUpperCase()
         console.log(`login---md5_password:`, md5_password) //todo 数据库密码方案使用md5加密
         if (user?.password !== password) {
@@ -27,7 +27,7 @@ export class Service_auth {
 
 
         // 生成token
-        const payload = {username: user?.username, id: user?.id, role: user?.role};
+        const payload = {username: user?.username, id: user?.id};
         const token = await this.jwt_service.signAsync(payload)
         console.log(`生成token:`, token)
 
@@ -36,7 +36,7 @@ export class Service_auth {
         let tb_menu = await db.tb_menu.findMany()
         let role_user = await db.role_user.findMany()
         let role_menu = await db.role_menu.findMany()
-        let menu_tree = util.make_menu_tree({username, tb_role, tb_menu, role_user, role_menu,})
+        let menu_tree = util.make_menu_tree({tel, tb_role, tb_menu, role_user, role_menu,})
 
         // 返回参数
         let result = {...user, token, menu_tree}

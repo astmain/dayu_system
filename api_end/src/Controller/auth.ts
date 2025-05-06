@@ -23,15 +23,15 @@ export class auth {
 
 
     @ApiOperation({summary: '登陆'})
-    @ApiQuery({name: 'username', default: "admin", type: String})
+    @ApiQuery({name: 'username', default: "15160315110", type: String})
     @ApiQuery({name: 'password', default: "123456", type: String})
     @UseFilters(new HttpExceptionFilter())
     @util.Dec_public()
     @Get("/login")
-    async login(@Query("username") username: string, @Query("password",) password: string) {
-        console.log(`login---username:`, username, password)
+    async login(@Query("tel") tel: string, @Query("password",) password: string) {
+        console.log(`login---tel:`, tel, password)
         // 1.查询用户校验密码
-        let user = await db.tb_user.findUnique({where: {username: username}})
+        let user = await db.tb_user.findUnique({where: {tel: tel}})
         let md5_password = md5(password).toUpperCase()
         console.log(`login---md5_password:`, md5_password) //todo 数据库密码方案使用md5加密
         if (user?.password !== password) {
@@ -39,7 +39,7 @@ export class auth {
         }
 
         // 2.生成token
-        const payload = {username: user?.username, id: user?.id, role: user?.role};
+        const payload = {username: user?.username, id: user?.id};
         const token = await this.jwt_service.signAsync(payload)
         console.log(`生成token:`, token)
 
@@ -72,25 +72,6 @@ export class auth {
         let user_list = await db.tb_user.findMany()
         return util.R.ok({msg: "成功", result: user_list})
     }
-
-
-    // @ApiOperation({summary: '登陆2'})
-    // @ApiBody({type: Dto_user})
-    // @UseFilters(new HttpExceptionFilter())
-    // @Dec_public()
-    // @Post("/login2")
-    // async login2(@Body() data: Dto_user) {
-    //     // return util.R.wrapper_response(this.service_auth.login(data.username, data.password), "登陆成功")
-    // }
-
-    //
-    // @ApiOperation({summary: 'admin_super'})
-    // @UseFilters(new HttpExceptionFilter())
-    // @Get("/admin_super")
-    // async admin_super() {
-    //     let user_list = await db.tb_user.findMany()
-    //     return util.R.ok({msg: "成功", result: user_list})
-    // }
 
 
 }

@@ -11,7 +11,7 @@ let show = $ref(false)
 const user_add_dialog = defineComponent({
   props: {
     title: { type: String, default: '' },
-    state: { type: Object, default: { id: 0, depart: "", parent_id: 0 } },
+    state: { type: Object, default: { tel: "", username: 0 } },
     that: { type: Object, default: () => ({}) }
   },
   setup(props, ctx) {
@@ -19,19 +19,18 @@ const user_add_dialog = defineComponent({
     let ElForm_ref = ref(null)
 
     let form = $ref({
-      id: props.state.id,
-      depart: props.state.depart,
-      parent_id: props.state.parent_id,
+      tel: props.state.tel,
+      username: props.state.username,
     })
 
     let rules = {
-      depart: [
-        { required: true, message: '请输入新的部门', trigger: 'blur' },
-        { min: 3, max: 20, message: '部门长度在 3 到 20 个字符之间', trigger: 'blur' }
+      tel: [
+        { required: true, message: '请输入-手机号码', trigger: 'blur' },
+        { min: 3, max: 20, message: '手机号码-长度在 3 到 20 个字符之间', trigger: 'blur' }
       ],
-      id: [
-        { required: false, message: '请输入新的部门', trigger: 'blur' },
-        { min: 3, max: 20, message: '部门长度在 3 到 20 个字符之间', trigger: 'blur' }
+      username: [
+        { required: true, message: '请输入-姓名', trigger: 'blur' },
+        { min: 3, max: 20, message: '姓名-长度在 1 到 10个字符之间', trigger: 'blur' }
       ]
     }
 
@@ -42,7 +41,7 @@ const user_add_dialog = defineComponent({
       ElForm_ref.value.validate(async (valid) => {
         if (valid) {
           console.log('submit---form:', form)
-          var config = { method: 'post', url: '/depart/save', data: form }
+          var config = { method: 'post', url: '/user/add', data: form }
           console.log('submit---config:', config)
           let res = await axios_api(config)
           console.log('depart_opt---res.result:', res.result)
@@ -60,18 +59,16 @@ const user_add_dialog = defineComponent({
 
     return () => (
 
-      <ElDialog v-model={show} title={props.title} width="800px" draggable>
-
+      <ElDialog v-model={show} title={props.title} width="500px" draggable>
         <ElForm ref={ElForm_ref} model={form} rules={rules}>
-          <ElFormItem label="部门" prop='depart'>
-            <ElInput v-model={form.depart} />
+          <ElFormItem label="电话" prop='tel'>
+            <ElInput v-model={form.tel} />
+          </ElFormItem>
+          <ElFormItem label="姓名" prop='username'>
+            <ElInput v-model={form.username} />
           </ElFormItem>
         </ElForm>
-
-
         <ElButton type="primary" onclick={async () => { submit() }}  >确定</ElButton>
-
-
       </ElDialog>
     )
   }
@@ -81,30 +78,5 @@ export default function open(props) {
   vue_dialog(user_add_dialog, props)
   show = true
 }
-
-
-
-
-// export default function open(props) {
-//   document.querySelector(`.aaa`) ? document.querySelector(`.aaa`).remove() : 0
-//   let container = document.createElement('div')
-//   container.className = 'aaa'
-//   document.body.appendChild(container)
-//   render(h(depart_edit_dialog, props), container)
-//   // show = true
-// }
-
-
-
-// export default function open(props) {
-//   document.querySelector(`.aaa`) ? document.querySelector(`.aaa`).remove() : 0
-//   let container = document.createElement('div')
-//   container.className = 'aaa'
-//   document.body.appendChild(container)
-//   const v_node = createVNode(depart_edit_dialog, props)
-//   render(v_node, container)
-//   v_node.component.exposed.open()
-//   // v_node.component.exposed.show=true
-// }
 
 

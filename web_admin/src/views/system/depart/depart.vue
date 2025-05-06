@@ -32,7 +32,7 @@
         </li>
         <el-button type='primary' @click='find_list()'>搜索</el-button>
         <el-button type='' @click="; (form = { menu: '', path: '' }), find_list()">清空</el-button>
-        <el-button type="primary" @click="open_dialog({ kind: 'add', item: {} })">添加</el-button>
+        <el-button type="primary" @click="user_kind({ kind: 'user_add' })">添加</el-button>
       </ul>
       <el-table :data="users" style="width: 100%" size="default" border highlight-current-row>
         <el-table-column label="序号" type="index" width="60px" />
@@ -107,22 +107,31 @@ export default {
       this.tree_config.data = tree_data
     },//
 
+    async user_kind({ kind }) {
+      console.log('user_kind---kind:', kind)
+      if (kind === "user_add") {
+        require('./user_add_dialog.jsx')({ state: { tel: "", username: "" }, that: this, title: "用户-新增" })
+      }
+      if (kind === "user_update") {
 
-    async tree_click(data) {
-      console.log('tree_click---data:', JSON.parse(JSON.stringify(data)))
-      this.form.depart_id = data.id
-      let config = { method: 'post', url: '/depart/find_info', data: this.form }
-      console.log('tree_click---config:', JSON.parse(JSON.stringify(config)))
-      let res = await axios_api(config)
-      console.log('tree_click---res:', res)
-      this.users = res.result.users
-    },
+      }
+
+      if (kind === "user_delete") {
+
+      }
+
+      if (kind === "user_find_list") {
+
+      }
+
+    },//
+
+
+
 
 
     async open_dialog({ kind, item }) {
       if (kind == 'depart_add') require('./depart_add_dialog.jsx')({ item: item, that: this, arg: { kind: "depart_add", title: "部门-添加" } })
-
-
     },
   },////
 

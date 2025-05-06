@@ -3,49 +3,48 @@ import {Put, Param, Delete, HttpCode} from '@nestjs/common';
 import {ApiTags, ApiOperation, ApiResponse, ApiQuery} from '@nestjs/swagger';
 import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 
+// 自定义
 import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 import {Dec_public} from "../auth/Dec_public";
+import {PrismaClient} from "@prisma/client";
+import util from "../util/index";
+import {DTO_role} from "../Dto/DTO_role";
+import {DTO_user} from "../Dto/DTO_user";
+import Dto from "../Dto/Dto";
+import get_menus_flat_by_role_id from "../util/make_menus_flat_by_role_id";
+import {DTO_depart} from "../Dto/DTO_depart";
 
+let db = new PrismaClient()
 
 
 @ApiTags('用户管理')
 @ApiBearerAuth('Authorization')
 @Controller("user")
 export class user {
-    @ApiOperation({summary: '得到数据'})
-    @ApiQuery({name: 'username', default: "admin", type: String})
-    @ApiQuery({name: 'password', default: "123456", type: String})
+    @ApiOperation({summary: '新增用户'})
     @UseFilters(new HttpExceptionFilter())
-    @Dec_public()
-    @Get("/login")
-    async get(@Query("username") username: string, @Query("password",) password: string) {
-        return {code: 200, msg: '成功/get', result: 111};
-    }
-
-
-    @ApiOperation({summary: '得到列表'})
-    @Get("/list")
-     list(): Object {
-        return {code: 200, msg: '成功/list', result: 111};
-    }
-
-    @Get("/add")
-    @ApiOperation({summary: '添加'})
-    add(): Object {
-        return {code: 200, msg: '成功/add', result: 111};
-    }
-
-
-    @Get("/update")
-    @ApiOperation({summary: '更新'})
-    update(): Object {
-        return {code: 200, msg: '成功/update', result: 111};
+    @Post("/add")
+    async add(@Body() data: DTO_user) {
+        console.log(`add---data:`, data)
+        let one = db.tb_user.create({data})
+        return {code: 200, msg: '成功/add', result: {one}};
     }
 
     @Get("/delete")
     @ApiOperation({summary: '删除'})
-    delete(): Object {
-        return {code: 200, msg: '成功/delete', result: 111};
+    async delete(@Body() data: DTO_user) {
+        console.log(`delete---data:`, data)
+        const one = await db.tb_depart.delete({where: {id: data.id}})
+        return {code: 200, msg: '成功/delete', result: {one}};
+    }
+
+
+    @ApiOperation({summary: '更新用户'})
+    @Get("/update")
+    update(@Body() data: DTO_user) {
+        console.log(`111---data:`, data)
+
+        return {code: 200, msg: '成功/update', result: 111};
     }
 
 

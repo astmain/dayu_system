@@ -4,7 +4,8 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-// D:\AAA\dayu_system_01\api_end\prisma\dev.db
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\api_end\prisma\dev.db             在家
 
 generator client {
   provider = "prisma-client-js"
@@ -19,22 +20,20 @@ datasource db {
 }
 
 model tb_user {
-  id          Int     @id @default(autoincrement())
-  uid         String  @unique
-  username    String  @unique
-  password    String
-  nickname    String
-  avatar      String
-  email       String  @unique
-  tel         String  @unique
-  order       Int     @default(0)
-  online      Boolean
+  id       Int    @id @default(autoincrement())
+  tel      String @unique
+  password String
+  username String
+  nickname String
+  email    String
+  avatar   String
+
   update_time String
   create_time String
-  is_del      Boolean @default(false)
-  kind        String
-  role        String
   remark      String  @default("")
+  order       Int     @default(0)
+  online      Boolean @default(true)
+  is_del      Boolean @default(false)
 }
 
 model tb_menu {
