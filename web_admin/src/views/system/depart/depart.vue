@@ -13,8 +13,12 @@
         <el-button type="primary" @click="open_dialog({ kind: 'depart_add', item: {} })">添加</el-button>
       </ul>
 
-      <el-tree ref="ElTree_ref" :data="tree.data" :show-checkbox="false" node-key="id" :props="tree" default-expand-all
-        @node-click="tree_click" :expand-on-click-node="false" highlight-current />
+      <!-- <el-tree ref="ElTree_ref" :data="tree.data" :show-checkbox="false" node-key="id" :props="tree" default-expand-all
+        @node-click="tree_click" :expand-on-click-node="false" highlight-current /> -->
+
+      <com_tree1 :tree_config="tree_config" :menu_config="menu_config"></com_tree1>
+
+
     </div>
 
 
@@ -46,17 +50,43 @@
   </nav>
 </template>
 <script>
+import com_tree1 from '@src/components/com_tree1.vue'
 export default {
+
+  components: {
+    com_tree1
+  },
   data() {
     return {
       name: "数据1",
       form: { depart: "", depart_id: 0 },
       users: [],
-      tree: {
-        data: [{ menu: '111', children: [{ menu: '222' }] }],
+
+      menu_config: {
+        opt: [{ title: '编辑', kind: 'edit' }, { title: '新增', kind: 'add' }, { title: '删除', kind: 'delete' },],
+        opt_click: (item, curr_data) => {
+          // console.log('item', item)
+          // console.log('curr_data', curr_data)
+          if (kind == 'depart_add') require('./depart_add_dialog.jsx')({ item: item, that: this, arg: { kind: "depart_add", title: "部门-添加" } })
+
+
+        }
+      },
+
+
+      tree_config: {
+        label: "depart",
         menus_chooseed: [],
-        label: 'depart',
-        children: 'children',
+        data: [{ menu: '111', children: [{ menu: '222' }] }],
+        tree_left_click: async (data) => {
+          console.log('tree_left_click---data222:', JSON.parse(JSON.stringify(data)))
+          this.form.depart_id = data.id
+          let config = { method: 'post', url: '/depart/find_info', data: this.form }
+          console.log('tree_click---config:', JSON.parse(JSON.stringify(config)))
+          let res = await axios_api(config)
+          console.log('tree_click---res:', res)
+          this.users = res.result.users
+        },
       }
     }
   },
@@ -69,7 +99,7 @@ export default {
       res.result.departs
       let tree_data = utils.build_depart_tree(res.result.departs)
       console.log('tree_data:', tree_data)
-      this.tree.data = tree_data
+      this.tree_config.data = tree_data
     },//
 
 
@@ -85,7 +115,7 @@ export default {
 
 
     async open_dialog({ kind, item }) {
-      if (kind == 'depart_add') require('./depart_add_dialog.jsx')({ item: item, that: this, arg: { kind: "depart_add", title: "部门-添加"} })
+      if (kind == 'depart_add') require('./depart_add_dialog.jsx')({ item: item, that: this, arg: { kind: "depart_add", title: "部门-添加" } })
 
 
     },

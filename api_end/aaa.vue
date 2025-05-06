@@ -1,40 +1,17 @@
-<template>
-<div>
-   <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
-      <el-button @click="met1()">met1</el-button>
+<script setup="">
+import {ref, watch} from 'vue'
 
-</div>
-</template>
-
-<script>
-
-
-export default {
-  data() {
-    return {
-      name: "数据1",
-    }
-
-
-  },
-
-  methods: {
-    async met1() {
-      console.log('met1      :', 111)
-
-
-    },//
-
-  },////
-
-  async mounted() {
-
-  },////
+function met1() {
 
 }
+
+
 </script>
 
-<style  scoped></style>
+<template>
+  <div @click="met1()">met1</div>
 
+</template>
 
-
+<style>
+</style>
