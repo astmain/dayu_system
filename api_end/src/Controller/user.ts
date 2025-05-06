@@ -31,7 +31,7 @@ export class user {
         let one2 = await db.depart_user.create({data: {depart_id :data.depart_id    ,user_id:one1.id}})
         console.log(`add---one1:`, one1)
         console.log(`add---one2:`, one2)
-        return {code: 200, msg: '成功/add', result: {one1,one2}};
+        return {code: 200, msg: '成功/add ', result: {one1,one2}};
     }
 
     @Get("/delete")
