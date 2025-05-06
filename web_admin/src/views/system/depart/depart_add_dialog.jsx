@@ -78,7 +78,10 @@ function depart_add_dialog(props, ctx) {
         {/* <ElForm v-model={data.form} label-width="60px" label-position="left" inline={true}> */}
         <ElForm v-model={data.form} inline={true}>
           <ElFormItem label="父级">
-            <ElCascader style={{ width: "300px" }} v-model={data.form.opt_val} options={data.form.opt_list}></ElCascader>
+            <ElCascader style={{ width: "300px" }} v-model={data.form.opt_val} options={data.form.opt_list}
+            
+            props={{  checkStrictly: true }}
+            ></ElCascader>
           </ElFormItem>
           <ElFormItem label="部门">
             <ElInput v-model={data.form.depart} />
