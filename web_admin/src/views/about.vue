@@ -4,7 +4,10 @@
   <el-button @click="met1()">met1</el-button>
 
   <el-tree :data="tree.tree_data" node-key="id" @node-contextmenu="tree_node_ritht_click"
-    @node-click="tree_node_left_click" ref="tree" highlight-current default-expand-all> </el-tree>
+    @node-click="tree_node_left_click" ref="tree"   :expand-on-click-node="false" highlight-current default-expand-all
+  
+
+    > </el-tree>
 
   <el-card v-show="tree.menu_show"
     :style="{ position: 'fixed', left: tree.menu_left + 'px', top: tree.menu_top + 'px' }"

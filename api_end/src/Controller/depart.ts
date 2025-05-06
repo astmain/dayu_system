@@ -69,7 +69,11 @@ export class depart {
         console.log(`save---data:`, data)
         let _data = {depart: data.depart, parent_id: data.parent_id}
         let res1 = {id: 0}
-        if (data.parent_id) {
+        if (data.parent_id && data.id) {
+            let _data22 = {depart: data.depart, parent_id: data.parent_id}
+            res1 = await db.tb_depart.upsert({where: {id: data.id}, update: _data22, create: _data22})
+            console.log(`更新---res1:`, res1)
+        } else {
             let res1 = await db.tb_depart.upsert({
                     where: {depart_parent_id: {depart: _data.depart, parent_id: _data.parent_id,}},
                     update: _data,
@@ -77,9 +81,6 @@ export class depart {
                 }
             )
             console.log(`添加---res1:`, res1)
-        } else {
-            // res1 = await db.tb_role.upsert({where: {role: data.role}, update: _data, create: _data})
-            // console.log(`111---res1:`, res1)
         }
 
 
@@ -95,10 +96,12 @@ export class depart {
 
 
     @ApiOperation({summary: '删除'})
-    @ApiQuery({name: 'id', default: 999999, type: Number})
-    @Get("/delete")
-    async delete(@Query("id", ParseIntPipe) id: number) {
-        return {code: 200, msg: '成功/delete', result: 111};
+    @Post("/delete")
+    async delete(@Body() data: DTO_depart) {
+        console.log(`delete---data:`, data)
+        const one = await db.tb_depart.deleteMany({where: {id: data.id}})
+        console.log(`delete---one:`, one)
+        return {code: 200, msg: '成功/delete', result: one};
     }
 
 

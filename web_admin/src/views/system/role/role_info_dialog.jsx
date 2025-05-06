@@ -29,11 +29,6 @@ function role_info_dialog(props, ctx) {
   })
 
 
-
-
-
-
-
   async function find_role_menu() {
     // if (!check_form()) return
     let config = { method: 'get', url: `/role/find_role_menu`, params: form }
@@ -46,9 +41,6 @@ function role_info_dialog(props, ctx) {
       console.log('tree   :', tree)
     }
   }
-
-
-
 
 
   return () => {

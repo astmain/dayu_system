@@ -10,6 +10,7 @@ function depart_add_dialog(props, ctx) {
   let data = $ref({
     show: false,
     arg: {},
+    that_this: () => 1,
     form: {
       depart: "",
       parent_id: 0,
@@ -22,13 +23,13 @@ function depart_add_dialog(props, ctx) {
 
   });
   ctx.expose({
-    open: async ({ item, that, arg }) => {
-      console.log("open---item:", item);
+    open: async ({ state, that, arg }) => {
+      console.log("open---state:", state);
       console.log("open---that:", that);
       console.log("open---arg:", arg);
       data.show = true
       data.arg = arg
-
+      data.that_this = that
       await depart_opt()
     },
   });
@@ -53,13 +54,7 @@ function depart_add_dialog(props, ctx) {
 
   async function submit() {
     if (!check_form()) return
-
-
-
-
-
     console.log('submit---:', JSON.parse(JSON.stringify(data.form)))
-
     let form_data = {
       depart: data.form.depart,
       parent_id: data.form.opt_val.at(-1)
@@ -68,6 +63,8 @@ function depart_add_dialog(props, ctx) {
     console.log('submit---config:', config)
     let res = await axios_api(config)
     console.log('depart_opt---res.result:', res.result)
+    res.code == 200 && await data.that_this.find_list_depart()
+    data.show = false
   }
 
 
@@ -78,7 +75,9 @@ function depart_add_dialog(props, ctx) {
         {/* <ElForm v-model={data.form} label-width="60px" label-position="left" inline={true}> */}
         <ElForm v-model={data.form} inline={true}>
           <ElFormItem label="父级">
-            <ElCascader style={{ width: "300px" }} v-model={data.form.opt_val} options={data.form.opt_list}></ElCascader>
+            <ElCascader style={{ width: "300px" }} v-model={data.form.opt_val} options={data.form.opt_list}
+              props={{ checkStrictly: true }}
+            ></ElCascader>
           </ElFormItem>
           <ElFormItem label="部门">
             <ElInput v-model={data.form.depart} />
@@ -93,6 +92,6 @@ function depart_add_dialog(props, ctx) {
   };
 }
 
-export default function open({ item, that, arg }) {
-  vue_open({ item, that, arg, callback: depart_add_dialog })
+export default function open({ state, that, arg }) {
+  vue_open({ state, that, arg, callback: depart_add_dialog })
 }
