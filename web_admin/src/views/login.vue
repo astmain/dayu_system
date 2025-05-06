@@ -8,15 +8,15 @@
 
 
       <el-form :model="loginForm" :rules="rules" ref="loginFormRef" @submit.prevent="handleLogin">
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="请输入账号">
-            <template #prepend>账号</template>
+        <el-form-item prop="tel">
+          <el-input v-model="loginForm.tel" placeholder="请输入-手机">
+            <template #prepend>手机</template>
           </el-input>
         </el-form-item>
 
 
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" show-password>
+          <el-input v-model="loginForm.password" type="password" placeholder="请输入-密码" show-password>
             <template #prepend>密码</template>
           </el-input>
         </el-form-item>
@@ -46,17 +46,17 @@ export default {
     return {
       loading: false,
       loginForm: {
-        username: 'admin',
+        tel: '15160315110',
         password: '123456'
       },
       rules: {
-        username: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
-          { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+        tel: [
+          { required: true, message: '请输入-手机', trigger: 'blur' },
+          { min: 3, max: 20, message: '手机-长度在 3 到 20 个字符', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+          { required: true, message: '请输入-密码', trigger: 'blur' },
+          { min: 3, max: 20, message: '密码-长度在 3 到 20 个字符', trigger: 'blur' }
         ]
       }
     }
@@ -86,24 +86,7 @@ export default {
 
 
 
-    // async handleLogin() {
-    //   try {
-    //     await this.$refs.loginFormRef.validate()
-    //     this.loading = true
 
-    //     // 这里添加登录逻辑
-    //     if (this.loginForm.username === 'admin' && this.loginForm.password === '123456') {
-    //       localStorage.setItem('token', 'true')
-    //       this.$router.push('/home')
-    //     } else {
-    //       this.$message.error('用户名或密码错误')
-    //     }
-    //   } catch (error) {
-    //     console.error('表单验证失败:', error)
-    //   } finally {
-    //     this.loading = false
-    //   }
-    // }
   }
 }
 </script>

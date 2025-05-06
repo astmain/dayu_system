@@ -41,13 +41,23 @@ export class depart {
     }
 
 
-    @ApiOperation({summary: '得到列表'})
+    @ApiOperation({summary: '得到列表--准备弃用'})
     @Post("/find_list")
     async find_list(@Body() data: DTO_depart) {
         console.log(`111---data:`, data)
         let departs = await db.tb_depart.findMany({where: {depart: {contains: data.depart}}})
         console.log(`333---departs:`, departs)
-        return {code: 200, msg: '成功/find_list', result: {departs}};
+        let departs_tree = util.build_departs_tree(departs)
+        return {code: 200, msg: '成功/find_list', result: {departs, departs_tree}};
+    }
+
+
+    @ApiOperation({summary: '部门树状态结构'})
+    @Post("/build_departs_tree")
+    async build_departs_tree() {
+        let departs = await db.tb_depart.findMany()
+        let departs_tree = util.build_departs_tree(departs)
+        return {code: 200, msg: '成功/build_departs_tree', result: {departs_tree}};
     }
 
 

@@ -1,11 +1,12 @@
 
-import { defineComponent, createVNode, reactive, render, ref } from "vue";
+import { defineComponent, createVNode, reactive, render, ref, onMounted } from "vue";
 import { ElButton, ElInput, ElForm, ElMessage, ElFormItem } from "element-plus";
 import { ElTree } from "element-plus";
 import { ElDrawer, ElDialog } from "element-plus";
 import { ElCheckboxGroup, ElCheckbox } from "element-plus";
 import { ElSelect, ElOption } from "element-plus";
 import { ElCascader } from "element-plus";
+
 
 let show = $ref(false)
 const user_add_dialog = defineComponent({
@@ -21,7 +22,25 @@ const user_add_dialog = defineComponent({
     let form = $ref({
       tel: props.state.tel,
       username: props.state.username,
+      depart_id: 0,
+      opt_val: [],
+      opt_list: []
     })
+
+    let build_departs_tree = BUS.api.tb_depart.build_departs_tree()
+    // console.log('build_departs_tree---:', build_departs_tree)
+
+
+    const validateArray = (rule, value, callback) => {
+      if (!Array.isArray(value)) {
+        callback(new Error('必须为数组'));
+      } else if (value.length < 1) {
+        callback(new Error('数组长度必须大于等于 1'));
+      } else {
+        callback();
+      }
+    };
+
 
     let rules = {
       tel: [
@@ -31,17 +50,30 @@ const user_add_dialog = defineComponent({
       username: [
         { required: true, message: '请输入-姓名', trigger: 'blur' },
         { min: 3, max: 20, message: '姓名-长度在 1 到 10个字符之间', trigger: 'blur' }
+      ],
+      opt_val: [
+        { validator: validateArray, trigger: 'change' }
       ]
     }
 
 
 
+    setTimeout(async () => {
+      form.opt_list = await BUS.api.tb_depart.build_departs_tree()
+      console.log('form.opt_list---:', form.opt_list)
+    })
+
+
+
+
 
     async function submit() {
+      // console.log('form---:', form)
+      // return
       ElForm_ref.value.validate(async (valid) => {
         if (valid) {
           console.log('submit---form:', form)
-          var config = { method: 'post', url: '/user/add', data: form }
+          var config = { method: 'post', url: '/user/add', data: { ...form, depart_id: form.opt_val.at(-1) } }
           console.log('submit---config:', config)
           let res = await axios_api(config)
           console.log('depart_opt---res.result:', res.result)
@@ -52,7 +84,6 @@ const user_add_dialog = defineComponent({
           return false
         }
       })
-
     }
 
 
@@ -61,6 +92,14 @@ const user_add_dialog = defineComponent({
 
       <ElDialog v-model={show} title={props.title} width="500px" draggable>
         <ElForm ref={ElForm_ref} model={form} rules={rules}>
+          <ElFormItem label="部门" prop='opt_val'>
+            <ElCascader style={{ width: "300px" }} v-model={form.opt_val} options={form.opt_list}
+              props={{ checkStrictly: true }}
+            ></ElCascader>
+          </ElFormItem>
+
+
+
           <ElFormItem label="电话" prop='tel'>
             <ElInput v-model={form.tel} />
           </ElFormItem>

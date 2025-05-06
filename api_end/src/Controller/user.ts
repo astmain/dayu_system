@@ -26,7 +26,8 @@ export class user {
     @Post("/add")
     async add(@Body() data: DTO_user) {
         console.log(`add---data:`, data)
-        let one = db.tb_user.create({data})
+        let one =await   db.tb_user.create({data})
+        console.log(`add---one:`, one)
         return {code: 200, msg: '成功/add', result: {one}};
     }
 

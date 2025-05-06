@@ -1,7 +1,7 @@
 import {IsArray, IsNotEmpty, IsNumber, IsBoolean, IsOptional, IsString} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 
-export class DTO_user {
+export class DTO_user_add {
     @ApiProperty({description: 'id', default: 0, type: Number})
     @IsOptional()
     @IsNumber()
@@ -10,13 +10,13 @@ export class DTO_user {
     @ApiProperty({description: '电话', default: '123456789123', type: String})
     @IsNotEmpty()
     @IsString()
-    tel: string="123456789123";
+    tel: string = "123456789123";
 
 
     @ApiProperty({description: '密码', default: '123456', type: String})
     @IsOptional()
     @IsString()
-    password: string='123456';
+    password: string = '123456';
 
     @ApiProperty({description: '姓名', default: 'test1', type: String})
     @IsOptional()
@@ -71,6 +71,14 @@ export class DTO_user {
     @IsOptional()
     @IsBoolean()
     is_del: boolean = false;
+
+
+// 非数据表字段===========================
+
+    // @ApiProperty({description: '逻辑删除', default: true, type: Boolean})
+    // @IsOptional()
+    // @IsBoolean()
+    // is_del: boolean = false;
 
 
 }
