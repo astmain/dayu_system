@@ -64,27 +64,32 @@ export default {
 
       menu_config: {
         opt: [{ title: '编辑', kind: 'edit' }, { title: '新增', kind: 'add' }, { title: '删除', kind: 'delete' },],
-        opt_click: (item, curr_data) => {
+        opt_click: async (item, curr_data) => {
           // console.log('item', item)
           // console.log('curr_data', curr_data)
-          if (kind == 'depart_add') require('./depart_add_dialog.jsx')({ item: item, that: this, arg: { kind: "depart_add", title: "部门-添加" } })
+          if (item.kind == 'add') require('./depart_add_dialog.jsx')({ state: curr_data, that: this, arg: { kind: "depart_add", title: "部门-添加" } })
+          if (item.kind == 'edit') {
+            // let aaa = require('./depart_edit_dialog.jsx')
+            // console.log('aaa:', aaa)
 
 
+            require('./depart_edit_dialog.jsx')({ title: "部门-编辑", state: curr_data, item, that: this, })
+          }
+          if (item.kind == 'delete') require('./depart_delete_dialog.jsx')({ state: curr_data, that: this, arg: { kind: "delete", title: "部门-删除" } })
         }
       },
-
 
       tree_config: {
         label: "depart",
         menus_chooseed: [],
         data: [{ menu: '111', children: [{ menu: '222' }] }],
         tree_left_click: async (data) => {
-          console.log('tree_left_click---data222:', JSON.parse(JSON.stringify(data)))
+          // console.log('tree_left_click---data222:', JSON.parse(JSON.stringify(data)))
           this.form.depart_id = data.id
           let config = { method: 'post', url: '/depart/find_info', data: this.form }
-          console.log('tree_click---config:', JSON.parse(JSON.stringify(config)))
+          // console.log('tree_click---config:', JSON.parse(JSON.stringify(config)))
           let res = await axios_api(config)
-          console.log('tree_click---res:', res)
+          // console.log('tree_click---res:', res)
           this.users = res.result.users
         },
       }

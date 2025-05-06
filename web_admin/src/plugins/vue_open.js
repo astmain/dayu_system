@@ -12,7 +12,7 @@ function vue_defineComponent(callback) {
 
 
 
-function vue_open({ ui_id = 'vue_open', item, that, callback, arg, }) {
+function vue_open({ ui_id = 'vue_open', state, that, callback, arg, }) {
     // 删除旧的vn
     document.querySelector(`.${ui_id}`) ? document.querySelector(`.${ui_id}`).remove() : 0
     // 创建新的虚拟dom
@@ -20,8 +20,8 @@ function vue_open({ ui_id = 'vue_open', item, that, callback, arg, }) {
     const element_new = document.createElement('div')
     element_new.id = ui_id
     document.body.appendChild((render(v_node, element_new), element_new))
-    // console.log('111item:', item)
-    v_node.component.exposed.open({ item, that, arg })
+    // 暴露方法
+    v_node.component.exposed.open({ state, that, arg })
 }
 
 function make(app) {

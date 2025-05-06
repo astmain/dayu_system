@@ -69,11 +69,7 @@ export class depart {
         console.log(`save---data:`, data)
         let _data = {depart: data.depart, parent_id: data.parent_id}
         let res1 = {id: 0}
-        if (data.parent_id && data.id) {
-            let _data22 = {depart: data.depart, parent_id: data.parent_id}
-            res1 = await db.tb_depart.upsert({where: {id: data.id}, update: _data22, create: _data22})
-            console.log(`更新---res1:`, res1)
-        } else {
+        if (data.parent_id && !data.id) {
             let res1 = await db.tb_depart.upsert({
                     where: {depart_parent_id: {depart: _data.depart, parent_id: _data.parent_id,}},
                     update: _data,
@@ -81,6 +77,10 @@ export class depart {
                 }
             )
             console.log(`添加---res1:`, res1)
+        } else {
+            let _data22 = {depart: data.depart, parent_id: data.parent_id}
+            res1 = await db.tb_depart.upsert({where: {id: data.id}, update: _data22, create: _data22})
+            console.log(`更新---res1:`, res1)
         }
 
 

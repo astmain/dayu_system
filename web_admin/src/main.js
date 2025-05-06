@@ -21,7 +21,7 @@ require('./plugins/VueSimpleContextMenu')(app)
 require('./plugins/dom_open.js')(app)
 require('./plugins/dom_open_data.js')(app)
 require('./plugins/vue_open.js')(app)
-
+require('./plugins/vue_dialog.js')(app)
 
 
 
