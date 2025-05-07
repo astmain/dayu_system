@@ -1,4 +1,4 @@
-import {Controller, Get, ParseIntPipe, Query, Req, UseFilters} from '@nestjs/common';
+import {Controller, Get, ParseIntPipe, Post, Query, Req, UseFilters} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiQuery, ApiTags} from '@nestjs/swagger';
 
 import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
@@ -80,6 +80,16 @@ export class menu {
         console.log(`delete---one:`, one)
         console.log(`delete---one_child:`, one_child)
         return {code: 200, msg: '成功/delete', result: one};
+    }
+
+    @ApiOperation({summary: '得到_菜单树'})
+    @ApiQuery({name: 'menu', required: false, type: String, default: "首页", description: '菜单名称'})
+    @Get("/find_menus_tree")
+    async find_menus_tree(@Query("menu",) menu: string = "") {
+        console.log(`111---find_menus_tree:`, menu)
+        let tb_menu = await db.tb_menu.findMany({where: {AND: [{menu: {contains: menu}},]}})
+        const menus_tree = util.menu_get_menus_tree({menus: tb_menu})
+        return {code: 200, msg: '成功/find_menus_tree', result: {menus_tree}};
     }
 
 

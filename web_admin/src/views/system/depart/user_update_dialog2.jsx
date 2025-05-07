@@ -91,6 +91,20 @@ const user_add_dialog = defineComponent({
     }
 
 
+    let ElTree_ref = ref(null)
+    let tree = $ref({
+      data: [],
+      props: {
+        label: 'name',
+        children: 'children'
+      }
+    })
+
+    setTimeout(async () => {
+      let res = await BUS.api.tb_menu.find_list({ menu: "depart" })
+      console.log('tb_menu---find_list---:', res)
+      tree.data = res.result.departs_tree
+    }, 1000)
 
     return () => (
 

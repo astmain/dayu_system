@@ -12,6 +12,8 @@ import {DTO_role} from "../DTO/DTO_role";
 import DTO from "../DTO/DTO";
 import get_menus_flat_by_role_id from "../util/make_menus_flat_by_role_id";
 import {DTO_depart} from "../DTO/DTO_depart";
+import {QQ} from "../util/QQ";
+import {Qform} from "../util/Qform";
 
 let db = new PrismaClient()
 
@@ -115,6 +117,22 @@ export class depart {
     }
 
 
+    @ApiOperation({summary: '得到_部门树'})
+    @ApiQuery({name: 'id', required: false, type: Number, default: 0, description: '部门id'})
+    @ApiQuery({name: 'depart', required: false, type: String, default: "", description: '名称id'})
+    @Get("/find_departs_tree")
+    async find_departs_tree(
+        @Qform([
+            {name: 'id', type: 'int', required: true},
+            {name: 'name', type: 'string', required: false}
+        ]) form) {
+        console.log(`111---find_menus_tree:`, form, typeof form)
+        let departs = await db.tb_depart.findMany()
+        let departs_tree = util.build_departs_tree(departs)
+        return {code: 200, msg: '成功/find_menus_tree', result: {departs_tree}};
+    }
+
+
 }
 
 
@@ -147,25 +165,6 @@ function build_depart_tree(departments) {
             }
         }
     });
-
-    return tree;
-}
-
-
-function build_depart_tree_by_id(departments, parentId) {
-    const tree: any = [];
-
-    // 找到所有直接子部门
-    const children = departments.filter(dept => dept.parent_id === parentId);
-
-    // 递归处理每个子部门
-    for (const child of children) {
-        const node = {
-            ...child,
-            children: build_depart_tree_by_id(departments, child.id)
-        };
-        tree.push(node);
-    }
 
     return tree;
 }
