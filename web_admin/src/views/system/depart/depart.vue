@@ -102,7 +102,10 @@ export default {
         require('./user_add_dialog.jsx')({ state: { tel: "", username: "" }, that: this, title: "用户-新增" })
       }
       if (kind === "user_update") {
-        require('./user_update_dialog.jsx')({ state: { tel: item.tel, username: item.username, id: item.id, depart_id: BUS_depart.departs_id }, that: this, title: "用户-编辑" })
+        // require('./user_update_dialog.jsx')({ state: { tel: item.tel, username: item.username, id: item.id, depart_id: BUS_depart.departs_id }, that: this, title: "用户-编辑" })
+        require('./user_update_dialog2.jsx')({ state: { tel: item.tel, username: item.username, id: item.id, depart_id: BUS_depart.departs_id }, that: this, title: "用户-编辑" })
+    
+    
       }
 
       if (kind === "user_delete") {

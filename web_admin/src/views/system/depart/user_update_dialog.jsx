@@ -77,11 +77,7 @@ const user_add_dialog = defineComponent({
       ElForm_ref.value.validate(async (valid) => {
         if (valid) {
           console.log('submit---form:', form)
-
-
           let  depart_ids = utils.arr_last_element(form.opt_val)
-       debugger
-
           let res = await BUS.api.tb_user.update({ id: props.state.id, tel: form.tel, username: form.username, depart_ids:depart_ids })
           console.log('depart_opt---res.result:', res.result)
           res.code == 200 && await props.that.find_list_depart()

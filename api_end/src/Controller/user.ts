@@ -54,7 +54,7 @@ export class user {
         const one1 = await db.tb_user.update({where: {id: data.id}, data: data1})
 
         let depart_ids: any = data.depart_ids
-        await  db.depart_user.deleteMany({where: {user_id: one1.id}})
+        await  db.depart_user.deleteMany({where: {user_id: one1.id}}) //todo 暴力删除数据,然后再更新数据
         for (let i = 0; i < depart_ids.length; i++) {
             let depart_id = depart_ids[i]
             console.log(`111---depart_id:`, depart_id)
