@@ -10,9 +10,10 @@ import {PrismaClient} from "@prisma/client";
 import util from "../util/index";
 import {DTO_role} from "../Dto/DTO_role";
 import {DTO_user} from "../Dto/DTO_user";
-import Dto from "../Dto/Dto";
+import  * as Dto from "../Dto/Dto";
 import get_menus_flat_by_role_id from "../util/make_menus_flat_by_role_id";
 import {DTO_depart} from "../Dto/DTO_depart";
+import {DTO_user_update} from "../Dto/DTO_user_update";
 
 let db = new PrismaClient()
 
@@ -46,7 +47,7 @@ export class user {
 
     @ApiOperation({summary: '更新用户'})
     @Get("/update")
-    update(@Body() data: DTO_user) {
+    update(@Body() data: DTO_user_update) {
         console.log(`111---data:`, data)
         return {code: 200, msg: '成功/update', result: 111};
     }
