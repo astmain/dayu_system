@@ -6,7 +6,10 @@ import {Dec_public} from "./Dec_public";
 import get_menus_flat_by_role_id from "./make_menus_flat_by_role_id";
 
 import make_menus_flat_by_role from "./make_menus_flat_by_role";
+
+//     树桩结构
 import build_departs_tree from "./build_departs_tree";
+import build_user_depart_opt_val from "./build_user_depart_opt_val";
 
 let util = {
     R: R,
@@ -18,7 +21,8 @@ let util = {
     Dec_public,
 
 //     树桩结构
-    build_departs_tree
+    build_departs_tree,
+    build_user_depart_opt_val,
 }
 
 export default util

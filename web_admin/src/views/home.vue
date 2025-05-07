@@ -1,68 +1,80 @@
 <template>
-  <div>
-    <el-cascader
-      v-model="value"
-      :options="options"
-            :props="{  checkStrictly: true }"
-      clearable
-    ></el-cascader>
-
-    <!-- <el-cascader
-      v-model="value"
-      :options="options"
-      :props="{ multiple: true, checkStrictly: true }"
-      clearable
-      collapse-tags
-      @change="changeLabel"
-    ></el-cascader> -->
-
-  </div>
+  <el-tree-select v-model="value" :data="data"     :default-checked-keys="['2']" :render-after-expand="false" show-checkbox style="width: 240px" />
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      value: [],
-      shareScopeEnd: [],
-      options: [
-      { value: '111', label: '111', children: [{ value: '111-1', label: '111-1', }, { value: '111-2', label: '111-2', },] },
-      { value: '222', label: '222', children: [{ value: '222-1', label: '222-1', }, { value: '222-2', label: '222-2', },] }
-          
-    
-      ]
-    }
+<script lang="ts" setup>
+import { ref } from 'vue'
+
+const value = ref()
+
+const data = [
+  {
+    value: '1',
+    label: 'Level one 1',
+    children: [
+      {
+        value: '1-1',
+        label: 'Level two 1-1',
+        children: [
+          {
+            value: '1-1-1',
+            label: 'Level three 1-1-1',
+          },
+        ],
+      },
+    ],
   },
-  methods: {
-    changeLabel(val) {
-      // 是否与上次的类型相同
-      let changeFlag = false
-      let changeItem = null
-      if (this.shareScopeEnd.length == 0) {
-        this.value = val
-      } else {
-        // 与原数组比对
-        this.value.forEach((item) => {
-          if (item[0] !== this.shareScopeEnd[0][0]) { // 一级标签不同
-            changeFlag = true
-            changeItem = item
-          } else if (item[1] != this.shareScopeEnd[0][1]) { // 一级标签相同但是二级标签不同
-            changeFlag = true
-            changeItem = item
-          } else if ((!item[2] && this.shareScopeEnd[0][2]) || (item[2] && !this.shareScopeEnd[0][2])) {
-            changeFlag = true
-            changeItem = item
-          }
-        })
-      }
-      if (changeFlag) {
-        this.value = []
-        this.value.push(changeItem)
-      }
-      this.shareScopeEnd = this.value
-    }
-  }
-}
+  {
+    value: '2',
+    label: 'Level one 2',
+    children: [
+      {
+        value: '2-1',
+        label: 'Level two 2-1',
+        children: [
+          {
+            value: '2-1-1',
+            label: 'Level three 2-1-1',
+          },
+        ],
+      },
+      {
+        value: '2-2',
+        label: 'Level two 2-2',
+        children: [
+          {
+            value: '2-2-1',
+            label: 'Level three 2-2-1',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: '3',
+    label: 'Level one 3',
+    children: [
+      {
+        value: '3-1',
+        label: 'Level two 3-1',
+        children: [
+          {
+            value: '3-1-1',
+            label: 'Level three 3-1-1',
+          },
+        ],
+      },
+      {
+        value: '3-2',
+        label: 'Level two 3-2',
+        children: [
+          {
+            value: '3-2-1',
+            label: 'Level three 3-2-1',
+          },
+        ],
+      },
+    ],
+  },
+]
 </script>
-
-

@@ -36,12 +36,10 @@ function depart_add_dialog(props, ctx) {
 
 
   async function depart_opt() {
-    var config = { method: 'post', url: '/depart/depart_opt', data: {} }
-    console.log('depart_opt---config:', config)
-    let res = await axios_api(config)
-    console.log('depart_opt---res.result:', res.result)
-    data.form.opt_list = res.result.opt_list
-    data.form.opt_val = res.result.opt_val
+    let { opt_list, opt_val } = await BUS.api.tb_depart.depart_opt()
+    console.log('opt_list, opt_val---:', opt_list, opt_val)
+    data.form.opt_list = opt_list
+    data.form.opt_val = opt_val
   }
 
   function check_form() {

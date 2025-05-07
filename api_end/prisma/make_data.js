@@ -67,6 +67,7 @@ let tb_depart = [
     {id: 2001, depart: "泉州分公司", parent_id: 1},//泉州分公司
     {id: 20011, depart: "财务部", parent_id: 2001},//财务部
     {id: 20012, depart: "业务部", parent_id: 2001},//业务部
+
     //
     {id: 2002, depart: "德化分公司", parent_id: 1},//德化分公司
     {id: 20021, depart: "财务部", parent_id: 2002},//财务部

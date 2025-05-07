@@ -16,7 +16,7 @@ export default function user_delete_dialog({ id }) {
     console.log('confirm:', confirm)
     let res = await BUS.api.tb_user.delete({ id: id })
     console.log('res:', res)
-    res.code == 200 && await that.find_list_depart()
+    res.code == 200 && BUS_depart.find_user_info_list()
   }).catch((error) => {
     console.log('catch', error)
   })

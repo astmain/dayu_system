@@ -36,7 +36,7 @@
         <el-table-column label="tel" prop="tel" />
         <el-table-column label="Operations">
           <template #default="scope">
-            <el-button type="primary" @click="open_dialog({ kind: 'edit', item: scope.row })"> 编辑</el-button>
+            <el-button type="primary" @click="user_kind({ kind: 'user_update', item: scope.row })"> 编辑</el-button>
             <el-button type="success" @click="open_dialog({ kind: 'info', item: scope.row })"> 详情</el-button>
             <el-button type="danger" @click="user_kind({ kind: 'user_delete', item: scope.row })"> 删除</el-button>
           </template>
@@ -64,9 +64,10 @@ export default {
         data: [{ menu: '111', children: [{ menu: '222' }] }],
         tree_left_click: async (data) => {
           BUS_depart.departs_id = data.id
-          let { users } = await BUS.api.tb_depart.find_user_info_list({ depart_id: BUS_depart.departs_id })
-          console.log('users:', users)
-          BUS_depart.users = users
+          BUS_depart.find_user_info_list()
+          // let { users } = await BUS.api.tb_depart.find_user_info_list({ depart_id: BUS_depart.departs_id })
+          // console.log('users:', users)
+          // BUS_depart.users = users
         },
       },
 
@@ -97,12 +98,12 @@ export default {
     },//
 
     async user_kind({ kind, item }) {
-      console.log('user_kind---kind:', kind)
+      console.log('user_kind---kind:', kind ,  JSON .parse( JSON.stringify(item)))
       if (kind === "user_add") {
         require('./user_add_dialog.jsx')({ state: { tel: "", username: "" }, that: this, title: "用户-新增" })
       }
       if (kind === "user_update") {
-
+        require('./user_update_dialog.jsx')({ state: { tel: item.tel, username: item.username, id: item.id, depart_id: BUS_depart.departs_id }, that: this, title: "用户-编辑" })
       }
 
       if (kind === "user_delete") {
