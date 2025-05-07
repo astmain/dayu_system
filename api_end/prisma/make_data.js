@@ -86,7 +86,7 @@ let depart_user = [
     {id: 10, depart_id: 3, user_id: 5},//王五
 ]
 
-
+//关联-部门_菜单(权限)
 let depart_menu = [
     {id: 1, depart_id: 2, menu_id: 1, role: "base-技术-admin"},//base-技术-admin
     {id: 2, depart_id: 2, menu_id: 2, role: "base-技术-admin"},
