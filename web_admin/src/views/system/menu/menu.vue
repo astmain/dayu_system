@@ -52,7 +52,7 @@ export default {
     },//
 
     async find_list() {
-      let config = { method: 'get', url: '/menu/find_list', params: { menu: this.form.menu } }
+      let config = { method: 'post', url: '/menu/find_list', data: { menu: this.form.menu } }
       let res = await axios_api(config)
       console.log('res      :', res)
       this.tree.data = res.result.menus_tree

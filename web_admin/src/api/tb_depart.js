@@ -21,7 +21,7 @@ let tb_depart = {
 
     find_user_info_list: async ({ depart_id }) => {
         const res = await axios_api({ method: "post", url: "/depart/find_user_info_list", data: { depart_id: depart_id } })
-        console.log('res---:', res)
+        console.log('find_user_info_list---res:', res)
         return { users: res.result.users }
     },
 
