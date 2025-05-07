@@ -47,12 +47,10 @@ export class user {
 
 
     @ApiOperation({summary: '更新用户'})
-    @Get("/update")
-    update(@Body() data: DTO_user_update) {
+    @Post("/update")
+    async update(@Body() data) {
         console.log(`111---data:`, data)
-
-        // const one = await db.tb_user.update({where: {id: data}})
-
+        const one = await db.tb_user.update({where: {id: 1} })
         return {code: 200, msg: '成功/update', result: 111};
     }
 

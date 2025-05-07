@@ -20,7 +20,7 @@ datasource db {
 }
 
 model tb_user {
-  id       Int    @id @default(autoincrement())
+  id       Int    @id @unique @default(autoincrement())
   tel      String @unique
   password String @default("123456")
   username String @default("")
