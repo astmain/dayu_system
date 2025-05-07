@@ -1,19 +1,11 @@
-arr = [
-    [
-        1,
-        2
-    ],
-    [
-        1,
-        3
-    ],
-    [
-        1,
-        2,
-        22,
-        [111,222]
-    ]
-]
+arr =  [
+    [ 1, 2 ],
+    [ 3 ],
+    [ 2001, 1, 20011 ],
+    [ 2001, 1, 20012 ],
+    [ 2002, 1, 20021 ],
+    [ 2002, 1, 20022 ]
+  ]
 
 //遍历数组  得到每个数组中的最后一个元素
 const lastElements = arr.map(subArray => {
@@ -30,10 +22,10 @@ function get_arr_last_element(arr){
         return Array.isArray(lastItem) ? lastItem[lastItem.length - 1] : lastItem;
     });
 }
-get_last_element(arr)
 
 
-console.log(get_last_element(arr))
+
+console.log(get_arr_last_element(arr))
 
 
 

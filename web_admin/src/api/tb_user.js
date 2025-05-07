@@ -30,8 +30,7 @@ let tb_user = {
     find_user_info_depart:async ({id})=>{
         let config = { method: "post", url: "/user/find_user_info_depart", data: { id } }
         const res = await axios_api(config)
-        console.log('res---:', res)
-        res.code === 200 ? ElMessage.success({ message: `添加成功`, duration: 3 * 1000, showClose: true }) : 0
+        console.log('find_user_info_depart---res:', res)
         let {opt_val,opt_list} =res.result
         return  {opt_val,opt_list}
     }

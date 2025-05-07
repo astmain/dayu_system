@@ -48,10 +48,30 @@ export class user {
 
     @ApiOperation({summary: '更新用户'})
     @Post("/update")
-    async update(@Body() data) {
+    async update(@Body() data: DTO_user_update) {
         console.log(`111---data:`, data)
-        const one = await db.tb_user.update({where: {id: 1} })
-        return {code: 200, msg: '成功/update', result: 111};
+        let data1 = {id: data.id, tel: data.tel, username: data.username,}
+        const one1 = await db.tb_user.update({where: {id: data.id}, data: data1})
+
+        let depart_ids: any = data.depart_ids
+        await  db.depart_user.deleteMany({where: {user_id: one1.id}})
+        for (let i = 0; i < depart_ids.length; i++) {
+            let depart_id = depart_ids[i]
+            console.log(`111---depart_id:`, depart_id)
+            let data2 = {depart_id, user_id: data.id}
+            let res1 = await db.depart_user.upsert({
+                    where: {depart_id_user_id: {depart_id: data2.depart_id, user_id: data.id,}},
+                    update: data2,
+                    create: data2,
+                }
+            )
+            console.log(`111---upsert:`, res1)
+
+
+        }
+
+
+        return {code: 200, msg: '成功/update', result: {one1}};
     }
 
 
@@ -67,7 +87,8 @@ export class user {
         console.log(`1-2---depart_user:`, depart_user)
 
         //查询部门
-        const tb_depart = await db.tb_depart.findMany()
+        const tb_depart = await db.tb_depart.findMany({orderBy: {parent_id: 'desc'}})
+        // const tb_depart = await db.tb_depart.findMany({orderBy: {parent_id: 'asc'}})
         console.log(`1-3---tb_depart:`, tb_depart)
 
         //遍历得到当前用户的部门关系

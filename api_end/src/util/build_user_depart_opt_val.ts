@@ -12,5 +12,5 @@ export default  function build_user_depart_opt_val(id, data) {
 
     findParents(id);
     result.push(id)
-    return result;
+    return result.sort();
 }

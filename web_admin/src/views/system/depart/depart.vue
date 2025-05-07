@@ -28,7 +28,7 @@
         </li>
         <el-button type='primary' @click='find_list()'>搜索</el-button>
         <el-button type='' @click="; (form = { menu: '', path: '' }), find_list()">清空</el-button>
-        <el-button type="primary" @click="user_kind({ kind: 'user_add' })">添加</el-button>
+        <el-button type="primary" @click="user_kind({ kind: 'user_add'  ,item:{}})">添加</el-button>
       </ul>
       <el-table :data="BUS_depart.users" style="width: 100%" size="default" border highlight-current-row>
         <el-table-column label="序号" type="index" width="60px" />
@@ -37,7 +37,6 @@
         <el-table-column label="Operations">
           <template #default="scope">
             <el-button type="primary" @click="user_kind({ kind: 'user_update', item: scope.row })"> 编辑</el-button>
-            <el-button type="success" @click="open_dialog({ kind: 'info', item: scope.row })"> 详情</el-button>
             <el-button type="danger" @click="user_kind({ kind: 'user_delete', item: scope.row })"> 删除</el-button>
           </template>
         </el-table-column>
