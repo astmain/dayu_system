@@ -22,8 +22,8 @@ let db = new PrismaClient()
 export class depart {
     @ApiOperation({summary: '得到数据'})
     @UseFilters(new HttpExceptionFilter())
-    @Post("/find_info")
-    async find_info(@Body() data: DTO_depart) {
+    @Post("/find_user_info_list")
+    async find_user_info_list(@Body() data: DTO_depart) {
         console.log(`data---`, data)
         let depart_childIds = build_depart_childIds_by_id(await db.tb_depart.findMany(), data.depart_id)
         console.log(`111---depart_childIds:`, depart_childIds)

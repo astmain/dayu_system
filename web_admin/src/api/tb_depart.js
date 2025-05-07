@@ -3,9 +3,16 @@ let tb_depart = {
     build_departs_tree: async () => {
         const res = await axios_api({ method: "post", url: "/depart/build_departs_tree" })
         console.log('res---:', res)
-        return res.result.departs_tree
-    }
+        // res.code===200 ? ElMessage.success({ message: `添加成功`, duration: 3 * 1000, showClose: true }):0
+        return { departs_tree: res.result.departs_tree }
+    },
 
+
+    find_user_info_list: async ({ depart_id }) => {
+        const res = await axios_api({ method: "post", url: "/depart/find_user_info_list", data: { depart_id: depart_id } })
+        console.log('res---:', res)
+        return { users: res.result.users }
+    },
 
 }
 

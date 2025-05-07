@@ -34,11 +34,12 @@ export class user {
         return {code: 200, msg: '成功/add ', result: {one1,one2}};
     }
 
-    @Get("/delete")
+    @Post("/delete")
     @ApiOperation({summary: '删除'})
+    @UseFilters(new HttpExceptionFilter())
     async delete(@Body() data: DTO_user) {
         console.log(`delete---data:`, data)
-        const one = await db.tb_depart.delete({where: {id: data.id}})
+        const one = await db.tb_user.delete({where: {id: data.id}})
         return {code: 200, msg: '成功/delete', result: {one}};
     }
 

@@ -12,10 +12,6 @@
         <el-button type='' @click="; (form = { menu: '', path: '' }), find_list()">清空</el-button>
         <el-button type="primary" @click="open_dialog({ kind: 'depart_add', item: {} })">添加</el-button>
       </ul>
-
-      <!-- <el-tree ref="ElTree_ref" :data="tree.data" :show-checkbox="false" node-key="id" :props="tree" default-expand-all
-        @node-click="tree_click" :expand-on-click-node="false" highlight-current /> -->
-
       <com_tree1 :tree_config="tree_config" :menu_config="menu_config"></com_tree1>
 
 
@@ -42,7 +38,7 @@
           <template #default="scope">
             <el-button type="primary" @click="open_dialog({ kind: 'edit', item: scope.row })"> 编辑</el-button>
             <el-button type="success" @click="open_dialog({ kind: 'info', item: scope.row })"> 详情</el-button>
-            <el-button type="danger" @click="open_dialog({ kind: 'delete', item: scope.row })"> 删除</el-button>
+            <el-button type="danger" @click="user_kind({ kind: 'user_delete', item: scope.row })"> 删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,13 +64,7 @@ export default {
           // console.log('item', item)
           // console.log('curr_data', curr_data)
           if (item.kind == 'add') require('./depart_add_dialog.jsx')({ state: curr_data, that: this, arg: { kind: "depart_add", title: "部门-添加" } })
-          if (item.kind == 'edit') {
-            // let aaa = require('./depart_edit_dialog.jsx')
-            // console.log('aaa:', aaa)
-
-
-            require('./depart_edit_dialog.jsx')({ title: "部门-编辑", state: curr_data, item, that: this, })
-          }
+          if (item.kind == 'edit') require('./depart_edit_dialog.jsx')({ title: "部门-编辑", state: curr_data, item, that: this, })
           if (item.kind == 'delete') require('./depart_delete_dialog.jsx')({ state: curr_data, that: this, arg: { kind: "delete", title: "部门-删除" } })
         }
       },
@@ -84,13 +74,9 @@ export default {
         menus_chooseed: [],
         data: [{ menu: '111', children: [{ menu: '222' }] }],
         tree_left_click: async (data) => {
-          // console.log('tree_left_click---data222:', JSON.parse(JSON.stringify(data)))
-          this.form.depart_id = data.id
-          let config = { method: 'post', url: '/depart/find_info', data: this.form }
-          // console.log('tree_click---config:', JSON.parse(JSON.stringify(config)))
-          let res = await axios_api(config)
-          // console.log('tree_click---res:', res)
-          this.users = res.result.users
+          let {users} = await BUS.api.tb_depart.find_user_info_list({ depart_id: data.id })
+          console.log('users:', users)
+          this.users =users
         },
       }
     }
@@ -107,7 +93,7 @@ export default {
       this.tree_config.data = tree_data
     },//
 
-    async user_kind({ kind }) {
+    async user_kind({ kind, item }) {
       console.log('user_kind---kind:', kind)
       if (kind === "user_add") {
         require('./user_add_dialog.jsx')({ state: { tel: "", username: "" }, that: this, title: "用户-新增" })
@@ -117,7 +103,8 @@ export default {
       }
 
       if (kind === "user_delete") {
-
+        console.log('user_kind---item:', item)
+        require('./user_delete_dialog.jsx')({ id: item.id })
       }
 
       if (kind === "user_find_list") {
