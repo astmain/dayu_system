@@ -18,8 +18,8 @@ let tb_user = {
     },
 
 
-    update: async ({ tel, username, depart_id, id }) => {
-        let config = { method: "post", url: "/user/update", data: { tel, username, depart_id, id } }
+    update: async ({ tel, username, opt_val }) => {
+        let config = { method: "post", url: "/user/update", data: { tel, username, opt_val } }
         const res = await axios_api(config)
         console.log('res---:', res)
         res.code === 200 ? ElMessage.success({ message: `添加成功`, duration: 3 * 1000, showClose: true }) : 0

@@ -15,7 +15,7 @@ const menus = [
         ]
     },
 ]
-let  routes = [
+let routes = [
     { path: '/', redirect: '/login' },
     { path: '/login', name: '登陆', component: () => import('@src/views/login.vue') },
     { path: '/:catchAll(.*)', name: 'NotFound', component: () => import('@src/views/login.vue') },
@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
 })
 
 // export default router
-export default {router,menus,routes,menu_list} 
+export default { router, menus, routes, menu_list }
 
 
 

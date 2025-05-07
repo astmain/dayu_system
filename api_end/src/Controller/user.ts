@@ -11,7 +11,7 @@ import util from "../util/index";
 import DTO from "../DTO/DTO";
 import {DTO_role} from "../DTO/DTO_role";
 import {DTO_user} from "../DTO/DTO_user";
-import  * as Dto from "../DTO/DTO";
+import * as Dto from "../DTO/DTO";
 import get_menus_flat_by_role_id from "../util/make_menus_flat_by_role_id";
 import {DTO_depart} from "../DTO/DTO_depart";
 import {DTO_user_update} from "../DTO/DTO_user_update";
@@ -50,6 +50,9 @@ export class user {
     @Get("/update")
     update(@Body() data: DTO_user_update) {
         console.log(`111---data:`, data)
+
+        // const one = await db.tb_user.update({where: {id: data}})
+
         return {code: 200, msg: '成功/update', result: 111};
     }
 
@@ -73,19 +76,15 @@ export class user {
         let opt_val: any = []
         for (let i = 0; i < depart_user.length; i++) {
             let ref = depart_user[i]
-            opt_val.push( util. build_user_depart_opt_val(ref.depart_id, tb_depart))
+            opt_val.push(util.build_user_depart_opt_val(ref.depart_id, tb_depart))
         }
         console.log(`1-4---opt_val:`, opt_val)
 
 
         // 部门树
         let opt_list = util.build_departs_tree(tb_depart)
-        console.log(`2-1---opt_list:`,     opt_list        )
-
-
-
-
-        return {code: 200, msg: '成功/update', result: {opt_val,opt_list}};
+        console.log(`2-1---opt_list:`, opt_list)
+        return {code: 200, msg: '成功/update', result: {opt_val, opt_list}};
     }
 
 
