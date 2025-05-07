@@ -30,7 +30,7 @@
         <el-button type='' @click="; (form = { menu: '', path: '' }), find_list()">清空</el-button>
         <el-button type="primary" @click="user_kind({ kind: 'user_add' })">添加</el-button>
       </ul>
-      <el-table :data="users" style="width: 100%" size="default" border highlight-current-row>
+      <el-table :data="BUS_depart.users" style="width: 100%" size="default" border highlight-current-row>
         <el-table-column label="序号" type="index" width="60px" />
         <el-table-column label="username" prop="username" />
         <el-table-column label="tel" prop="tel" />
@@ -58,6 +58,18 @@ export default {
       form: { depart: "", depart_id: 0 },
       users: [],
 
+      tree_config: {
+        label: "depart",
+        menus_chooseed: [],
+        data: [{ menu: '111', children: [{ menu: '222' }] }],
+        tree_left_click: async (data) => {
+          BUS_depart.departs_id = data.id
+          let { users } = await BUS.api.tb_depart.find_user_info_list({ depart_id: BUS_depart.departs_id })
+          console.log('users:', users)
+          BUS_depart.users = users
+        },
+      },
+
       menu_config: {
         opt: [{ title: '编辑', kind: 'edit' }, { title: '新增', kind: 'add' }, { title: '删除', kind: 'delete' },],
         opt_click: async (item, curr_data) => {
@@ -69,16 +81,7 @@ export default {
         }
       },
 
-      tree_config: {
-        label: "depart",
-        menus_chooseed: [],
-        data: [{ menu: '111', children: [{ menu: '222' }] }],
-        tree_left_click: async (data) => {
-          let {users} = await BUS.api.tb_depart.find_user_info_list({ depart_id: data.id })
-          console.log('users:', users)
-          this.users =users
-        },
-      }
+
     }
   },
 
@@ -123,8 +126,8 @@ export default {
   },////
 
   async mounted() {
-
     await this.find_list_depart()
+    require('./BUS_depart.js')
 
   },////
 
