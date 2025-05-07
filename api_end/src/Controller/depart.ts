@@ -118,18 +118,36 @@ export class depart {
 
 
     @ApiOperation({summary: '得到_部门树'})
-    @ApiQuery({name: 'id', required: false, type: Number, default: 0, description: '部门id'})
-    @ApiQuery({name: 'depart', required: false, type: String, default: "", description: '名称id'})
+    @ApiQuery({name: 'user_id', required: false, type: Number, default: 0, description: '用户id'})
+    @ApiQuery({name: 'depart', required: false, type: String, default: "", description: '部门名称'})
     @Get("/find_departs_tree")
     async find_departs_tree(
         @Qform([
-            {name: 'id', type: 'int', required: false},
-            {name: 'name', type: 'string', required: false}
+            {name: 'user_id', type: 'int', required: false},
+            {name: 'depart', type: 'string', required: false}
         ]) form) {
         console.log(`111---find_menus_tree:`, form, typeof form)
+
+
+        // 部门树====================================================
         let departs = await db.tb_depart.findMany()
         let departs_tree = util.build_departs_tree(departs)
-        return {code: 200, msg: '成功/find_menus_tree', result: {departs_tree}};
+
+
+        // 部门关系选中====================================================
+        const user = await db.tb_user.findMany({where: {id: form.user_id}})
+        console.log(`1-1---user:`, user)
+        // 查询部门关联用户
+        let depart_user = await db.depart_user.findMany({where: {user_id: form.user_id}})
+        let departs_checked = depart_user.map(o => o.depart_id)
+        console.log(`1-2---departs_checked:`, departs_checked)
+
+        //查询部门
+        const tb_depart = await db.tb_depart.findMany({orderBy: {parent_id: 'desc'}})
+        console.log(`1-3---tb_depart:`, tb_depart)
+
+
+        return {code: 200, msg: '成功/find_menus_tree', result: {departs_tree, departs_checked}};
     }
 
 

@@ -26,10 +26,13 @@ let tb_depart = {
     },
 
     // 得到_部门树
-    find_menus_tree: async ({ depart ,id}) => {
-        const res = await axios_api({ method: "get", url: "/depart/find_departs_tree", data: { depart, id } })
+    find_menus_tree: async ({ depart, user_id }) => {
+        let config = { method: "get", url: "/depart/find_departs_tree", params: { depart, user_id } }
+        console.log('find_menus_tree---config:', config)
+        const res = await axios_api(config)
         console.log('find_menus_tree---res:', res)
-        return { departs_tree: res.result.departs_tree }
+        let { departs_tree, departs_checked } = res.result
+        return { departs_tree, departs_checked }
     },
 
 

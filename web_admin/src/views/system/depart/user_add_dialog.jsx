@@ -59,8 +59,7 @@ const user_add_dialog = defineComponent({
 
 
     setTimeout(async () => {
-      let { departs_tree } = await BUS.api.tb_depart.build_departs_tree()
-      form.opt_list = departs_tree
+      form.opt_list = await BUS.api.tb_depart.build_departs_tree()
       console.log('form.opt_list---:', form.opt_list)
     })
 
@@ -74,19 +73,18 @@ const user_add_dialog = defineComponent({
       ElForm_ref.value.validate(async (valid) => {
         if (valid) {
           console.log('submit---form:', form)
-          // let data = {
-          //   tel: form.tel,
-          //   username: form.username,
-          //   depart_id: form.opt_val.at(-1)
-          // }
-          // // var config = { method: 'post', url: '/user/add', data: data }
-          // // console.log('submit---config:', config)
-          // // let res = await axios_api(config)
-
-          let res = await BUS.api.tb_user.add({ tel: form.tel, username: form.username, depart_id: form.opt_val.at(-1) })
+          let data={
+            tel: form.tel,
+            username: form.username,
+            depart_id:  form.opt_val.at(-1)
+          }
+          var config = { method: 'post', url: '/user/add', data: data }
+          console.log('submit---config:', config)
+          let res = await axios_api(config)
           console.log('depart_opt---res.result:', res.result)
           res.code == 200 && await props.that.find_list_depart()
           show = false
+          
         } else {
           ElMessage.error('表单参数错误')
           return false

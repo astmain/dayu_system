@@ -81,3 +81,15 @@ model depart_user {
 
   @@unique([depart_id, user_id])
 }
+
+model depart_menu {
+  id        Int     @id @default(autoincrement())
+  depart_id Int
+  menu_id   Int
+  role      String
+  look      Boolean @default(true)
+  del       Boolean @default(false)
+  add       Boolean @default(false)
+  update    Boolean @default(false)
+  other     String  @default("")
+}

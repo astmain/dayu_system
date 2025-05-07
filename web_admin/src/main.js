@@ -23,7 +23,7 @@ require('./plugins/dom_open_data.js')(app)
 require('./plugins/vue_open.js')(app)
 require('./plugins/vue_dialog.js')(app)
 
-
+require('@src/api/api.js')
 
 
 // 工具方法:构造菜单树

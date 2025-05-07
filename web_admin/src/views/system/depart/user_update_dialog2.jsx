@@ -1,6 +1,6 @@
 
 import { defineComponent, createVNode, reactive, render, ref, onMounted } from "vue";
-import { ElButton, ElInput, ElForm, ElMessage, ElFormItem } from "element-plus";
+import { ElButton, ElInput, ElForm, ElMessage, ElFormItem, ElCard } from "element-plus";
 import { ElTree } from "element-plus";
 import { ElDrawer, ElDialog } from "element-plus";
 import { ElCheckboxGroup, ElCheckbox } from "element-plus";
@@ -56,17 +56,7 @@ const user_add_dialog = defineComponent({
 
 
 
-    setTimeout(async () => {
-      let { opt_val, opt_list } = await BUS.api.tb_user.find_user_info_depart({ id: props.state.id })
-      console.log('opt_val---:', opt_val)
-      console.log('opt_list---:', opt_list)
-      form.opt_val = opt_val
-      form.opt_list = opt_list
-      // await BUS.api.tb_depart.find_user_info_list({ depart_id: props.state.depart_id })
 
-
-
-    })
 
 
 
@@ -92,28 +82,29 @@ const user_add_dialog = defineComponent({
 
 
     let ElTree_ref = ref(null)
-    let tree = $ref({
-      data: [],
-      props: {
-        label: 'name',
-        children: 'children'
-      }
-    })
-
-    const handleNodeClick = (data, node, component)  => {
-      console.log('handleNodeClick---node111111111111111111:', node)
-      // component.setChecked(data, false);
+    let tree_depart = $ref({ data: [], checked: [], props: { label: 'label', children: 'children' } })
+    let tree_menu = $ref({ data: [], checked: [], props: { label: 'name', children: 'children' } })
+    const tree_left_click = async (data, node, component) => {
+      let { menus_tree } = await BUS.api.tb_menu.find_menus_tree({ menu: "" })
+      console.log('tree_left_click---aaa---:', menus_tree)
+      tree_menu.data = menus_tree
     }
 
     setTimeout(async () => {
-      let {departs_tree} = await BUS.api.tb_depart.find_menus_tree({ menu: "depart" })
-      console.log('tb_menu---departs_tree---:', departs_tree)
-      tree.data = departs_tree
-    }, 1000)
+      // 部门树
+      let { departs_tree ,departs_checked} = await api.tb_depart.find_menus_tree({ depart: "", user_id: props.state.id })
+      tree_depart.data = departs_tree
+      tree_depart.checked = departs_checked
+
+      // 部门选中
+      // let { departs_tree } = await BUS.api.tb_depart.find_menus_tree({ menu: "depart" })
+      // tree_depart.data = departs_tree
+
+    }, 100)
 
     return () => (
 
-      <ElDialog v-model={show} title={props.title} width="800px" draggable>
+      <ElDialog v-model={show} title={props.title} width="1000px" draggable>
         <ElForm ref={ElForm_ref} model={form} rules={rules}>
           <ElFormItem label="电话" prop='tel'>
             <ElInput v-model={form.tel} />
@@ -121,20 +112,29 @@ const user_add_dialog = defineComponent({
           <ElFormItem label="姓名" prop='username'>
             <ElInput v-model={form.username} />
           </ElFormItem>
-
-          <ElFormItem label="部门" prop='opt_val'>
-            <ElCascader style={{ width: "300px" }} v-model={form.opt_val} options={form.opt_list}
-              props={{ checkStrictly: false, multiple: true }}
-            ></ElCascader>
-          </ElFormItem>
         </ElForm>
 
-          菜单树
-          <ElTree ref={ElTree_ref} onNodeClick={ handleNodeClick} data={tree.data} show-checkbox node-key="id"
-           check-on-click-node={false}
-           check-on-click-leaf={false}
-          props={tree} default-expand-all expand-on-click-node={false} highlight-current />
-    
+        部门树
+
+        <div style={{ display: 'flex' }}>
+          <ElTree style={{ flex: 1 }} ref={ElTree_ref} onNodeClick={tree_left_click} data={tree_depart.data} show-checkbox node-key="id"
+            check-on-click-node={false}
+            check-on-click-leaf={false}
+            default-checked-keys={tree_depart.checked}
+            props={tree_depart.props} default-expand-all expand-on-click-node={false} highlight-current />
+
+
+
+          <ElCard style={{ flex: 1 }}>
+            <ElTree style={{ flex: 1 }} data={tree_menu.data} show-checkbox node-key="id"
+              check-on-click-node={false}
+              check-on-click-leaf={false}
+              props={tree_menu.props} default-expand-all expand-on-click-node={false} highlight-current />
+
+          </ElCard>
+        </div>
+
+
 
 
         <ElButton type="primary" onclick={async () => { submit() }}  >确定</ElButton>

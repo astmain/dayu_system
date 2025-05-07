@@ -15,6 +15,9 @@ export const Qform = createParamDecorator(
     (fields: FieldConfig[], ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest();
         const result: any = {};
+        let uri = request.route.path
+        let url = request.url
+        console.log(`请求---Qform:`, url)
 
         for (const field of fields) {
             const source = field.source || 'query';
@@ -35,15 +38,18 @@ export const Qform = createParamDecorator(
             }
 
             const valueStr = String(raw).trim();
+            // console.log(`111---222:`,     request.query[field.name]     ,  field,"111",  request.query )
 
             let value: any = valueStr;
             if (field.type === 'int') {
-                console.log(`111---valueStr:`,     valueStr        )
+                // console.log(`111---valueStr:`,     valueStr        )
                 if (!isPureNumberByRegex(valueStr)) throw new BadRequestException(`${field.name} 不是有效的整数--${valueStr}`);
                 value = parseInt(valueStr, 10);
             } else if (field.type === 'float') {
                 if (!isPureNumberByRegex(valueStr)) throw new BadRequestException(`${field.name} 不是有效的整数--${valueStr}`);
                 value = parseFloat(valueStr);
+            } else if (field.type === 'string') {
+                console.log(`111---string---field:`, field)
 
             }
 
