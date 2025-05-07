@@ -34,5 +34,9 @@ nestjs英文文档        https://docs.nestjs.com/
 https://docs.nestjs.cn/9/techniques?id=数据
 https://www.bilibili.com/video/BV1JViRYJEGH?p=21
 
+prisma
+https://prisma.yoga/getting-started
+https://blog.csdn.net/YUELEI118/article/details/143055472
+
 
 

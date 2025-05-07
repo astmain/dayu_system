@@ -1,0 +1,30 @@
+
+import app from '@src/layout/app.js'
+
+// 注册axios拦截器               功能:全局axios,错误响应,取消网络请求 todo
+require('./config_axios_api')({name: 'axios_api', baseURL: 'http://127.0.0.1:3000', debug: false, timeout: 30000})
+
+
+// 注册全局状态store
+let BUS = require('./BUS.js')
+require('./config_pinia')({app: app, name: BUS.name, state: BUS.state, persist: BUS.persist})
+
+// 注册全局组件
+
+
+
+// 注册多语言配置
+
+
+//插件
+require('./plugins/VueSimpleContextMenu')(app)
+require('./plugins/dom_open.js')(app)
+require('./plugins/dom_open_data.js')(app)
+
+
+app.mount('#app')
+
+
+
+
+

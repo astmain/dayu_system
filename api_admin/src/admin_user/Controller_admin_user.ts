@@ -24,7 +24,7 @@ export default class Controller_admin_user {
     @Get("/get_user_by_token")
     async get_user_by_token(@Req() request) {
         console.log(`get_user_by_token---request["user"]:`, request["user"])
-        return util.R.ok({msg: "成功", data: request["user"]})
+        return util.R.ok({msg: "成功", result: request["user"]})
     }
 
 
