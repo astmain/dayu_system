@@ -17,7 +17,7 @@ export const Qform = createParamDecorator(
         const result: any = {};
         let uri = request.route.path
         let url = request.url
-        console.log(`请求---Qform:`, url)
+        console.log(`请求---url---Qform:`, url)
 
         for (const field of fields) {
             const source = field.source || 'query';

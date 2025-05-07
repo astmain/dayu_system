@@ -88,24 +88,38 @@ let depart_user = [
 
 //关联-部门_菜单(权限)
 let depart_menu = [
-    {id: 1, depart_id: 2, menu_id: 1, role: "base-技术-admin"},//base-技术-admin
-    {id: 2, depart_id: 2, menu_id: 2, role: "base-技术-admin"},
-    {id: 3, depart_id: 2, menu_id: 3, role: "base-技术-admin"},
-    {id: 4, depart_id: 2, menu_id: 4, role: "base-技术-admin"},
-    {id: 5, depart_id: 2, menu_id: 5, role: "base-技术-admin"},
-    {id: 6, depart_id: 2, menu_id: 6, role: "base-技术-admin"},
-    {id: 7, depart_id: 2, menu_id: 7, role: "base-技术-admin"},
-    {id: 8, depart_id: 2, menu_id: 8, role: "base-技术-admin"},
-    {id: 9, depart_id: 20011, menu_id: 1, role: "base-泉州-财务"},//base-泉州-财务
-    {id: 10, depart_id: 20011, menu_id: 2, role: "base-泉州-财务"},
-    {id: 11, depart_id: 20011, menu_id: 3, role: "base-base-泉州-财务"},
-    {id: 12, depart_id: 20012, menu_id: 1, role: "base-泉州-业务"},//base-泉州-业务
-    {id: 13, depart_id: 20012, menu_id: 2, role: "base-泉州-业务"},
-    {id: 14, depart_id: 20021, menu_id: 1, role: "base-德化-财务"},//base-德化-财务
-    {id: 15, depart_id: 20021, menu_id: 2, role: "base-德化-财务"},
-    {id: 16, depart_id: 20021, menu_id: 3, role: "base-德化-财务"},
-    {id: 17, depart_id: 20022, menu_id: 1, role: "base-德化-业务"},//base-德化-业务
-    {id: 18, depart_id: 20022, menu_id: 2, role: "base-德化-业务"},//base-德化-业务
+    // high
+    {id: 1, depart_id: 2, menu_id: 1, role: "high-技术-admin"},//base-技术-admin
+    {id: 2, depart_id: 2, menu_id: 2, role: "high-技术-admin"},
+    {id: 3, depart_id: 2, menu_id: 3, role: "high-技术-admin"},
+    {id: 4, depart_id: 2, menu_id: 4, role: "high-技术-admin"},
+    {id: 5, depart_id: 2, menu_id: 5, role: "high-技术-admin"},
+    {id: 6, depart_id: 2, menu_id: 6, role: "high-技术-admin"},
+    {id: 7, depart_id: 2, menu_id: 7, role: "high-技术-admin"},
+    {id: 8, depart_id: 2, menu_id: 8, role: "high-技术-admin"},
+    {id: 9, depart_id: 20011, menu_id: 1, role: "high-泉州-财务"},//base-泉州-财务
+    {id: 10, depart_id: 20011, menu_id: 2, role: "high-泉州-财务"},
+    {id: 11, depart_id: 20011, menu_id: 3, role: "high-泉州-财务"},
+    {id: 12, depart_id: 20012, menu_id: 1, role: "high-泉州-业务"},//base-泉州-业务
+    {id: 13, depart_id: 20012, menu_id: 2, role: "high-泉州-业务"},
+    {id: 14, depart_id: 20021, menu_id: 1, role: "high-德化-财务"},//base-德化-财务
+    {id: 15, depart_id: 20021, menu_id: 2, role: "high-德化-财务"},
+    {id: 16, depart_id: 20021, menu_id: 3, role: "high-德化-财务"},
+    {id: 17, depart_id: 20022, menu_id: 1, role: "high-德化-业务"},//base-德化-业务
+    {id: 18, depart_id: 20022, menu_id: 2, role: "high-德化-业务"},//base-德化-业务
+    // low
+    {id: 19, depart_id: 20011, menu_id: 1, del: false, add: false, update: false, role: "low-泉州-财务"},//base-泉州-财务
+    {id: 20, depart_id: 20011, menu_id: 2, del: false, add: false, update: false, role: "low-泉州-财务"},
+    {id: 21, depart_id: 20011, menu_id: 3, del: false, add: false, update: false, role: "low-泉州-财务"},
+    {id: 22, depart_id: 20012, menu_id: 1, del: false, add: false, update: false, role: "low-泉州-业务"},//base-泉州-业务
+    {id: 23, depart_id: 20012, menu_id: 2, del: false, add: false, update: false, role: "low-泉州-业务"},
+    {id: 24, depart_id: 20021, menu_id: 1, del: false, add: false, update: false, role: "low-德化-财务"},//base-德化-财务
+    {id: 25, depart_id: 20021, menu_id: 2, del: false, add: false, update: false, role: "low-德化-财务"},
+    {id: 26, depart_id: 20021, menu_id: 3, del: false, add: false, update: false, role: "low-德化-财务"},
+    {id: 27, depart_id: 20022, menu_id: 1, del: false, add: false, update: false, role: "low-德化-业务"},//base-德化-业务
+    {id: 28, depart_id: 20022, menu_id: 2, del: false, add: false, update: false, role: "low-德化-业务"},//base-德化-业务
+
+
 ]
 
 // id        Int     @id @default(autoincrement())
@@ -183,8 +197,14 @@ dao = {
 
     depart_menu: async function () {
         await db.depart_menu.deleteMany();
-        let result = await db.depart_menu.createMany({data: depart_menu})
-        console.log(`depart_user---成功:创建数据${result.count}条记录`);
+        let num=0
+        for (let i = 0; i < depart_menu.length; i++) {
+        num+=1
+            let ele = depart_menu[i]
+         ele['id']=num
+            let result = await db.depart_menu.create({data: ele})
+        }
+        console.log(`depart_user---成功:创建数据${num}条记录`);
     },
 
 }

@@ -26,8 +26,8 @@ let tb_depart = {
     },
 
     // 得到_部门树
-    find_menus_tree: async ({ depart, user_id }) => {
-        let config = { method: "get", url: "/depart/find_departs_tree", params: { depart, user_id } }
+    find_menus_tree: async ({ depart_id, user_id }) => {
+        let config = { method: "get", url: "/depart/find_departs_tree", params: { depart_id, user_id } }
         console.log('find_menus_tree---config:', config)
         const res = await axios_api(config)
         console.log('find_menus_tree---res:', res)
@@ -35,7 +35,15 @@ let tb_depart = {
         return { departs_tree, departs_checked }
     },
 
+    // 得到_部门-菜单-按钮
+    find_depart_menu_btn: async ({depart_id}) => {
+        let config = { method: "get", url: "/depart/find_depart_menu_btn", params: { depart_id } }
+        const res = await axios_api(config)
+        console.log('find_depart_menu_btn---res:', res)
+        let { depart_menu ,depart_menu_btns} = res.result
+        return { depart_menu,  depart_menu_btns}
 
+    }
 
 
 

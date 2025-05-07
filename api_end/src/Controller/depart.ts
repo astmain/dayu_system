@@ -119,12 +119,12 @@ export class depart {
 
     @ApiOperation({summary: '得到_部门树'})
     @ApiQuery({name: 'user_id', required: false, type: Number, default: 0, description: '用户id'})
-    @ApiQuery({name: 'depart', required: false, type: String, default: "", description: '部门名称'})
+    @ApiQuery({name: 'depart_id', required: false, type: Number, default: 0, description: '部门id'})
     @Get("/find_departs_tree")
     async find_departs_tree(
         @Qform([
             {name: 'user_id', type: 'int', required: false},
-            {name: 'depart', type: 'string', required: false}
+            {name: 'depart_id', type: 'int', required: false}
         ]) form) {
         console.log(`111---find_menus_tree:`, form, typeof form)
 
@@ -145,9 +145,26 @@ export class depart {
         //查询部门
         const tb_depart = await db.tb_depart.findMany({orderBy: {parent_id: 'desc'}})
         console.log(`1-3---tb_depart:`, tb_depart)
-
-
         return {code: 200, msg: '成功/find_menus_tree', result: {departs_tree, departs_checked}};
+    }
+
+    //
+    @ApiOperation({summary: '得到_部门-菜单-按钮'})
+    @ApiQuery({name: 'depart_id', required: false, type: Number, default: 0, description: '部门id'})
+    @Get("/find_depart_menu_btn")
+    async find_depart_menu_btn(
+        @Qform([
+            {name: 'depart_id', type: 'int', required: false}
+        ]) form) {
+
+
+        let depart_menu = await db.depart_menu.findMany({where: {depart_id: form.depart_id}})
+        console.log(`111---depart_menu:`, depart_menu)
+        let depart_menu_btns = util.build_depart_menu_btn(depart_menu)
+        console.log(`111---depart_menu_btns:`,     depart_menu_btns        )
+
+
+        return {code: 200, msg: '成功/find_depart_menu_btn', result: {depart_menu, depart_menu_btns}};
     }
 
 
@@ -203,3 +220,6 @@ function build_depart_childIds_by_id(depart, departId) {
     findChildren(departId);
     return Array.from(result);
 }
+
+
+

@@ -27,13 +27,15 @@ let tb_user = {
     },
 
     // 用户部门关系
-    find_user_info_depart:async ({id})=>{
+    find_user_info_depart: async ({ id }) => {
         let config = { method: "post", url: "/user/find_user_info_depart", data: { id } }
         const res = await axios_api(config)
         console.log('find_user_info_depart---res:', res)
-        let {opt_val,opt_list} =res.result
-        return  {opt_val,opt_list}
-    }
+        let { opt_val, opt_list } = res.result
+        return { opt_val, opt_list }
+    },
+
+
 
 
 }
