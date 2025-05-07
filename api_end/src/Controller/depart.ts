@@ -8,10 +8,10 @@ import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 import {Dec_public} from "../auth/Dec_public";
 import {PrismaClient} from "@prisma/client";
 import util from "../util/index";
-import {DTO_role} from "../Dto/DTO_role";
-import Dto from "../Dto/Dto";
+import {DTO_role} from "../DTO/DTO_role";
+import DTO from "../DTO/DTO";
 import get_menus_flat_by_role_id from "../util/make_menus_flat_by_role_id";
-import {DTO_depart} from "../Dto/DTO_depart";
+import {DTO_depart} from "../DTO/DTO_depart";
 
 let db = new PrismaClient()
 
