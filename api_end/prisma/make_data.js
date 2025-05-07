@@ -17,8 +17,10 @@ let tb_role = [
 ]
 // 菜单表
 let tb_menu = [
+    {id: 2111, menu: "设置", path: "/setting", parent_id: 0},
     {id: 1, menu: "首页", path: "/home", parent_id: 0},
     {id: 2, menu: "关于", path: "/about", parent_id: 0},
+
     {id: 3, menu: "订单管理", path: "/order_manage", parent_id: 0},
     {id: 4, menu: "权限管理", path: "/system", parent_id: 0},//有child 4
     {id: 5, menu: "用户管理", path: "/user/user", parent_id: 4},
@@ -33,6 +35,7 @@ let tb_menu = [
 
 //关联-角色_菜单     // 管理员1 ,用户2 商家3
 let role_menu = [
+    {id: 2111, role_id: 1, menu_id: 2111}, //管理员   -设置
     {id: 1, role_id: 1, menu_id: 1}, //管理员   -首页
     {id: 2, role_id: 1, menu_id: 2}, //管理员   -关于
     {id: 3, role_id: 1, menu_id: 3}, //管理员   -订单管理

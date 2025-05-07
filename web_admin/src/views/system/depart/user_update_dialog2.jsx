@@ -100,10 +100,15 @@ const user_add_dialog = defineComponent({
       }
     })
 
+    const handleNodeClick = (data, node, component)  => {
+      console.log('handleNodeClick---node111111111111111111:', node)
+      // component.setChecked(data, false);
+    }
+
     setTimeout(async () => {
-      let res = await BUS.api.tb_menu.find_list({ menu: "depart" })
-      console.log('tb_menu---find_list---:', res)
-      tree.data = res.result.departs_tree
+      let {departs_tree} = await BUS.api.tb_depart.find_menus_tree({ menu: "depart" })
+      console.log('tb_menu---departs_tree---:', departs_tree)
+      tree.data = departs_tree
     }, 1000)
 
     return () => (
@@ -123,7 +128,13 @@ const user_add_dialog = defineComponent({
             ></ElCascader>
           </ElFormItem>
         </ElForm>
-        <ElTree ref={ElTree_ref} data={tree.data} show-checkbox node-key="id" props={tree} default-expand-all expand-on-click-node={false} highlight-current />
+
+          菜单树
+          <ElTree ref={ElTree_ref} onNodeClick={ handleNodeClick} data={tree.data} show-checkbox node-key="id"
+           check-on-click-node={false}
+           check-on-click-leaf={false}
+          props={tree} default-expand-all expand-on-click-node={false} highlight-current />
+    
 
 
         <ElButton type="primary" onclick={async () => { submit() }}  >确定</ElButton>

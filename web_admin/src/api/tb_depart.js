@@ -25,6 +25,16 @@ let tb_depart = {
         return { users: res.result.users }
     },
 
+    // 得到_部门树
+    find_menus_tree: async ({ depart ,id}) => {
+        const res = await axios_api({ method: "get", url: "/depart/find_departs_tree", data: { depart, id } })
+        console.log('find_menus_tree---res:', res)
+        return { departs_tree: res.result.departs_tree }
+    },
+
+
+
+
 
 
 

@@ -123,7 +123,7 @@ export class depart {
     @Get("/find_departs_tree")
     async find_departs_tree(
         @Qform([
-            {name: 'id', type: 'int', required: true},
+            {name: 'id', type: 'int', required: false},
             {name: 'name', type: 'string', required: false}
         ]) form) {
         console.log(`111---find_menus_tree:`, form, typeof form)

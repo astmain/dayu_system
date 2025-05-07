@@ -3,8 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // 路由开发页面pages
 const menus = [
-    { path: '/home', name: '首页', component: () => import('@src/views/home.vue') },
+    { path: '/home', name: '首页', component: () => import('@src/views/home.jsx') },
     { path: '/about', name: '关于', component: () => import('@src/views/about.vue') },
+    { path: '/setting', name: '设置', component: () => import('@src/views/setting.jsx') },
     {
         path: '/system', name: '权限管理', children: [
             { path: '/system/menu/menu', name: '菜单管理', component: () => import('@src/views/system/menu/menu.vue') },
