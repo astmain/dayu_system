@@ -22,6 +22,7 @@ const user_add_dialog = defineComponent({
 
     let form = $ref({
       tel: props.state.tel,
+      id: props.state.id,
       username: props.state.username,
       depart_id: 0,
       opt_val: [],
@@ -61,6 +62,9 @@ const user_add_dialog = defineComponent({
       console.log('opt_list---:', opt_list)
       form.opt_val = opt_val
       form.opt_list = opt_list
+
+
+
     })
 
 
@@ -68,12 +72,13 @@ const user_add_dialog = defineComponent({
 
 
     async function submit() {
-      console.log('form---:', JSON.parse(JSON.stringify(form)))
-      return
+      // console.log('form---:', JSON.parse(JSON.stringify(form)))
+      // return
       ElForm_ref.value.validate(async (valid) => {
         if (valid) {
           console.log('submit---form:', form)
-          let res = await BUS.api.tb_user.update({ tel: form.tel, username: form.username, depart_id: form.opt_val.at(-1) })
+          let  depart_ids = utils.arr_last_element(form.opt_val)
+          let res = await BUS.api.tb_user.update({ id: props.state.id, tel: form.tel, username: form.username, depart_ids:depart_ids })
           console.log('depart_opt---res.result:', res.result)
           res.code == 200 && await props.that.find_list_depart()
           show = false

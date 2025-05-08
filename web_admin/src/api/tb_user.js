@@ -18,8 +18,8 @@ let tb_user = {
     },
 
 
-    update: async ({ tel, username, opt_val }) => {
-        let config = { method: "post", url: "/user/update", data: { tel, username, opt_val } }
+    update: async ({ id, tel, username, depart_ids }) => {
+        let config = { method: "post", url: "/user/update", data: { id, tel, username, depart_ids } }
         const res = await axios_api(config)
         console.log('res---:', res)
         res.code === 200 ? ElMessage.success({ message: `添加成功`, duration: 3 * 1000, showClose: true }) : 0
@@ -27,14 +27,15 @@ let tb_user = {
     },
 
     // 用户部门关系
-    find_user_info_depart:async ({id})=>{
+    find_user_info_depart: async ({ id }) => {
         let config = { method: "post", url: "/user/find_user_info_depart", data: { id } }
         const res = await axios_api(config)
-        console.log('res---:', res)
-        res.code === 200 ? ElMessage.success({ message: `添加成功`, duration: 3 * 1000, showClose: true }) : 0
-        let {opt_val,opt_list} =res.result
-        return  {opt_val,opt_list}
-    }
+        console.log('find_user_info_depart---res:', res)
+        let { opt_val, opt_list } = res.result
+        return { opt_val, opt_list }
+    },
+
+
 
 
 }

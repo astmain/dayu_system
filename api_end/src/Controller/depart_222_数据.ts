@@ -165,40 +165,33 @@ export class depart {
 
 
     @ApiOperation({summary: '添加_部门-权限'})
-    @Post("/add_depart_permission")
-    async add_depart_permission(@Body() form) {
+    @ApiQuery({name: 'other', required: false, type: String, default: "", description: '其他'})
+    @ApiQuery({name: 'role', required: false, type: String, default: "", description: '角色'})
+    @ApiQuery({name: 'add', required: false, type: Boolean, default: false, description: '添加'})
+    @ApiQuery({name: 'del', required: false, type: Boolean, default: false, description: '删除'})
+    @ApiQuery({name: 'look', required: false, type: Boolean, default: false, description: '查看'})
+    @ApiQuery({name: 'update', required: false, type: Boolean, default: false, description: '更新'})
+    @ApiQuery({name: 'user_id', required: false, type: Number, default: 0, description: '用户id'})
+    @ApiQuery({name: 'depart_id', required: false, type: Number, default: 0, description: '部门id'})
+    @ApiQuery({name: 'menu_id', required: false, type: Number, default: 0, description: '菜单id'})
+    @Get("/add_depart_permission")
+    async add_depart_permission(
+        @Qform([
+            {name: 'other', type: 'string', required: false},
+            {name: 'role', type: 'string', required: false},
+            {name: 'add', type: 'boolean', required: false},
+            {name: 'del', type: 'boolean', required: false},
+            {name: 'look', type: 'boolean', required: false},
+            {name: 'update', type: 'boolean', required: false},
+            {name: 'user_id', type: 'int', required: false},
+            {name: 'depart_id', type: 'int', required: false},
+            {name: 'menu_id', type: 'int', required: false},
+        ]) form) {
         let tag = "add_depart_permission"
         console.log(tag, `111---form:`, form)
-        let one = await db.depart_permission.create({data: form})
+        let one = await db.depart_menu.create({data: form})
         console.log(tag, `222---one:`, one)
         return {code: 200, msg: '成功/add_depart_permission', result: {one}};
-    }
-
-    @ApiOperation({summary: '得到_部门-depart_permission'})
-    @Post("/find_depart_permission_list")
-    async find_depart_permission_list(@Body() form) {
-
-        let tb_user = await db.tb_user.findMany()
-        let tb_role = await db.tb_role.findMany()
-        let depart_user = await db.depart_user.findMany()
-        let tb_menu = await db.tb_menu.findMany()
-        let depart_permission_list:any = []
-        if (form.user_id) {
-            depart_permission_list = await db.depart_permission.findMany({where: {user_id: form.user_id}})
-        } else {
-            depart_permission_list = await db.depart_permission.findMany()
-        }
-
-        return {
-            code: 200, msg: '成功/add_depart_permission', result: {
-                tb_user,
-                tb_role,
-                depart_user,
-                tb_menu,
-                depart_permission_list,
-            }
-        };
-
     }
 
 

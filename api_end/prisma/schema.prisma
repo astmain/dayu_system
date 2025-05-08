@@ -78,4 +78,31 @@ model depart_user {
   id        Int @id @default(autoincrement())
   depart_id Int
   user_id   Int
+
+  @@unique([depart_id, user_id])
+}
+
+model depart_menu {
+  id        Int     @id @default(autoincrement())
+  depart_id Int
+  menu_id   Int
+  role      String
+  look      Boolean @default(true)
+  del       Boolean @default(false)
+  add       Boolean @default(false)
+  update    Boolean @default(false)
+  other     String  @default("")
+}
+
+model depart_permission {
+  id        Int     @id @default(autoincrement())
+  other     String  @default("")
+  role      String  @default("")
+  add       Boolean @default(false)
+  del       Boolean @default(false)
+  look      Boolean @default(false)
+  update    Boolean @default(false)
+  user_id   Int
+  depart_id Int
+  menu_id   Int
 }

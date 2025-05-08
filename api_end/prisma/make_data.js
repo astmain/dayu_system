@@ -3,11 +3,11 @@ const db = new PrismaClient()
 
 //用户表  admin 1 二狗 2 张三 3 李四 4
 let tb_user = [
-    {id: 1,  username: "admin", password: "123456", nickname: "AD", avatar: "111", email: "11111111@qq.com", tel: "15160315110", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false,},
-    {id: 2,   username: "二狗", password: "123456", nickname: "小狗", avatar: "111", email: "2222222222@qq.com", tel: "15374118112", order: 111, online: true, update_time: "2023-01-01 05:05:05", create_time: "2023-01-01 05:05:05", is_del: false, },
-    {id: 3,  username: "张三", password: "123456", nickname: "小张", avatar: "111", email: "3333333333@qq.com", tel: "15374118113", order: 111, online: true, update_time: "2023-01-01 05:05:05", create_time: "2023-01-01 05:05:05", is_del: false, },
-    {id: 4,  username: "李四", password: "123456", nickname: "小李", avatar: "111", email: "4444444444@qq.com", tel: "15374118114", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false, },
-    {id: 5,  username: "王五", password: "123456", nickname: "小李", avatar: "111", email: "5555555555@qq.com", tel: "15374118115", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false, },
+    {id: 1, username: "admin", password: "123456", nickname: "AD", avatar: "111", email: "11111111@qq.com", tel: "15160315110", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false,},
+    {id: 2, username: "二狗", password: "123456", nickname: "小狗", avatar: "111", email: "2222222222@qq.com", tel: "15374118112", order: 111, online: true, update_time: "2023-01-01 05:05:05", create_time: "2023-01-01 05:05:05", is_del: false,},
+    {id: 3, username: "张三", password: "123456", nickname: "小张", avatar: "111", email: "3333333333@qq.com", tel: "15374118113", order: 111, online: true, update_time: "2023-01-01 05:05:05", create_time: "2023-01-01 05:05:05", is_del: false,},
+    {id: 4, username: "李四", password: "123456", nickname: "小李", avatar: "111", email: "4444444444@qq.com", tel: "15374118114", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false,},
+    {id: 5, username: "王五", password: "123456", nickname: "小李", avatar: "111", email: "5555555555@qq.com", tel: "15374118115", order: 111, online: true, update_time: "2023-01-01 04:05:05", create_time: "2023-01-01 04:05:05", is_del: false,},
 ]
 // 角色表
 let tb_role = [
@@ -17,8 +17,10 @@ let tb_role = [
 ]
 // 菜单表
 let tb_menu = [
+    {id: 2111, menu: "设置", path: "/setting", parent_id: 0},
     {id: 1, menu: "首页", path: "/home", parent_id: 0},
     {id: 2, menu: "关于", path: "/about", parent_id: 0},
+
     {id: 3, menu: "订单管理", path: "/order_manage", parent_id: 0},
     {id: 4, menu: "权限管理", path: "/system", parent_id: 0},//有child 4
     {id: 5, menu: "用户管理", path: "/user/user", parent_id: 4},
@@ -28,11 +30,9 @@ let tb_menu = [
 ]
 
 
-
-
-
 //关联-角色_菜单     // 管理员1 ,用户2 商家3
 let role_menu = [
+    {id: 2111, role_id: 1, menu_id: 2111}, //管理员   -设置
     {id: 1, role_id: 1, menu_id: 1}, //管理员   -首页
     {id: 2, role_id: 1, menu_id: 2}, //管理员   -关于
     {id: 3, role_id: 1, menu_id: 3}, //管理员   -订单管理
@@ -86,6 +86,69 @@ let depart_user = [
     {id: 10, depart_id: 3, user_id: 5},//王五
 ]
 
+//关联-部门_菜单(权限)
+let depart_menu = [
+    // high
+    {id: 1, depart_id: 2, menu_id: 1, role: "high-技术-admin"},//base-技术-admin
+    {id: 2, depart_id: 2, menu_id: 2, role: "high-技术-admin"},
+    {id: 3, depart_id: 2, menu_id: 3, role: "high-技术-admin"},
+    {id: 4, depart_id: 2, menu_id: 4, role: "high-技术-admin"},
+    {id: 5, depart_id: 2, menu_id: 5, role: "high-技术-admin"},
+    {id: 6, depart_id: 2, menu_id: 6, role: "high-技术-admin"},
+    {id: 7, depart_id: 2, menu_id: 7, role: "high-技术-admin"},
+    {id: 8, depart_id: 2, menu_id: 8, role: "high-技术-admin"},
+    {id: 9, depart_id: 20011, menu_id: 1, role: "high-泉州-财务"},//base-泉州-财务
+    {id: 10, depart_id: 20011, menu_id: 2, role: "high-泉州-财务"},
+    {id: 11, depart_id: 20011, menu_id: 3, role: "high-泉州-财务"},
+    {id: 12, depart_id: 20012, menu_id: 1, role: "high-泉州-业务"},//base-泉州-业务
+    {id: 13, depart_id: 20012, menu_id: 2, role: "high-泉州-业务"},
+    {id: 14, depart_id: 20021, menu_id: 1, role: "high-德化-财务"},//base-德化-财务
+    {id: 15, depart_id: 20021, menu_id: 2, role: "high-德化-财务"},
+    {id: 16, depart_id: 20021, menu_id: 3, role: "high-德化-财务"},
+    {id: 17, depart_id: 20022, menu_id: 1, role: "high-德化-业务"},//base-德化-业务
+    {id: 18, depart_id: 20022, menu_id: 2, role: "high-德化-业务"},//base-德化-业务
+    // low
+    {id: 19, depart_id: 20011, menu_id: 1, del: false, add: false, update: false, role: "low-泉州-财务"},//base-泉州-财务
+    {id: 20, depart_id: 20011, menu_id: 2, del: false, add: false, update: false, role: "low-泉州-财务"},
+    {id: 21, depart_id: 20011, menu_id: 3, del: false, add: false, update: false, role: "low-泉州-财务"},
+    {id: 22, depart_id: 20012, menu_id: 1, del: false, add: false, update: false, role: "low-泉州-业务"},//base-泉州-业务
+    {id: 23, depart_id: 20012, menu_id: 2, del: false, add: false, update: false, role: "low-泉州-业务"},
+    {id: 24, depart_id: 20021, menu_id: 1, del: false, add: false, update: false, role: "low-德化-财务"},//base-德化-财务
+    {id: 25, depart_id: 20021, menu_id: 2, del: false, add: false, update: false, role: "low-德化-财务"},
+    {id: 26, depart_id: 20021, menu_id: 3, del: false, add: false, update: false, role: "low-德化-财务"},
+    {id: 27, depart_id: 20022, menu_id: 1, del: false, add: false, update: false, role: "low-德化-业务"},//base-德化-业务
+    {id: 28, depart_id: 20022, menu_id: 2, del: false, add: false, update: false, role: "low-德化-业务"},//base-德化-业务
+
+
+]
+
+// id        Int     @id @default(autoincrement())
+// depart_id Int
+// menu_id   Int
+// role      String
+// look      Boolean @default(true)
+// del       Boolean @default(false)
+// add       Boolean @default(false)
+// update    Boolean @default(false)
+// other     String
+
+
+/*
+    {id: 2111, menu: "设置", path: "/setting", parent_id: 0},
+    {id: 1, menu: "首页", path: "/home", parent_id: 0},
+    {id: 2, menu: "关于", path: "/about", parent_id: 0},
+
+    {id: 3, menu: "订单管理", path: "/order_manage", parent_id: 0},
+    {id: 4, menu: "权限管理", path: "/system", parent_id: 0},//有child 4
+    {id: 5, menu: "用户管理", path: "/user/user", parent_id: 4},
+    {id: 6, menu: "菜单管理", path: "/menu/menu", parent_id: 4},
+    {id: 7, menu: "角色管理", path: "/role/role", parent_id: 4},
+    {id: 8, menu: "部门管理", path: "/depart/depart", parent_id: 4},
+
+
+
+
+* */
 
 
 // 操作
@@ -132,6 +195,18 @@ dao = {
         console.log(`depart_user---成功:创建数据${result.count}条记录`);
     },
 
+    depart_menu: async function () {
+        await db.depart_menu.deleteMany();
+        let num=0
+        for (let i = 0; i < depart_menu.length; i++) {
+        num+=1
+            let ele = depart_menu[i]
+         ele['id']=num
+            let result = await db.depart_menu.create({data: ele})
+        }
+        console.log(`depart_user---成功:创建数据${num}条记录`);
+    },
+
 }
 
 
@@ -145,6 +220,7 @@ async function make_data() {
         await dao.role_user()
         await dao.tb_depart()
         await dao.depart_user()
+        await dao.depart_menu()
 
     } catch (error) {
         console.error('批量创建记录时出错:', error);
