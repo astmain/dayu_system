@@ -1,3 +1,4 @@
+import { ElMessage } from "element-plus";
 let tb_depart = {
     // 部门/菜单数据
     build_departs_tree: async () => {
@@ -36,14 +37,25 @@ let tb_depart = {
     },
 
     // 得到_部门-菜单-按钮
-    find_depart_menu_btn: async ({depart_id}) => {
+    find_depart_menu_btn: async ({ depart_id }) => {
         let config = { method: "get", url: "/depart/find_depart_menu_btn", params: { depart_id } }
         const res = await axios_api(config)
         console.log('find_depart_menu_btn---res:', res)
-        let { depart_menu ,depart_menu_btns} = res.result
-        return { depart_menu,  depart_menu_btns}
+        let { depart_menu, depart_menu_btns } = res.result
+        return { depart_menu, depart_menu_btns }
 
-    }
+    },
+
+    //添加_部门-权限
+    add_depart_permission: async ({ item }) => {
+        let config = { method: "post", url: "/depart/add_depart_permission", data: JSON.parse(JSON.stringify(item)) }
+        console.log('add_depart_permission---config:', config)
+        const res = await axios_api(config)
+        console.log('add_depart_permission---res:', res)
+        let { one } = res.result
+        res.code === 200 ? ElMessage.success({ message: `添加成功`, duration: 2 * 1000, showClose: true }) : alert("数据错误")
+        return { one }
+    },
 
 
 

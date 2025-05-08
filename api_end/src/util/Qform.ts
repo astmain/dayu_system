@@ -6,7 +6,7 @@ import {
 
 interface FieldConfig {
     name: string;
-    type?: 'string' | 'int' | 'float';
+    type?: 'string' | 'int' | 'float'| 'boolean';
     required?: boolean;
     source?: 'query' | 'param' | 'header';
 }

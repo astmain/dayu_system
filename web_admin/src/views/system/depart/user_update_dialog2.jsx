@@ -7,6 +7,9 @@ import { ElCheckboxGroup, ElCheckbox } from "element-plus";
 import { ElSelect, ElOption } from "element-plus";
 import { ElCascader } from "element-plus";
 
+import utils from "@src/utils/index";
+
+
 
 let show = $ref(false)
 const user_add_dialog = defineComponent({
@@ -57,35 +60,12 @@ const user_add_dialog = defineComponent({
 
 
 
-
-
-
-
-
-    async function submit() {
-      // console.log('form---:', JSON.parse(JSON.stringify(form)))
-      // return
-      ElForm_ref.value.validate(async (valid) => {
-        if (valid) {
-          console.log('submit---form:', form)
-          let depart_ids = utils.arr_last_element(form.opt_val)
-          let res = await BUS.api.tb_user.update({ id: props.state.id, tel: form.tel, username: form.username, depart_ids: depart_ids })
-          console.log('depart_opt---res.result:', res.result)
-          res.code == 200 && await props.that.find_list_depart()
-          show = false
-        } else {
-          ElMessage.error('表单参数错误')
-          return false
-        }
-      })
-    }
-
-
     let ElTree_ref = ref(null)
     let tree_menu_ref = ref(null)
     let tree_depart = $ref({ data: [], checked: [], props: { label: 'label', children: 'children' } })
     let tree_menu = $ref({ data: [], checked: [], props: { label: 'name', children: 'children' } })
     let depart_menu_btns = $ref([])
+    let curr_menu_permiss = $ref([])
     const tree_left_click = async (data, node, component) => {
       // 得到菜单树
       let { menus_tree } = await api.tb_menu.find_menus_tree({ menu: "" })
@@ -102,13 +82,15 @@ const user_add_dialog = defineComponent({
 
     //todo 选中菜单权限
     function btn_select_menu(o) {
-      console.log('btn_select_menu---o:', o)
+      console.log('btn_select_menu---o:', JSON.parse(JSON.stringify(o)))
+      curr_menu_permiss.push(o)
+      console.error('btn_select_menu---curr_menu_permiss:', JSON.parse(JSON.stringify(curr_menu_permiss)))
       let menu_ids = o.list.map(v => v.menu_id)
       tree_menu.checked = menu_ids
       console.log('menu_ids---:', menu_ids)
-      console.log('tree_menu.checked---:',       tree_menu.checked)
+      console.log('tree_menu.checked---:', tree_menu.checked)
       console.log('tree_menu_ref---:', tree_menu_ref)
-      tree_menu_ref.value.  setCheckedKeys(menu_ids)
+      tree_menu_ref.value.setCheckedKeys(menu_ids)
     }
 
     setTimeout(async () => {
@@ -123,6 +105,39 @@ const user_add_dialog = defineComponent({
       // tree_depart.data = departs_tree
 
     }, 100)
+
+
+
+
+
+
+
+    async function submit() {
+      ElForm_ref.value.validate(async (valid) => {
+        if (valid) {
+          console.log('submit---form:', form)
+
+          console.log('curr_menu_permiss---:', curr_menu_permiss)
+          console.log('util.build_departs_permiss_btn_flat---:', utils.build_departs_permiss_btn_flat)
+
+          let list = utils.build_departs_permiss_btn_flat({ arr: curr_menu_permiss, user_id: props.state.id })
+
+          for (let index = 0; index < list.length; index++) {
+            const item = list[index];
+            let res = await api.tb_depart.add_depart_permission({item})
+          }
+          show = false
+        } else {
+          ElMessage.error('表单参数错误')
+          return false
+        }
+      })
+    }
+
+
+
+
+
 
     return () => (
 
