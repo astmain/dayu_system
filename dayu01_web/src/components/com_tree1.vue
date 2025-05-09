@@ -1,5 +1,5 @@
 <template>
-  <el-tree class="com_tree1" ref="tree_ref" :data="tree_config.data" node-key="id" @node-contextmenu="tree_ritht_click"
+  <el-tree class="com_tree1" ref="tree_ref" :data="tree_config.data" :node-key="tree_config.id" @node-contextmenu="tree_ritht_click"
     @node-click="tree_left_click" :props="{ children: 'children', label: tree_config.label }"
     :current-node-key="currentNodeKey" :expand-on-click-node="false" highlight-current default-expand-all> </el-tree>
   <el-card v-show="menu_show" :style="{ position: 'fixed', left: menu_left + 'px', top: menu_top + 'px' }"
@@ -19,6 +19,7 @@ const props = defineProps({
   tree_config: {
     type: Object, default: {
       label: "depart",
+      id: "id",
       tree_left_click: () => { },
       data: [
         {

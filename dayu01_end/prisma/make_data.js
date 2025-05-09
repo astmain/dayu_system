@@ -34,10 +34,10 @@ async function make_data() {
         {menu_id: 5, menu: "权限管理", path: "/system", parent_id: 0},//权限管理 5
         {menu_id: 6, menu: "用户管理", path: "/user/user", parent_id: 5},
         {menu_id: 7, menu: "菜单管理", path: "/menu/menu", parent_id: 5},
-        {menu_id: 666, menu: "商品管理", path: "/mall_goods", parent_id: 1},
-        {menu_id: 777, menu: "商城购物", path: "/mall_shop", parent_id: 1},
-        {menu_id: 888, menu: "购物订单", path: "/mall_order", parent_id: 1},
-        {menu_id: 999, menu: "购物车", path: "/mall_car", parent_id: 1},
+        {menu_id: 666, menu: "商品管理", path: "/mall_goods", parent_id: 0},
+        {menu_id: 777, menu: "商城购物", path: "/mall_shop", parent_id: 0},
+        {menu_id: 888, menu: "购物订单", path: "/mall_order", parent_id: 0},
+        {menu_id: 999, menu: "购物车", path: "/mall_car", parent_id: 0},
     ]
     //模型lv: 1 2 3
     let depart_role = [

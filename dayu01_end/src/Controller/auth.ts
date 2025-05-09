@@ -9,6 +9,8 @@ import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 import * as md5 from "md5";
 import {PrismaClient} from "@prisma/client";
 import {Qgetform} from "../util/Qgetform";
+import tool from "../tool";
+
 
 let db = new PrismaClient()
 
@@ -23,7 +25,7 @@ export class auth {
     }
 
 
-    @util.Dec_public()
+    @tool.Dec_public()
     @UseFilters(new HttpExceptionFilter())
     @Qgetform("/login", "登陆", [{desc: "电话", key: 'tel', val: "111", type: String, required: true}, {desc: "密码", key: 'password', val: "123456", type: String, required: true}],)
     async login(@Query() form) {
@@ -43,8 +45,15 @@ export class auth {
         console.log(`生成token:`, token)
 
 
+        let tb_menu = await db.tb_menu.findMany()
+        console.log(`111---tb_menu:`, tb_menu)
+
+        const menus_tree = tool.build_tree({ arr: tb_menu, key_id: 'menu_id', key_parent: 'parent_id' })
+        // build_tree({ arr: tb_depart, key_id: 'depart_id', key_parent: 'parent_id' })
+
+        let result = {...user, token, menus_tree}
         // console.log(`111---result:`, result)
-        return {code: 200, msg: '成功/login', result: {user}};
+        return {code: 200, msg: '成功/login', result};
     }
 
     @ApiOperation({summary: 'admin_super'})
@@ -52,25 +61,25 @@ export class auth {
     @Get("/admin_super")
     async admin_super() {
         let user_list = await db.tb_user.findMany()
-        return util.R.ok({msg: "成功", result: user_list})
+        return tool.R.ok({msg: "成功", result: user_list})
     }
 
 
-    @util.Dec_public()
+    @tool.Dec_public()
     //我想把 Get 和ApiQuery 封装成一个装饰器
     @ApiQuery({name: 'tel', default: "111", type: String})
     @ApiQuery({name: 'password', default: "111", type: String})
     @Get("/test")
     async test(@Query() form) {
         console.log(`111---tel:`, form)
-        return util.R.ok({msg: "成功", result: form})
+        return tool.R.ok({msg: "成功", result: form})
     }
 
-    @util.Dec_public()
-    @Qgetform("测试2", "/test2", [{desc: "电话", key: 'tel', val: "111", type: String, required: true}, {desc: "密码", key: 'password', val: "123456", type: String, required: true}],)
+    @tool.Dec_public()
+    @Qgetform("测试2", "/test2", [{desc: "电话", key: 'tel', val: "111", type: String, required: true}, {desc: "密码", key: 'password', val: "123456", type: String, required: true}])
     async test2(@Query() form) {
-        console.log(``, form)
-        return util.R.ok({msg: "成功", result: form})
+        console.log(`form`, form)
+        return tool.R.ok({msg: "成功", result: form})
     }
 
 

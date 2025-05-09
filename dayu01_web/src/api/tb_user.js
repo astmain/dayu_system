@@ -37,6 +37,18 @@ let tb_user = {
 
 
 
+    // 新的-----------------
+    find_user_list: async ({ depart_id = 0 }) => {
+        let config = { method: "get", url: "/user/find_user_list", params: { depart_id } }
+        console.log('config:', config)
+        const res = await axios_api(config)
+        console.log('find_user_list---res:', res)
+        let { user_list } = res.result
+        return { user_list }
+    },
+
+
+
 
 }
 
