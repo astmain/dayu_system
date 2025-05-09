@@ -15,6 +15,7 @@ export default function build_tree_ids({list, val, key, ref}) {
     }
 
     findChildren(val);
+    console.log(`111---build_tree_ids:`,     result        )
 
     let ids: any[] = [];
     ids = result.map(o => o[key]);

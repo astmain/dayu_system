@@ -14,8 +14,8 @@ async function make_data() {
     ]
     let tb_depart = [
         {id: 1, depart: "大宇三维打印", parent_id: 0}, //总公司
-        {id: 3, depart: "客户", parent_id: 1},        //客户
-        {id: 10000, depart: "用户", parent_id: 1},    //用户
+        {id: 77777, depart: "客户", parent_id: 1},        //客户
+        {id: 10000, depart: "工作人员", parent_id: 1},    //工作人员
         {id: 20000, depart: "技术部", parent_id: 1},  //技术部
         //
         {id: 30000, depart: "泉州分公司", parent_id: 1},//泉州分公司
@@ -41,10 +41,21 @@ async function make_data() {
     ]
 
     let ref_depart_user = [
+        // 技术部
+        {user_id: 1, depart_id: 20000},
+        {user_id: 2, depart_id: 20000},
+        // 财务部-业务部
         {user_id: 3, depart_id: 30001},
         {user_id: 4, depart_id: 30002},
         {user_id: 5, depart_id: 40001},
         {user_id: 6, depart_id: 40002},
+        // 特殊情况用户-张三夸部门
+        {user_id: 3, depart_id: 30002},
+        {user_id: 3, depart_id: 40001},
+        //客户
+        {user_id: 7, depart_id: 77777},
+
+
     ]
 
 

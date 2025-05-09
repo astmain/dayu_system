@@ -36,20 +36,34 @@ export class depart {
         console.log(`form`, form)
         form.depart_id = Number(form.depart_id)
         form.is_parent = Boolean(form.depart_id)
+        // 筛选用户10000
+        if (form.depart_id === 10000) {
+            // 预备排除客户
+            let depart_list_7777 = await db.ref_depart_user.findMany({where: {OR: [{id: 77777}, {depart_id: 77777}]}})
+            let notin_ids_7777 = tool.build_tree_ids({list: depart_list_7777, val: 77777, key: "id", ref: "parent_id"})
+            let refs_user_id = await db.ref_depart_user.findMany({where: {depart_id: {in: notin_ids_7777}}})
+            let notIn_user_ids = refs_user_id.map(item => item.user_id)
+            // 排除客户
+            let user_list = await db.tb_user.findMany({where: {id: {notIn: notIn_user_ids}}})
+            console.log(`333---user_list:`, user_list)
+            return tool.R.ok({msg: "成功/find_user_list_BY_depart_id", result: {user_list, kind: "筛选用户10000"}})
+        }
+
+
+        // 得到部门id和子部门id
         let depart_list = await db.tb_depart.findMany()
-
-
-        const ids = tool.build_tree_ids({list: depart_list, val:   form.depart_id , key: "id", ref: "parent_id"});
-
-
+        let ids = tool.build_tree_ids({list: depart_list, val: form.depart_id, key: "id", ref: "parent_id"})
         // 得到用户id
         let refs_user_id = await db.ref_depart_user.findMany({where: {depart_id: {in: ids}}})
         let refs_user_id_1: number[] = [0]
         refs_user_id_1 = refs_user_id.map(item => item.user_id)
-        console.log(`111---refs_user_id_2:`, refs_user_id_1)
+        // console.log(`111---refs_user_id_2:`, refs_user_id_1)
+        // 得到用户数据_根据_用户id
         let user_list = await db.tb_user.findMany({where: {id: {in: refs_user_id_1}}})
-        console.log(`333---user_list:`, user_list)
-        return tool.R.ok({msg: "成功/find_user_list_BY_depart_id", result: {user_list}})
+        // console.log(`333---user_list:`, user_list)
+
+
+        return tool.R.ok({msg: "成功/find_user_list_BY_depart_id", result: {user_list, kind: "筛选部门"}})
     }
 
 }
