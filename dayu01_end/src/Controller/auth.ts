@@ -40,7 +40,7 @@ export class auth {
         }
 
         // 2.生成token
-        const payload = {username: user?.username, user_id: user?.user_id};
+        const payload = {username: user?.username, id: user?.id};
         const token = await this.jwt_service.signAsync(payload)
         console.log(`生成token:`, token)
 
@@ -48,7 +48,7 @@ export class auth {
         let tb_menu = await db.tb_menu.findMany()
         console.log(`111---tb_menu:`, tb_menu)
 
-        const menus_tree = tool.build_tree({ arr: tb_menu, key_id: 'menu_id', key_parent: 'parent_id' })
+        const menus_tree = tool.build_tree({ arr: tb_menu, key_id: 'id', key_parent: 'parent_id' })
         // build_tree({ arr: tb_depart, key_id: 'depart_id', key_parent: 'parent_id' })
 
         let result = {...user, token, menus_tree}

@@ -39,15 +39,7 @@ export class depart {
         let depart_list = await db.tb_depart.findMany()
 
 
-        const ids = tool.build_tree_ids({list: depart_list, val:   form.depart_id , key: "id", ref: "parent_id"});
-
-
-        // 得到用户id
-        let refs_user_id = await db.ref_depart_user.findMany({where: {depart_id: {in: ids}}})
-        let refs_user_id_1: number[] = [0]
-        refs_user_id_1 = refs_user_id.map(item => item.user_id)
-        console.log(`111---refs_user_id_2:`, refs_user_id_1)
-        let user_list = await db.tb_user.findMany({where: {id: {in: refs_user_id_1}}})
+        let user_list = await db.tb_user.findMany({where: {id: {in: []}}})
         console.log(`333---user_list:`, user_list)
         return tool.R.ok({msg: "成功/find_user_list_BY_depart_id", result: {user_list}})
     }

@@ -72,13 +72,18 @@ export default {
       //用户
       let { user_list } = await api.tb_user.find_user_list({ depart_id: this.tree_depart.node.depart_id })
       console.log('user_list:', user_list);
-      this.tree_depart.user_list = user_list
+      // this.tree_depart.user_list = user_list
 
 
     },//
 
-    tree_left_click(node) {
+    async tree_left_click(node) {
       this.tree_depart.node = node
+      console.log('tree_left_click---this.tree_depart.node:', this.tree_depart.node)
+      let depart_id = this.tree_depart.node.id
+      let is_parent = this.tree_depart.node?.children?.length >= 1 ? true : false
+      let { user_list } = await api.tb_depart.find_user_list_BY_depart_id({ depart_id: depart_id, is_parent: is_parent })
+      this.tree_depart.user_list = user_list
     },
 
     tree_ritht_click(node) {
