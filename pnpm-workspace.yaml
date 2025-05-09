@@ -12,3 +12,8 @@ packages:
   
   - "api_end"       #前段页面
   - "web_admin"     #前段页面
+  
+  
+  
+  - "dayu01_web"     #前端
+  - "dayu01_end"     #后端

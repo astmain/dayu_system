@@ -1,0 +1,18 @@
+
+{
+  "视频讲解":0,                 "   (**/*,*}.(js,ts,jsx,tsx,vue)   ":0,
+  "视频讲解2":0,                 "https://www.bilibili.com/video/BV1pB2NYLEoC/":0,
+  "printWidth": 2000,	          "注释-每行代码数量":0,
+  "tabWidth": 4,                "注释-缩进的空格个数":0,  
+  "useTabs": false,             "注释-制表符使用空格":0, 
+  "semi": false,                "注释-末尾分号":0,        
+  "endOfLine": "auto",          "注释-换行符":0,        
+  "singleQuote": true,          "注释-单引号":0,        
+  "trailingComma": "all",       "注释-对象末尾始终携带逗号":0,        
+  "bracketSpacing": true,       "注释-对象大括号带空格":0,        
+  "arrowParens": "always",      "注释-箭头符号参数始终带括号":0,        
+  "end":0,                      "注释-end":0    
+}
+
+
+
