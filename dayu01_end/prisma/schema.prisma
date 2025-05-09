@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\api_end\prisma\dev.db             在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model tb_user {
+  id       Int    @id @default(autoincrement())
+  tel      String @unique
+  password String @default("123456")
+  username String @default("")
+  nickname String @default("")
+  email    String @default("")
+  avatar   String @default("")
+
+  update_time String  @default("")
+  create_time String  @default("")
+  remark      String  @default("")
+  order       Int     @default(0)
+  online      Boolean @default(true)
+  is_del      Boolean @default(false)
+}
+
+model tb_menu {
+  id        Int    @id @default(autoincrement())
+  menu      String @unique
+  path      String @unique
+  parent_id Int    @default(0)
+  remark    String @default("")
+}
+
+model tb_role {
+  id     Int    @id @default(autoincrement())
+  role   String @unique
+  remark String @default("")
+}
+
+model role_menu {
+  id      Int @id @default(autoincrement())
+  role_id Int
+  menu_id Int
+
+  @@unique([role_id, menu_id])
+}
+
+model role_user {
+  id      Int @id @default(autoincrement())
+  role_id Int
+  user_id Int
+}
+
+//-------------------
+
+model tb_depart {
+  id        Int    @id @default(autoincrement())
+  depart    String
+  parent_id Int
+
+  @@unique([depart, parent_id])
+}
+
+model depart_user {
+  id        Int @id @default(autoincrement())
+  depart_id Int
+  user_id   Int
+
+  @@unique([depart_id, user_id])
+}
+
+model depart_menu {
+  id        Int     @id @default(autoincrement())
+  depart_id Int
+  menu_id   Int
+  role      String
+  look      Boolean @default(true)
+  del       Boolean @default(false)
+  add       Boolean @default(false)
+  update    Boolean @default(false)
+  other     String  @default("")
+}
+
+model depart_permission {
+  id        Int     @id @default(autoincrement())
+  other     String  @default("")
+  role      String  @default("")
+  add       Boolean @default(false)
+  del       Boolean @default(false)
+  look      Boolean @default(false)
+  update    Boolean @default(false)
+  user_id   Int
+  depart_id Int
+  menu_id   Int
+}
