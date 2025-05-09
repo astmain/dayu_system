@@ -10,7 +10,7 @@ interface IdFromRequestOptions {
     source?: 'query' | 'param' | 'header'; // 来源，可选，默认 query
 }
 
-export const QQ = createParamDecorator(
+export const Qparams = createParamDecorator(
     (options: IdFromRequestOptions, ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest();
 

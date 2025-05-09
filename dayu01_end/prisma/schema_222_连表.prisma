@@ -1,0 +1,89 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\api_end\prisma\dev.db             在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model tb_user {
+  user_id          Int                @id @default(autoincrement())
+  tel              String             @unique
+  password         String             @default("123456")
+  username         String             @default("")
+  user_depart_role user_depart_role[]
+}
+
+model tb_depart {
+  depart_id        Int                @id @default(autoincrement())
+  depart           String             @default("")
+  user_depart_role user_depart_role[]
+  depart_role      depart_role[]
+}
+
+
+model tb_menu {
+  menu_id   Int         @id @default(autoincrement())
+  menu      String      @default("")
+  role_menu role_menu[]
+  add       Boolean     @default(false)
+  del       Boolean     @default(false)
+  update    Boolean     @default(false)
+  look      Boolean     @default(false)
+}
+
+
+model tb_role {
+  role_id          Int                @id @default(autoincrement())
+  role             String             @default("")
+  user_depart_role user_depart_role[]
+  depart_role      depart_role[]
+  role_menu        role_menu[]
+}
+
+
+model role_menu {
+  role_menu_id Int @id @default(autoincrement())
+  role_id      Int
+  menu_id      Int
+
+  role tb_role @relation(fields: [role_id], references: [role_id])
+  menu tb_menu @relation(fields: [menu_id], references: [menu_id])
+}
+
+model depart_role {
+  depart_role_id Int @id @default(autoincrement())
+  depart_id      Int
+  role_id        Int
+
+  depart tb_depart @relation(fields: [depart_id], references: [depart_id])
+  role   tb_role   @relation(fields: [role_id], references: [role_id])
+}
+
+model user_depart_role {
+  user_depart_role_id Int @id @default(autoincrement())
+  user_id             Int
+  depart_id           Int
+  role_id             Int
+
+  user   tb_user   @relation(fields: [user_id], references: [user_id])
+  depart tb_depart @relation(fields: [depart_id], references: [depart_id])
+  role   tb_role   @relation(fields: [role_id], references: [role_id])
+}
+
+// 帮我生产数据
+// 用户有 许一,二狗,张三,李四,王五
+// 菜单有 首页,设置,关于
+// 部门有 泉州公司,德化公司        泉州公司下有部门:财务部,业务部,技术部     德化公司下有部门:财务部,业务部
+// 许一属于:泉州公司下:技术部,业务部,财务部门      德化公司下有部门:财务部,业务部
+// 二狗属于:泉州公司下:技术部
+// 张三数据:泉州公司下:财务部
+// 李四数据:泉州公司下:业务部
+// 王五数据:德化公司下:业务部

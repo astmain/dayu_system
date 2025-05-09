@@ -15,6 +15,10 @@ const menus = [
             // { path: '/system/depart/depart', name: '部门管理', component: () => import('@src/views/system/depart/depart.jsx') },
         ]
     },
+    { path: '/mall_shop', name: '商城购物', component: () => import('@src/views/mall_shop.vue') },
+    { path: '/mall_order', name: '购物订单', component: () => import('@src/views/mall_order.vue') },
+    { path: '/mall_goods', name: '商品管理', component: () => import('@src/views/mall_goods.vue') },
+    { path: '/mall_car', name: '购物车', component: () => import('@src/views/mall_car.vue') },
 ]
 let routes = [
     { path: '/', redirect: '/login' },
