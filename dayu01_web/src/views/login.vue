@@ -46,7 +46,7 @@ export default {
     return {
       loading: false,
       loginForm: {
-        tel: '15160315110',
+        tel: '111',
         password: '123456'
       },
       rules: {
