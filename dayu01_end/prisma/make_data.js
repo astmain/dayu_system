@@ -15,7 +15,7 @@ async function make_data() {
     let tb_depart = [
         {id: 1, depart: "大宇三维打印", parent_id: 0}, //总公司
         {id: 77777, depart: "客户", parent_id: 1},        //客户
-        {id: 10000, depart: "工作人员", parent_id: 1},    //工作人员
+        {id: 10000, depart: "内部人员", parent_id: 1},    //内部人员
         {id: 20000, depart: "技术部", parent_id: 1},  //技术部
         //
         {id: 30000, depart: "泉州分公司", parent_id: 1},//泉州分公司
