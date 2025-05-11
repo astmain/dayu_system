@@ -54,8 +54,16 @@ async function make_data() {
         {user_id: 3, depart_id: 40001},
         //客户
         {user_id: 7, depart_id: 77777},
+    ]
 
-
+   let ref_depart_role=[
+        {role_id: 3, depart_id: 30000},
+        {role_id: 1, depart_id: 10000},
+        {role_id: 1, depart_id: 20000},
+        {role_id: 1, depart_id: 30000},
+        {role_id: 1, depart_id: 30001},
+        {role_id: 1, depart_id: 30002},
+        {role_id: 1, depart_id: 40000},
     ]
 
 
