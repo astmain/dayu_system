@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
-    <el-button @click="met1()">met1</el-button>
+<div>
+   <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
+      <el-button @click="met1()">met1</el-button>
 
-  </div>
+</div>
 </template>
 
 <script>
@@ -34,4 +34,7 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style  scoped></style>
+
+
+

@@ -11,7 +11,7 @@ const menus = [
             { path: '/system/menu/menu', name: '菜单管理', component: () => import('@src/views/system/menu/menu.vue') },
             { path: '/system/role/role', name: '角色管理', component: () => import('@src/views/system/role/role.vue') },
             { path: '/system/user/user', name: '用户管理', component: () => import('@src/views/system/user/user.vue') },
-            { path: '/system/depart/depart', name: '部门管理', component: () => import('@src/views/system/depart/depart.vue') },
+            { path: '/system/depart/depart', name: '部门设置职位', component: () => import('@src/views/system/depart/depart.vue') },
             // { path: '/system/depart/depart', name: '部门管理', component: () => import('@src/views/system/depart/depart.jsx') },
         ]
     },
