@@ -35,6 +35,7 @@ async function make_data() {
         {id: 6, menu: "用户管理", path: "/user/user", parent_id: 5},
         {id: 7, menu: "菜单管理", path: "/menu/menu", parent_id: 5},
         {id: 8, menu: "角色管理", path: "/role/role", parent_id: 5},
+        {id: 9, menu: "部门设置职位", path: "/depart/depart", parent_id: 5},
         {id: 666, menu: "商品管理", path: "/mall_goods", parent_id: 0},
         {id: 777, menu: "商城购物", path: "/mall_shop", parent_id: 0},
         {id: 888, menu: "购物订单", path: "/mall_order", parent_id: 0},
