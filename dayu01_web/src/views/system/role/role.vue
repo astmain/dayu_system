@@ -122,7 +122,11 @@ export default {
 
 
     async submit() {
-      console.log('submit:', this.tree.data)
+      console.error('submit:', this.tree.data)
+
+      let result = await api.tb_menu.update_ref_menu_permiss({ role_id: this.tree.node.id, tree_data: this.tree.data })
+      // let result = await api.tb_menu.update_ref_menu_permiss({ role_id: this.tree.node.id, tree_data: [] })
+      console.error('result:', result)
     },
 
     async btn_click(data, kind) {

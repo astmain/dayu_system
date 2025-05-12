@@ -18,6 +18,15 @@ let tb_menu = {
         console.log('tb_menu---find_menu_tree---:', res)
         return res.result
     },
+
+
+    update_ref_menu_permiss: async function ({ role_id, tree_data }) {
+        let config = { method: 'post', url: '/menu/update_ref_menu_permiss', data: { role_id, tree_data } }
+        console.log("update_ref_menu_permiss---", config)
+        const res = await axios_api(config)
+        console.log('tb_menu---update_ref_menu_permiss---:', res)
+        return res.result
+    }
 }
 
 

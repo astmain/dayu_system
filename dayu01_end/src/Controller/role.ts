@@ -35,12 +35,7 @@ export class role {
         return tool.R.ok({msg: "成功/find_role_ref_menu_tree", result: {role_ref_menu_tree}})
     }
 
-    @ApiOperation({summary: '保存_角色_详细_权限信息'})
-    @Post("/update_role_permiss_info")
-    async update_role_permiss_info(@Body() form) {
-        console.log(`form`, form)
-        return tool.R.ok({msg: "成功/update_role_permiss_info", result: {}})
-    }
+
 
 
 }

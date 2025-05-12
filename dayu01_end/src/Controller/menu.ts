@@ -7,12 +7,13 @@ import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 import {PrismaClient} from "@prisma/client";
 import tool from "../tool";
+import {DTO_role_id_menu_permiss} from "../DTO/DTO_role_id_menu_permiss";
 
 
 let db = new PrismaClient()
 
 
-@ApiTags('部门管理')
+@ApiTags('菜单管理')
 @ApiBearerAuth('Authorization')
 @Controller("menu")
 export class menu {
@@ -48,10 +49,10 @@ export class menu {
         let menu_list_match_role: any = []
         for (let i = 0; i < menu_list.length; i++) {
             let menu = menu_list[i]
-            let permiss = ref_menu_permiss.find(o => o.menu_id=== menu.id)
-            if(!permiss){
+            let permiss = ref_menu_permiss.find(o => o.menu_id === menu.id)
+            if (!permiss) {
                 menu_list_match_role.push(menu)
-            }else{
+            } else {
                 menu.add = permiss.add
                 menu.del = permiss.del
                 menu.update = permiss.update
@@ -62,14 +63,44 @@ export class menu {
         }
         let menu_tree_match_role = tool.build_tree({arr: menu_list_match_role, key_id: 'id', key_parent: 'parent_id'})
         console.log(`111---menu_tree:`, menu_tree_match_role)
-        return tool.R.ok({msg: "成功/find_menu_tree_match__role_id", result: {menu_list, menu_tree, menu_list_match_role,menu_tree_match_role}})
+        return tool.R.ok({msg: "成功/find_menu_tree_match__role_id", result: {menu_list, menu_tree, menu_list_match_role, menu_tree_match_role}})
     }
 
 
+    @tool.Dec_public()
+    @ApiOperation({summary: '保存_角色_详细_权限信息'})
+    @Post("/update_ref_menu_permiss")
+    async update_ref_menu_permiss(@Body() form: DTO_role_id_menu_permiss) {
+        // console.log(`form`, form)
+        let arr_flat = tool.build_tree_arr_flat(form.tree_data)
+        // console.log(`111---arr_flat:`, arr_flat)
 
 
+        let one1111 = await db.ref_menu_permiss.findMany({where: {menu_id: 1, role_id: 1}})
+
+        console.log(`111---one1111:`, one1111)
 
 
+        for (let i = 0; i < arr_flat.length; i++) {
+            let ele = arr_flat[i]
+            let one = await db.ref_menu_permiss.findMany({where: {menu_id: ele.id, role_id: form.role_id}})
+            if (one?.length >= 1) {
+                console.log(`更新---111:`, 111)
+                let condition = {menu_id: ele.id, role_id: form.role_id}
+                let item = {id: ele.id, add: ele.add, del: ele.add, update: ele.update, find: ele.find, view: ele.view}
+                await db.ref_menu_permiss.update({where: {menu_id: ele.id,role_id:form.role_id}, data: {...item, ...condition}})
+            } else {
+                console.log(`插入---222:`, 222)
+                let condition = {menu_id: ele.id, role_id: form.role_id}
+                let item = {add: ele.add, del: ele.add, update: ele.update, find: ele.find, view: ele.view}
+                await db.ref_menu_permiss.create({data: {...item, ...condition}})
+            }
+        }
+
+
+        console.log(`更新数据完成---update_ref_menu_permiss:`, 333)
+        return tool.R.ok({msg: "成功/update_ref_menu_permiss", result: {}})
+    }
 
 
 }

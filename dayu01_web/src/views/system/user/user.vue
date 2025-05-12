@@ -97,21 +97,13 @@ export default {
 
 
     async depart_kind({kind,item}){
-      console.log('kind:', kind)     
-      console.log('item:', item)         
-
+      console.log('kind:', kind)
+      console.log('item:', item)
       if (kind == 'info'){
-
-
         let { menus_tree } = await api.tb_depart.find_depart_ref({}) 
         let form={username:item.username,tel:item.tel,password:item.password,menus_tree}
-
-
         require('./user_info_dialog.jsx')({ state: form, that: this, arg: { kind: "info", title: "部门-添加" } })
       }
-
-
-
       
     }
 
