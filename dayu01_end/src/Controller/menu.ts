@@ -74,13 +74,8 @@ export class menu {
         // console.log(`form`, form)
         let arr_flat = tool.build_tree_arr_flat(form.tree_data)
         // console.log(`111---arr_flat:`, arr_flat)
-
-
         let one1111 = await db.ref_menu_permiss.findMany({where: {menu_id: 1, role_id: 1}})
-
         console.log(`111---one1111:`, one1111)
-
-
         for (let i = 0; i < arr_flat.length; i++) {
             let ele = arr_flat[i]
             let one = await db.ref_menu_permiss.findMany({where: {menu_id: ele.id, role_id: form.role_id}})
@@ -88,7 +83,7 @@ export class menu {
                 console.log(`更新---111:`, 111)
                 let condition = {menu_id: ele.id, role_id: form.role_id}
                 let item = {id: ele.id, add: ele.add, del: ele.add, update: ele.update, find: ele.find, view: ele.view}
-                await db.ref_menu_permiss.update({where: {menu_id: ele.id,role_id:form.role_id}, data: {...item, ...condition}})
+                await db.ref_menu_permiss.updateMany({where: {menu_id: ele.id,role_id:form.role_id}, data: {...item, ...condition}})
             } else {
                 console.log(`插入---222:`, 222)
                 let condition = {menu_id: ele.id, role_id: form.role_id}
@@ -96,11 +91,11 @@ export class menu {
                 await db.ref_menu_permiss.create({data: {...item, ...condition}})
             }
         }
-
-
         console.log(`更新数据完成---update_ref_menu_permiss:`, 333)
         return tool.R.ok({msg: "成功/update_ref_menu_permiss", result: {}})
     }
+
+
 
 
 }
