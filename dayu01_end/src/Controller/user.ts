@@ -18,14 +18,12 @@ let db = new PrismaClient()
 @Controller("user")
 export class user {
 
-    @Qgetform("find_user_list", "查找_用户", [])
+    @Qgetform("find_user_list", "查找_用户列表", [])
     async find_user_list(@Query() form) {
         console.log(`form`, form)
-
         // let departs = await db.tb_depart.findMany({where: {depart: {contains: data.depart}}})
         let user_list = await db.tb_user.findMany()
         console.log(`111---user_list:`, user_list)
-
         return tool.R.ok({msg: "成功", result: {user_list}})
     }
 

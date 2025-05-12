@@ -22,6 +22,17 @@ let tb_depart = {
     },
 
 
+    find_depart_ref: async () => {
+        let tag = "find_depart_ref"
+        let config = { method: "get", url: "/depart/find_depart_ref", params: { } }
+        console.log(tag, 'config:', config)
+        const res = await axios_api(config)
+        console.log(tag, 'res:', res)
+        res.code === 200 ? ElMessage.success({ message: res.msg, duration: 1 * 1000, showClose: true }) : 0
+        return { menus_tree: res.result.menus_tree }
+    },
+
+
 
 
 

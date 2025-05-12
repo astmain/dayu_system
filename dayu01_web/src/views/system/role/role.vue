@@ -1,74 +1,162 @@
 <template>
   <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
-  <!-- 搜索工具栏 -->
-  <ul class="css_toolbar1">
-    <li>
-      <title style="width: 50px;">角色</title>
-      <el-input style="width: 120px;" v-model="form.role" />
-    </li>
-    <el-button type='primary' @click='find_list()'>搜索</el-button>
-    <el-button type='' @click="; (form = { menu: '', path: '' }), find_list()">清空</el-button>
+  <el-button @click="init_data()">init_data</el-button>
 
-  </ul>
 
-  <!-- 表格 -->
-  <el-button type="primary" @click="open_dialog({ kind: 'add', item: {} })">添加</el-button>
-  <el-table :data="tableData" style="width: 100%" size="default" border>
+  <el-table :data="role_list" style="width: 100%" height="200" size="default" border highlight-current-row>
     <el-table-column label="序号" type="index" width="60px" />
     <el-table-column label="role" prop="role" />
-    <el-table-column label="remark" prop="remark" />
+    <el-table-column label="tel" prop="tel" />
     <el-table-column label="Operations">
       <template #default="scope">
-        <el-button type="primary" @click="open_dialog({ kind: 'edit', item: scope.row })"> 编辑</el-button>
-        <el-button type="success" @click="open_dialog({ kind: 'info', item: scope.row })"> 详情</el-button>
-        <el-button type="danger" @click="open_dialog({ kind: 'delete', item: scope.row })"> 删除</el-button>
+        <el-button type="" @click="select_kind({ kind: 'info', item: scope.row })"> 详情</el-button>
+        <el-button type="primary" @click="select_kind({ kind: 'edit', item: scope.row })"> 编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
+
+
+
+  <div style="height: 50px">{{ tree.node }}</div>
+  <div style="height: 50px"> <el-button type="primary" v-show="is_edit" @click="submit"> 保存</el-button></div>
+  <div style="display: flex;">
+    <div style="flex: 1;">
+      <el-tree style="width:600px" :data="tree.data" :props="tree.props" :node-key="tree.id"
+        @node-click="tree_left_click" @node-contextmenu="tree_ritht_click" :expand-on-click-node="false"
+        highlight-current default-expand-all>
+        <template #default="{ node, data }">
+          <div class="custom-tree-node ">
+            <span style="margin-right: 20px">{{ node.label }}</span>
+            <div style="display: flex;gap:20px">
+              <div :class="{ btn_isactive: data.view }" @click="btn_click(data, 'view')">显示</div>
+              <div :class="{ btn_isactive: data.add }" @click="btn_click(data, 'add')">添加</div>
+              <div :class="{ btn_isactive: data.del }" @click="btn_click(data, 'del')">删除</div>
+              <div :class="{ btn_isactive: data.update }" @click="btn_click(data, 'update')">修改</div>
+              <div :class="{ btn_isactive: data.find }" @click="btn_click(data, 'find')">查询</div>
+            </div>
+          </div>
+
+        </template>
+      </el-tree>
+    </div>
+
+
+
+  </div>
+
 </template>
+
 <script>
+import com_tree1 from '@src/components/com_tree1.vue'
+
 export default {
+  components: {
+    com_tree1
+  },
   data() {
     return {
-      name: "数据1",
-      form: { role: "" },
-      tableData: []
+      role_list: [],
+      tree: {
+        props: {
+          children: 'children',
+          label: 'menu',
+          nodeKey: 'depart_id'
+        },
+        data: [],
+        node: {},
+        user_list: [],
+      },
+      menu_config: {
+        opt: [{ title: '编辑', kind: 'edit' }, { title: '新增', kind: 'add' }, { title: '删除', kind: 'delete' },],
+        opt_click: async (item, curr_data) => {
+          // console.log('item', item)
+          // console.log('curr_data', curr_data)
+          // if (item.kind == 'add') require('./depart_add_dialog.jsx')({ state: curr_data, that: this, arg: { kind: "depart_add", title: "部门-添加" } })
+          // if (item.kind == 'edit') require('./depart_edit_dialog.jsx')({ title: "部门-编辑", state: curr_data, item, that: this, })
+          // if (item.kind == 'delete') require('./depart_delete_dialog.jsx')({ state: curr_data, that: this, arg: { kind: "delete", title: "部门-删除" } })
+        }
+      },
+
+      is_edit: false,
+
+
+
     }
 
 
   },
 
   methods: {
-    async find_list() {
-      let config = { method: 'get', url: '/role/find_list', params: this.form }
-      let res = await axios_api(config)
-      console.log('res:', res)
-      this.tableData = res.result.roles
+    async init_data() {
+      let { role_list } = await api.tb_role.find_role_list()
+      this.role_list = role_list
+      console.log('role_list:', role_list)
+
+
     },//
 
-    async open_dialog({ kind, item }) {
-      if (kind == 'add') require('./role_add_dialog.jsx')({ item: item, that: this })
-      if (kind == 'edit') require('./role_edit_dialog.jsx')({ item: item, that: this })
-      if (kind == 'info') require('./role_info_dialog.jsx')({ item: item, that: this, arg: { kind: "info", title: "详情-角色"} })
+    async tree_left_click(node) {
 
-      if (kind == 'delete') {
-        let confirm = await ElMessageBox.confirm('确定删除吗', '删除提示', { cancelButtonText: '取消', confirmButtonText: '删除' })
-        if (confirm != 'confirm') return
-        let config = { method: 'get', url: `/role/delete?`, params: { id: item.id } }
-        let res = await axios_api(config)
-        console.log('res:', res)
-        res.code == 200 && await this.find_list()
+    },
+
+    tree_ritht_click(node) {
+      console.log('met_tree_ritht_click:', node)
+    },
+
+    async select_kind({ kind, item }) {
+      this.is_edit = false
+      console.log('select_kind:', kind, item)
+      if (kind == 'info') {
+        // let { menu_tree } = await api.tb_menu.find_menu_tree()
+        let result = await api.tb_menu.find_menu_tree_match_role_id({ role_id: item.id })
+        console.error('result:', result)
+        this.tree.data = result.menu_tree
+      }
+      if (kind == 'edit') {
+        this.is_edit = true
+        let result = await api.tb_menu.find_menu_tree_match_role_id({ role_id: item.id })
+        console.error('result:', result)
+        this.tree.data = result.menu_tree_match_role
       }
     },
+
+
+    async submit() {
+      console.log('submit:', this.tree.data)
+    },
+
+    async btn_click(data, kind) {
+      console.log('btn_click:', data, kind)
+      if (data[kind]) {
+        data[kind] = !data[kind]
+      } else {
+        data[kind] = true
+      }
+    },
+
+
+
+
   },////
 
   async mounted() {
-
-    await this.find_list()
-
+    this.init_data()
   },////
 
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+
+.btn_isactive {
+  color: green;
+}
+</style>

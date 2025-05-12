@@ -16,6 +16,11 @@
         <el-table-column label="序号" type="index" width="60px" />
         <el-table-column label="username" prop="username" />
         <el-table-column label="tel" prop="tel" />
+        <el-table-column label="Operations">
+          <template #default="scope">
+            <el-button type="primary" @click="depart_kind({ kind: 'info', item: scope.row })"> 详情</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
 
@@ -89,6 +94,26 @@ export default {
     tree_ritht_click(node) {
       console.log('met_tree_ritht_click:', node)
     },
+
+
+    async depart_kind({kind,item}){
+      console.log('kind:', kind)     
+      console.log('item:', item)         
+
+      if (kind == 'info'){
+
+
+        let { menus_tree } = await api.tb_depart.find_depart_ref({}) 
+        let form={username:item.username,tel:item.tel,password:item.password,menus_tree}
+
+
+        require('./user_info_dialog.jsx')({ state: form, that: this, arg: { kind: "info", title: "部门-添加" } })
+      }
+
+
+
+      
+    }
 
   },////
 
