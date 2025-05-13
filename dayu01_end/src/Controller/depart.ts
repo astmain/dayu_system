@@ -239,6 +239,21 @@ export class depart {
         return tool.R.ok({msg: "成功/find_depart_ref", result: {menus_tree}})
     }
 
+
+    @tool.Dec_public()
+    @tool.Get_form("getAllDepartmentsWithPositions", "/查询_部门角色关系2", [])
+    async getAllDepartmentsWithPositions(@Query() form) {
+        const depart_position = await db.tb_depart.findMany({
+            where: { add: true },
+            include: {
+                ref_position: true
+            }
+        })
+
+
+        return tool.R.ok({msg: "成功/getAllDepartmentsWithPositions", result: {depart_position}})
+    }
+
 }
 
 

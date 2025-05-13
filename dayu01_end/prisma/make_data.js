@@ -104,6 +104,69 @@ async function make_data() {
     await db.ref_menu_permiss.createMany({data: ref_menu_permiss})
 
 
+    const hr = await db.tb_depart.create({
+        data: {
+            depart: '人力资源部',
+            add: true,
+            del: true,
+            update: true,
+            look: true,
+            parent_id: 0,
+            ref_position: {
+                create: [
+                    { position: 'HR总监' },
+                    { position: '招聘专员' },
+                    { position: '培训专员' },
+                    { position: '薪酬福利专员' }
+                ]
+            }
+        }
+    })
+
+    const it = await db.tb_depart.create({
+        data: {
+            depart: '信息技术部',
+            add: true,
+            del: true,
+            update: true,
+            look: true,
+            parent_id: 0,
+            ref_position: {
+                create: [
+                    { position: 'CTO' },
+                    { position: '前端开发工程师' },
+                    { position: '后端开发工程师' },
+                    { position: '测试工程师' },
+                    { position: '运维工程师' }
+                ]
+            }
+        }
+    })
+
+    const finance = await db.tb_depart.create({
+        data: {
+            depart: '财务部',
+            add: true,
+            del: false,
+            update: true,
+            look: true,
+            parent_id: 0,
+            ref_position: {
+                create: [
+                    { position: '财务总监' },
+                    { position: '会计' },
+                    { position: '出纳' }
+                ]
+            }
+        }
+    })
+
+    console.log({ hr, it, finance })
+
+
+
+
+
 
     console.error('成功:初始化表');
 }
