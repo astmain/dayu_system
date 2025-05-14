@@ -22,7 +22,7 @@ export default function build_tree({arr, key_id = "id", key_parent = 'parent_id'
                 });
             }
             //自定义children中的字段
-            o.name = o.menu;
+            o.name = o.menu ? o.menu : o.name
             o.path_full = o.path;
             menu_tree.push(o);
         }

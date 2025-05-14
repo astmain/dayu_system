@@ -1,67 +1,189 @@
-// 生成菜单树
-
-//调用方式 const menuTree = menu_get_menus_tree({menus:menus_flat});
-function build_menus_tree({ menus, key_id = "depart_id", key_parent = 'parent_id', parentId = 0}) {
-    menus = JSON.parse(JSON.stringify(menus))
-    const menu_tree = []
-    for (const o of menus) {
-        if (o[key_parent] === parentId) {
-            const children = build_menus_tree({ menus, key_id: key_id, key_parent: key_parent, parentId: o[key_id] });
-            if (children.length > 0) {
-                o.children = children;
-                o.children.forEach(child => {
-                    //自定义children中的字段
-                    // child.parent_id = o[key_id];
-                    // child.parent_menu = o.menu;
-                    // child.parent_name = o.name;
-                    // child.parent_path = o.path;
-                    if (o.path + child.path) {
-                        child.path_full = o.path + child.path
-                    }
-
-                });
+aaa=[
+    {
+        "id": 1,
+        "menu": "首页",
+        "path": "/home",
+        "add": true,
+        "del": true,
+        "update": true,
+        "find": true,
+        "view": true,
+        "parent_id": 0,
+        "name": "首页",
+        "path_full": "/home"
+    },
+    {
+        "id": 2,
+        "menu": "关于",
+        "path": "/about",
+        "add": true,
+        "del": true,
+        "update": true,
+        "find": true,
+        "view": true,
+        "parent_id": 0,
+        "name": "关于",
+        "path_full": "/about"
+    },
+    {
+        "id": 3,
+        "menu": "设置",
+        "path": "/setting",
+        "add": true,
+        "del": true,
+        "update": true,
+        "find": true,
+        "view": true,
+        "parent_id": 0,
+        "name": "设置",
+        "path_full": "/setting"
+    },
+    {
+        "id": 4,
+        "menu": "订单管理",
+        "path": "/order_manage",
+        "add": false,
+        "del": false,
+        "update": false,
+        "find": false,
+        "view": false,
+        "parent_id": 0,
+        "name": "订单管理",
+        "path_full": "/order_manage"
+    },
+    {
+        "id": 5,
+        "menu": "权限管理",
+        "path": "/system",
+        "add": false,
+        "del": false,
+        "update": false,
+        "find": false,
+        "view": false,
+        "parent_id": 0,
+        "children": [
+            {
+                "id": 6,
+                "menu": "用户管理",
+                "path": "/user/user",
+                "add": false,
+                "del": false,
+                "update": false,
+                "find": false,
+                "view": false,
+                "parent_id": 5,
+                "name": "用户管理",
+                "path_full": "/system/user/user"
+            },
+            {
+                "id": 7,
+                "menu": "菜单管理",
+                "path": "/menu/menu",
+                "add": false,
+                "del": false,
+                "update": false,
+                "find": false,
+                "view": false,
+                "parent_id": 5,
+                "name": "菜单管理",
+                "path_full": "/system/menu/menu"
+            },
+            {
+                "id": 8,
+                "menu": "角色管理",
+                "path": "/role/role",
+                "add": false,
+                "del": false,
+                "update": false,
+                "find": false,
+                "view": false,
+                "parent_id": 5,
+                "name": "角色管理",
+                "path_full": "/system/role/role"
             }
-            //自定义children中的字段
-            o.name = o.menu;
-            o.path_full = o.path;
-            menu_tree.push(o);
-        }
+        ],
+        "name": "权限管理",
+        "path_full": "/system"
+    },
+    {
+        "id": 666,
+        "menu": "商品管理",
+        "path": "/mall_goods",
+        "add": false,
+        "del": false,
+        "update": false,
+        "find": false,
+        "view": false,
+        "parent_id": 0,
+        "name": "商品管理",
+        "path_full": "/mall_goods"
+    },
+    {
+        "id": 777,
+        "menu": "商城购物",
+        "path": "/mall_shop",
+        "add": false,
+        "del": false,
+        "update": false,
+        "find": false,
+        "view": false,
+        "parent_id": 0,
+        "name": "商城购物",
+        "path_full": "/mall_shop"
+    },
+    {
+        "id": 888,
+        "menu": "购物订单",
+        "path": "/mall_order",
+        "add": false,
+        "del": false,
+        "update": false,
+        "find": false,
+        "view": false,
+        "parent_id": 0,
+        "name": "购物订单",
+        "path_full": "/mall_order"
+    },
+    {
+        "id": 999,
+        "menu": "购物车",
+        "path": "/mall_car",
+        "add": false,
+        "del": false,
+        "update": false,
+        "find": false,
+        "view": false,
+        "parent_id": 0,
+        "name": "购物车",
+        "path_full": "/mall_car"
     }
-    return menu_tree;
+]
+
+/**
+ * 将树形菜单数据平坦化
+ * @param {Array} treeData - 树形菜单数据
+ * @returns {Array} - 平坦化后的菜单数据
+ */
+function build_tree_flat(treeData) {
+    const result = [];
+    
+    function flatten(items) {
+        items.forEach(item => {
+            // 创建新对象，不包含children属性
+            const { children, ...rest } = item;
+            result.push(rest);
+            
+            // 如果有子节点，递归处理
+            if (children && children.length > 0) {
+                flatten(children);
+            }
+        });
+    }
+    
+    flatten(treeData);
+    return result;
 }
 
-
-let tb_depart = [
-    { depart_id: 1, depart: "大宇三维打印", parent_id: 0 }, //总公司
-    { depart_id: 3, depart: "客户", parent_id: 1 },        //客户
-    { depart_id: 10000, depart: "用户", parent_id: 1 },    //用户
-    { depart_id: 20000, depart: "技术部", parent_id: 1 },  //技术部
-    //
-    { depart_id: 30000, depart: "泉州分公司", parent_id: 1 },//泉州分公司
-    { depart_id: 30001, depart: "财务部", parent_id: 30000 },//财务部
-    { depart_id: 30002, depart: "业务部", parent_id: 30000 },//业务部
-    //
-    { depart_id: 40000, depart: "德化分公司", parent_id: 1 },//德化分公司
-    { depart_id: 40001, depart: "财务部", parent_id: 40000 },//财务部
-    { depart_id: 40002, depart: "业务部", parent_id: 40000 },//业务部
-]
-let tb_menu = [
-    { menu_id: 1, menu: "首页", path: "/home", parent_id: 0 },
-    { menu_id: 2, menu: "关于", path: "/about", parent_id: 0 },
-    { menu_id: 3, menu: "设置", path: "/setting", parent_id: 0 },
-    { menu_id: 4, menu: "订单管理", path: "/order_manage", parent_id: 0 },
-    { menu_id: 5, menu: "权限管理", path: "/system", parent_id: 0 },//权限管理 5
-    { menu_id: 6, menu: "用户管理", path: "/user/user", parent_id: 5 },
-    { menu_id: 7, menu: "菜单管理", path: "/menu/menu", parent_id: 5 },
-    { menu_id: 666, menu: "商品管理", path: "/mall_goods", parent_id: 0 },
-    { menu_id: 777, menu: "商城购物", path: "/mall_shop", parent_id: 0 },
-    { menu_id: 888, menu: "购物订单", path: "/mall_order", parent_id: 0 },
-    { menu_id: 999, menu: "购物车", path: "/mall_car", parent_id: 0 },
-]
-
-
-
-
-
-console.log(JSON.stringify(build_menus_tree({ menus: tb_menu, key_id: 'menu_id', key_parent: 'parent_id' }), null, 2));
-console.log(JSON.stringify(build_menus_tree({ menus: tb_depart, key_id: 'depart_id', key_parent: 'parent_id' }), null, 2));
+// 使用示例
+const flattenedData = build_tree_flat(aaa);
+console.log('平坦化后的数据:', flattenedData);

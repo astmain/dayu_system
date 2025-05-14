@@ -1,0 +1,116 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\dayu01_end\prisma\dev.db            在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// =======================================
+model tb_user {
+  id       Int    @id @default(autoincrement())
+  tel      String @unique
+  password String @default("123456")
+  username String @default("")
+}
+
+model tb_menu {
+  id        Int     @id @default(autoincrement())
+  menu      String  @default("")
+  path      String  @default("")
+  add       Boolean @default(false)
+  del       Boolean @default(false)
+  update    Boolean @default(false)
+  find      Boolean @default(false)
+  view      Boolean @default(false)
+  parent_id Int
+}
+
+model tb_depart {
+  id        Int     @id @default(autoincrement())
+  depart    String  @default("")
+  add       Boolean @default(false)
+  del       Boolean @default(false)
+  update    Boolean @default(false)
+  look      Boolean @default(false)
+  parent_id Int
+}
+
+model ref_depart_user {
+  id        Int @id @default(autoincrement())
+  user_id   Int
+  depart_id Int
+}
+
+model tb_role {
+  id   Int    @id @default(autoincrement())
+  role String @default("")
+}
+
+model ref_menu_permiss {
+  id      Int     @id @default(autoincrement())
+  add     Boolean @default(false)
+  del     Boolean @default(false)
+  update  Boolean @default(false)
+  find    Boolean @default(false)
+  view    Boolean @default(false)
+  menu_id Int     @default(0)
+  role_id Int     @default(0)
+}
+
+//---------------------------------------------------
+model Company {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  // 关联关系
+  departments Department[]
+}
+
+model Department {
+  id        Int    @id @default(autoincrement())
+  name      String
+  companyId Int
+
+  // 关联关系
+  company   Company    @relation(fields: [companyId], references: [id])
+  positions Position[]
+
+  @@unique([companyId, name]) // 同一公司内部门名称唯一
+}
+
+model Position {
+  id           Int    @id @default(autoincrement())
+  name         String
+  departmentId Int
+
+  // 关联关系
+  department    Department     @relation(fields: [departmentId], references: [id])
+  rolePositions RolePosition[]
+
+  @@unique([departmentId, name])
+}
+
+model Role {
+  name String @unique
+  id   Int    @id @default(autoincrement())
+
+  // 关联关系
+  rolePositions RolePosition[]
+}
+
+model RolePosition {
+  roleId     Int      @id @default(autoincrement())
+  positionId Int
+  role       Role     @relation(fields: [roleId], references: [id])
+  position   Position @relation(fields: [positionId], references: [id])
+
+  @@unique([roleId, positionId]) // 角色与职位的组合唯一
+}

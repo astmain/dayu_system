@@ -1,69 +1,117 @@
+arr = [
+  {
+    "id": 77778,
+    "depart": "人力资源部",
+    "add": true,
+    "del": true,
+    "update": true,
+    "look": true,
+    "parent_id": 0,
+    "ref_position": [
+      {
+        "id": 1,
+        "position": "HR总监",
+        "depart_id": 77778
+      },
+      {
+        "id": 2,
+        "position": "招聘专员",
+        "depart_id": 77778
+      },
+      {
+        "id": 3,
+        "position": "培训专员",
+        "depart_id": 77778
+      },
+      {
+        "id": 4,
+        "position": "薪酬福利专员",
+        "depart_id": 77778
+      }
+    ]
+  },
+  {
+    "id": 77779,
+    "depart": "信息技术部",
+    "add": true,
+    "del": true,
+    "update": true,
+    "look": true,
+    "parent_id": 0,
+    "ref_position": [
+      {
+        "id": 5,
+        "position": "CTO",
+        "depart_id": 77779
+      },
+      {
+        "id": 6,
+        "position": "前端开发工程师",
+        "depart_id": 77779
+      },
+      {
+        "id": 7,
+        "position": "后端开发工程师",
+        "depart_id": 77779
+      },
+      {
+        "id": 8,
+        "position": "测试工程师",
+        "depart_id": 77779
+      },
+      {
+        "id": 9,
+        "position": "运维工程师",
+        "depart_id": 77779
+      }
+    ]
+  },
+  {
+    "id": 77780,
+    "depart": "财务部",
+    "add": true,
+    "del": false,
+    "update": true,
+    "look": true,
+    "parent_id": 0,
+    "ref_position": [
+      {
+        "id": 10,
+        "position": "财务总监",
+        "depart_id": 77780
+      },
+      {
+        "id": 11,
+        "position": "会计",
+        "depart_id": 77780
+      },
+      {
+        "id": 12,
+        "position": "出纳",
+        "depart_id": 77780
+      }
+    ]
+  }
+]
 
-// console.log(JSON.stringify(build_tree({ arr: tb_menu, key_id: 'menu_id', key_parent: 'parent_id' }), null, 2));
-// console.log(JSON.stringify(build_tree({ arr: tb_depart, key_id: 'depart_id', key_parent: 'parent_id' }), null, 2));
+
+//js将ref_position 字段替换成 childern
+
+function transformDepartments(data, key_old, key_new) {
+  return data.map(o => {
 
 
-function build_tree({ arr, key_id = "depart_id", key_parent = 'parent_id', parentId = 0}) {
-    arr = JSON.parse(JSON.stringify(arr))
-    const menu_tree = []
-    for (const o of arr) {
-        if (o[key_parent] === parentId) {
-            const children = build_tree({ arr, key_id: key_id, key_parent: key_parent, parentId: o[key_id] });
-            if (children.length > 0) {
-                o.children = children;
-                o.children.forEach(child => {
-                    //自定义children中的字段
-                    // child.parent_id = o[key_id];
-                    // child.parent_menu = o.menu;
-                    // child.parent_name = o.name;
-                    // child.parent_path = o.path;
-                    if (o.path + child.path) {
-                        child.path_full = o.path + child.path
-                    }
 
-                });
-            }
-            //自定义children中的字段
-            o.name = o.menu;
-            o.path_full = o.path;
-            menu_tree.push(o);
-        }
-    }
-    return menu_tree;
+    let ele = { ...o }
+    ele[key_new] = o[key_old]
+    ele[key_old] = undefined
+    delete ele[key_old]
+
+    return ele
+  });
 }
 
+arr = transformDepartments(arr, "ref_position", 'children')
+arr = transformDepartments(arr, "depart", 'name')
 
-let tb_depart = [
-    { depart_id: 1, depart: "大宇三维打印", parent_id: 0 }, //总公司
-    { depart_id: 3, depart: "客户", parent_id: 1 },        //客户
-    { depart_id: 10000, depart: "用户", parent_id: 1 },    //用户
-    { depart_id: 20000, depart: "技术部", parent_id: 1 },  //技术部
-    //
-    { depart_id: 30000, depart: "泉州分公司", parent_id: 1 },//泉州分公司
-    { depart_id: 30001, depart: "财务部", parent_id: 30000 },//财务部
-    { depart_id: 30002, depart: "业务部", parent_id: 30000 },//业务部
-    //
-    { depart_id: 40000, depart: "德化分公司", parent_id: 1 },//德化分公司
-    { depart_id: 40001, depart: "财务部", parent_id: 40000 },//财务部
-    { depart_id: 40002, depart: "业务部", parent_id: 40000 },//业务部
-]
-let tb_menu = [
-    { menu_id: 1, menu: "首页", path: "/home", parent_id: 0 },
-    { menu_id: 2, menu: "关于", path: "/about", parent_id: 0 },
-    { menu_id: 3, menu: "设置", path: "/setting", parent_id: 0 },
-    { menu_id: 4, menu: "订单管理", path: "/order_manage", parent_id: 0 },
-    { menu_id: 5, menu: "权限管理", path: "/system", parent_id: 0 },//权限管理 5
-    { menu_id: 6, menu: "用户管理", path: "/user/user", parent_id: 5 },
-    { menu_id: 7, menu: "菜单管理", path: "/menu/menu", parent_id: 5 },
-    { menu_id: 666, menu: "商品管理", path: "/mall_goods", parent_id: 0 },
-    { menu_id: 777, menu: "商城购物", path: "/mall_shop", parent_id: 0 },
-    { menu_id: 888, menu: "购物订单", path: "/mall_order", parent_id: 0 },
-    { menu_id: 999, menu: "购物车", path: "/mall_car", parent_id: 0 },
-]
-
-
-
-
-
-// console.log(JSON.stringify(build_tree({ arr: tb_menu, key_id: 'menu_id', key_parent: 'parent_id' }), null, 2));
-console.log(JSON.stringify(build_tree({ arr: tb_depart, key_id: 'depart_id', key_parent: 'parent_id' }), null, 2));
+console.log('111---:', JSON.stringify(arr,null,2))

@@ -34,6 +34,8 @@ async function make_data() {
         {id: 5, menu: "权限管理", path: "/system", parent_id: 0},//权限管理 5
         {id: 6, menu: "用户管理", path: "/user/user", parent_id: 5},
         {id: 7, menu: "菜单管理", path: "/menu/menu", parent_id: 5},
+        {id: 8, menu: "角色管理", path: "/role/role", parent_id: 5},
+        {id: 9, menu: "部门设置职位", path: "/depart/depart", parent_id: 5},
         {id: 666, menu: "商品管理", path: "/mall_goods", parent_id: 0},
         {id: 777, menu: "商城购物", path: "/mall_shop", parent_id: 0},
         {id: 888, menu: "购物订单", path: "/mall_order", parent_id: 0},
@@ -54,8 +56,28 @@ async function make_data() {
         {user_id: 3, depart_id: 40001},
         //客户
         {user_id: 7, depart_id: 77777},
+    ]
 
-
+    let tb_role = [
+        {id: 1, role: "技术部-主管"},
+        {id: 2, role: "技术部-副主管"},
+        {id: 3, role: "技术部-职员"},
+        {id: 4, role: "泉州分公司-财务部-主管"},
+        {id: 5, role: "泉州分公司-财务部-副主管"},
+        {id: 6, role: "泉州分公司-财务部-职员"},
+        {id: 7, role: "内部人员"},
+        {id: 8, role: "泉州分公司-业务部-主管"},
+        {id: 9, role: "泉州分公司-业务部-副主管"},
+        {id: 10, role: "泉州分公司-业务部-职员"},
+        {id: 11, role: "客户"},
+        {id: 12, role: "德化分公司-财务部-主管"},
+        {id: 13, role: "德化分公司-财务部-副主管"},
+        {id: 14, role: "德化分公司-财务部-职员"},
+    ]
+    let ref_menu_permiss = [
+        {menu_id: 1, role_id: 1, add: true, del: true, update: true, find: true, view: true,},
+        {menu_id: 2, role_id: 1, add: true, del: true, update: true, find: true, view: true,},
+        {menu_id: 3, role_id: 1, add: true, del: true, update: true, find: true, view: true,},
     ]
 
 
@@ -72,6 +94,78 @@ async function make_data() {
     ////关联-部门-用户
     await db.ref_depart_user.deleteMany();
     await db.ref_depart_user.createMany({data: ref_depart_user})
+
+    ////关联-部门-用户
+    await db.tb_role.deleteMany();
+    await db.tb_role.createMany({data: tb_role})
+
+    ////关联-菜单权限
+    await db.ref_menu_permiss.deleteMany();
+    await db.ref_menu_permiss.createMany({data: ref_menu_permiss})
+
+
+    const hr = await db.tb_depart.create({
+        data: {
+            depart: '人力资源部',
+            add: true,
+            del: true,
+            update: true,
+            look: true,
+            parent_id: 0,
+            ref_position: {
+                create: [
+                    { position: 'HR总监' },
+                    { position: '招聘专员' },
+                    { position: '培训专员' },
+                    { position: '薪酬福利专员' }
+                ]
+            }
+        }
+    })
+
+    const it = await db.tb_depart.create({
+        data: {
+            depart: '信息技术部',
+            add: true,
+            del: true,
+            update: true,
+            look: true,
+            parent_id: 0,
+            ref_position: {
+                create: [
+                    { position: 'CTO' },
+                    { position: '前端开发工程师' },
+                    { position: '后端开发工程师' },
+                    { position: '测试工程师' },
+                    { position: '运维工程师' }
+                ]
+            }
+        }
+    })
+
+    const finance = await db.tb_depart.create({
+        data: {
+            depart: '财务部',
+            add: true,
+            del: false,
+            update: true,
+            look: true,
+            parent_id: 0,
+            ref_position: {
+                create: [
+                    { position: '财务总监' },
+                    { position: '会计' },
+                    { position: '出纳' }
+                ]
+            }
+        }
+    })
+
+    console.log({ hr, it, finance })
+
+
+
+
 
 
     console.error('成功:初始化表');

@@ -3,6 +3,8 @@ import {Get_form} from "./Get_form"
 import R from "./R"
 import build_tree from "./build_tree"
 import build_tree_ids from "./build_tree_ids"
+import build_tree_arr_flat from "./build_tree_arr_flat";
+
 //     树桩结构
 
 let tool = {
@@ -13,7 +15,8 @@ let tool = {
     Get_form: Get_form,
     // 数据处理=========================
     build_tree,
-    build_tree_ids
+    build_tree_ids,
+    build_tree_arr_flat,
 
 }
 
