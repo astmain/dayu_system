@@ -316,7 +316,6 @@ export class depart {
         console.log(`111---form:`, form)
         form.id = Number(form.id)
         console.log(`222---form:`, form)
-
         await db.tb_depart.update({
             where: {id: form.id},
             data: {
