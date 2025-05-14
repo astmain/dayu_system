@@ -22,7 +22,9 @@
   <div style="display: flex;">
     <div style="flex: 1;">
       <el-tree style="width:600px" :data="tree.data" :props="tree.props" :node-key="tree.id"
-        @node-click="tree_left_click" @node-contextmenu="tree_ritht_click" :expand-on-click-node="false"
+        @node-click="tree_left_click" 
+        @node-contextmenu="tree_ritht_click" 
+        :expand-on-click-node="false"
         highlight-current default-expand-all>
         <template #default="{ node, data }">
           <div class="custom-tree-node ">
