@@ -15,3 +15,9 @@ npx prisma generate                生成代码
 // prisma/schema.prisma    家里     E:\AAA\react18_electron_preload\api_end\prisma\dev.db
 
 
+
+
+# 小满nestjs
+https://blog.csdn.net/qq1195566313/category_11844396.html
+
+
