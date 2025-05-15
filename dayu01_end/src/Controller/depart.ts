@@ -42,7 +42,9 @@ export class depart {
             let refs_user_id = await db.ref_depart_user.findMany({where: {depart_id: {in: notin_ids_7777}}})
             let notIn_user_ids = refs_user_id.map(item => item.user_id)
             // 排除客户
-            let user_list = await db.tb_user.findMany({where: {id: {notIn: notIn_user_ids}}})
+            let user_list = await db.tb_user.findMany({
+                where: {id: {notIn: notIn_user_ids}}
+            })
             console.log(`333---user_list:`, user_list)
             return tool.R.ok({msg: "成功/find_user_list_BY_depart_id", result: {user_list, kind: "筛选用户10000"}})
         }
@@ -285,6 +287,7 @@ export class depart {
         console.log(`222---form:`, form)
 
         if (form.is_position) {
+            console.log(`111---职位:`,         111    )
             await db.ref_position.update({
                 where: {id: form.id},
                 data: {
@@ -294,6 +297,7 @@ export class depart {
         }
 
         if (!form.is_position) {
+            console.log(`222---部门:`,         111    )
             await db.tb_depart.update({
                 where: {id: form.id},
                 data: {

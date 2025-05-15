@@ -71,7 +71,8 @@ export class menu {
     @ApiOperation({summary: '保存_角色_详细_权限信息'})
     @Post("/update_ref_menu_permiss")
     async update_ref_menu_permiss(@Body() form: DTO_role_id_menu_permiss) {
-        // console.log(`form`, form)
+        console.log(`111---update_ref_menu_permiss:`,     333        )
+        console.log(`form`, form)
         let arr_flat = tool.build_tree_arr_flat(form.tree_data)
         // console.log(`111---arr_flat:`, arr_flat)
         let one1111 = await db.ref_menu_permiss.findMany({where: {menu_id: 1, role_id: 1}})
