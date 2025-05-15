@@ -8,6 +8,8 @@ import {PrismaClient} from "@prisma/client";
 import tool from "../tool";
 import {Service_test} from "../Service/Service_test"
 import {Service_app} from "../Service/Service_app";
+import {DTO_test_pipe} from "../DTO/DTO_test_pipe";
+import {DTO_test} from "../DTO/DTO_test";
 
 
 let db = new PrismaClient()
@@ -55,6 +57,14 @@ export class test {
     async Post_Request(@Request() request) {
         console.log(`111---222:`, request.body)
         return {code: 200}
+    }
+
+
+    @tool.Dec_public()
+    @Post("test_login")
+    async test_login(@Body(DTO_test_pipe) body: DTO_test) {
+        console.log(`111---body:`, body)
+        return tool.R.ok({msg: "成功/test_login", result: {}})
     }
 
 
