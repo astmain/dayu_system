@@ -27,7 +27,8 @@ import {global_module} from "./Module/global_module";
         __role,
         __menu,
     //
-        global_module
+    //     global_module,
+        global_module.make_path({path: "/app.json"}),
 
 
     ],
