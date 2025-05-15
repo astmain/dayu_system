@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {upload} from '../Controller/upload';
+import {static_file} from '../Controller/static_file';
 import {MulterModule} from '@nestjs/platform-express'
 import {diskStorage} from 'multer'
 import {extname, join} from 'path';
@@ -28,9 +28,9 @@ import {extname, join} from 'path';
 
 
         })],
-    controllers: [upload],
+    controllers: [static_file],
     providers: [],
 })
-export class __upload {
+export class __static_file {
 }
 

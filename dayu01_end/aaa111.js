@@ -1,22 +1,15 @@
-function build_tree_ids({list, val, key, ref}) {
-    const result = [];
-
-    // 递归查找所有子部门
-    function findChildren(val) {
-        list.forEach(item => {
-            if (item[ref] === val) {
-                result.push(item);
-                findChildren(item[key]); // 继续查找当前部门的子部门
-            }
-        });
+function build_tree_ids({list = [], val, key, ref}) {
+    let result = [];
+    for (let i = 0; i < list.length; i++) {
+        let ele = list[i]
+        if (val === ele[ref]) {
+            result.push(ele[key])
+        }
     }
-
-    findChildren(val);
-
-    let ids = [];
-    ids = result.map(o => o[key]);
-    console.log(`111---222:`, ids)
-    return ids;
+    // console.log(`111---result:`, result)
+    let result2 = [val, ...result]
+    // console.log(`111---result2:`, result2)
+    return result2
 }
 
 let tb_depart = [//
@@ -34,6 +27,5 @@ let tb_depart = [//
     {id: 40002, depart: "业务部", parent_id: 40000},//业务部
 ]
 // 根据id=30000得到所有得子部门（泉州分公司）的所有子部门
-// const ids = build_tree_ids({list: tb_depart, val: 30000, key: "id", ref: "parent_id"});
-const ids = build_tree_ids({list: tb_depart, val: 1, key: "id", ref: "parent_id"});
+const ids = build_tree_ids({list: tb_depart, val: 30000, key: "id", ref: "parent_id"});
 console.log(ids);
