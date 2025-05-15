@@ -6,6 +6,7 @@ import {__depart} from './Module/depart'
 import {__user} from './Module/user'
 import {__role} from './Module/role'
 import {__menu} from './Module/menu'
+import {__upload} from './Module/upload'
 
 //
 import {appController} from './app.Controller'
@@ -14,7 +15,6 @@ import {Service_app} from './Service/Service_app'
 
 //
 import {global_module} from "./Module/global_module";
-
 
 
 @Module({
@@ -26,15 +26,17 @@ import {global_module} from "./Module/global_module";
         __user,
         __role,
         __menu,
-    //
-    //     global_module,
+        // 上传资源
+        __upload,
+        //
+        //     global_module,
         global_module.make_path({path: "/app.json"}),
 
 
     ],
     controllers: [appController],
     providers: [Service_app, Service_test],
-    exports : [Service_app,Service_test],
+    exports: [Service_app, Service_test],
 
 
 })

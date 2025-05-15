@@ -19,14 +19,14 @@ export class appController {
     constructor(private readonly service_test: Service_test) {
     }
 
-    // @tool.Dec_public()
+    @tool.Dec_public()
     @Get("Request")
     async Request(@Request() request) {
         console.log(`111---222:`, request.query)
         return {code: 200}
     }
 
-    // @tool.Dec_public()
+    @tool.Dec_public()
     @Get("Query")
     async Query(@Query() query, @Headers() header) {
         console.log(`111---query:`, query)

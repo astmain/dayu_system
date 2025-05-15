@@ -1,14 +1,23 @@
 import {NestFactory} from '@nestjs/core'
+
+import {NestExpressApplication} from '@nestjs/platform-express'
+import { join } from 'path'
+
+// 自定义
 import {AppModule} from './app.module'
 import {config_docs} from "./config_docs"
 
 
+
+import {Config_logger_global_middleware} from "./Config_logger_global_middleware"
+
+
 async function bootstrap() {
-    let app_http = await NestFactory.create(AppModule, {cors: true})
+    let app_http = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true})
+    app_http.useStaticAssets(join(__dirname,  'static'),{prefix:"/static"})   //      http://127.0.0.1:3000/static/1747306430929.png
     let main = config_docs(app_http, 3000)
+    main.app.use(Config_logger_global_middleware)
     await main.app.listen(main.port);
-
-
 
 
     // 使用证书
