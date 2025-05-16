@@ -17,3 +17,7 @@ packages:
   
   - "dayu01_web"     #前端
   - "dayu01_end"     #后端
+  
+  
+  - "dayu02_web"     #前端
+  - "dayu02_end"     #后端
