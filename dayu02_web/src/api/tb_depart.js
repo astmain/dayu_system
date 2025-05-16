@@ -34,15 +34,6 @@ let tb_depart = {
 
 
 
-    getAllDepartmentsWithPositions: async () => {
-        let tag = "getAllDepartmentsWithPositions"
-        let config = { method: "get", url: "/depart/getAllDepartmentsWithPositions" }
-        console.log(tag, 'config:', config)
-        const res = await axios_api(config)
-        console.log(tag, 'res:', res)
-        // res.code === 200 ? ElMessage.success({ message: res.msg, duration: 1 * 1000, showClose: true }) : 0
-        return { depart_position: res.result.depart_position }
-    },
 
 
     update_DepartmentsWithPositions: async ({ is_position, id, name }) => {

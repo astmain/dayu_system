@@ -21,3 +21,7 @@ npx prisma generate                生成代码
 https://blog.csdn.net/qq1195566313/category_11844396.html
 
 
+# Prisma中间件和集成
+https://chatgpt.com/share/6826f6ff-f6a0-800c-9288-244d6ac5ef0f
+
+

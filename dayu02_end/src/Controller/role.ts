@@ -18,23 +18,6 @@ let db = new PrismaClient()
 export class role {
 
 
-    @tool.Get_form("find_role_list", "/角色_列表", [])
-    async find_role_list(@Query() form) {
-        console.log(`form`, form)
-        let role_list = await db.tb_role.findMany()
-        return tool.R.ok({msg: "成功/find_role_list", result: {role_list}})
-    }
-
-
-    @tool.Get_form("find_role_ref_menu_tree", "/角色_管理_菜单树", [])
-    async find_departs_tree(@Query() form) {
-        console.log(`form`, form)
-        let tb_menu = await db.tb_menu.findMany()
-        let role_ref_menu_tree = tool.build_tree({arr: tb_menu, key_id: 'menu_id', key_parent: 'parent_id'})
-        console.log(`111---role_ref_menu_tree:`, role_ref_menu_tree)
-        return tool.R.ok({msg: "成功/find_role_ref_menu_tree", result: {role_ref_menu_tree}})
-    }
-
 
 
 
