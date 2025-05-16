@@ -1,0 +1,57 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\dayu01_end\prisma\dev.db            在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// =======================================
+model tb_user {
+  id        Int         @id @default(autoincrement())
+  tel       String      @unique
+  password  String      @default("123456")
+  username  String      @default("")
+  tb_depart tb_depart[]
+}
+
+model tb_depart {
+  id   Int    @id @default(autoincrement())
+  name String @default("")
+
+  parent_id  Int
+  // 部门关联子部门
+  ref_depart ref_depart[]
+  // 部门管理user
+  user_id    Int
+  tb_user    tb_user      @relation(fields: [user_id], references: [id])
+  // 功能
+  look       Boolean      @default(true)
+  edit       Boolean      @default(true)
+  delte      Boolean      @default(true)
+  update     Boolean      @default(true)
+}
+
+model ref_depart {
+  id        Int       @id @default(autoincrement())
+  name      String    @default("")
+  depart_id Int
+  tb_depart tb_depart @relation(fields: [depart_id], references: [id])
+  // 功能
+  look      Boolean   @default(true)
+  edit      Boolean   @default(true)
+  delte     Boolean   @default(true)
+  update    Boolean   @default(true)
+}
+
+model tb_menu {
+  id   Int    @id @default(autoincrement())
+  name String @default("")
+}

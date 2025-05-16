@@ -1,0 +1,17 @@
+// 测试11111111111111111111111111111111
+// 测试一对一关系,111111==================================================
+// 测试一对一关系,111111==================================================
+// 测试一对一关系,111111==================================================
+
+model tb_account {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  rel_1 rel_1? // 一对一关系（可选）
+}
+
+model rel_1 {
+  id         Int        @id @default(autoincrement())
+  bio        String
+  tb_account tb_account @relation(fields: [account_id], references: [id])
+  account_id Int        @unique
+}

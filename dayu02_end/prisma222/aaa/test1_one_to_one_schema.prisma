@@ -1,0 +1,29 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\dayu01_end\prisma\dev.db            在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+
+model tb_account {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  rel_1 rel_1? // 一对一关系（可选）
+}
+
+model rel_1 {
+  id         Int    @id @default(autoincrement())
+  bio        String
+  tb_account User   @relation(fields: [acc_id], references: [id]) // 本表user_id         原表tb_account的id
+  acc_id     Int    @unique // 确保一对一
+}
+
