@@ -5,8 +5,8 @@ import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 import {extname, join} from 'path';
 // import {zip} from 'compressing'
 import {FileInterceptor} from '@nestjs/platform-express' //单文件上传
-import type { Response } from 'express'
-import { diskStorage } from 'multer';
+import type {Response} from 'express'
+import {diskStorage} from 'multer';
 // 自定义
 import util from "../util/index";
 import {PrismaClient} from "@prisma/client";
@@ -25,7 +25,7 @@ export class static_file {
 
     @tool.Dec_public()
     @ApiOperation({summary: '单文件上传'})
-    @UseInterceptors(FileInterceptor("file",{
+    @UseInterceptors(FileInterceptor("file", {
         storage: diskStorage({
             // 指定文件存储路径
             destination: './src/static',
@@ -49,7 +49,7 @@ export class static_file {
     @Post("/upload_one")
     async upload_one(@UploadedFile() file) {
         console.log(`111---file:`, file)
-        return {code: 200}
+        return tool.R.ok({msg: "成功/upload_one", result: {}})
     }
 
     @ApiOperation({summary: '多文件上传-等待开发'})
@@ -57,7 +57,7 @@ export class static_file {
     @Post("/upload_many")
     async upload_many(@UploadedFile() file) {
         console.log(`111---file:`, file)
-        return {code: 200}
+        return {code: 200, result: "111"}
     }
 
 
