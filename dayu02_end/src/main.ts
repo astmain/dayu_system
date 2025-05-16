@@ -13,7 +13,7 @@ import {Config_filter_catch_error} from "./Config_filter_catch_error"
 async function bootstrap() {
     let app_http = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true})
     app_http.useStaticAssets(join(__dirname,  'static'),{prefix:"/static"})   //      http://127.0.0.1:3000/static/1747306430929.png
-    let main = config_docs(app_http, 3000)
+    let main = config_docs(app_http, 10001)
     main.app.use(Config_logger_global_middleware)
     main.app.useGlobalInterceptors(new Config_filter_response())
     main.app.useGlobalFilters(new Config_filter_catch_error())
@@ -32,9 +32,9 @@ async function bootstrap() {
 void bootstrap();
 console.log(`
       启动成功
-      http://127.0.0.1:3000/
-      http://127.0.0.1:3000/index
-      http://localhost:3000/api/swagger
-      http://127.0.0.1:3000/doc.html
+      http://127.0.0.1:10001/
+      http://127.0.0.1:10001/index
+      http://localhost:10001/api/swagger
+      http://127.0.0.1:10001/doc.html
     `);
 // http://127.0.0.1:3000/docs
