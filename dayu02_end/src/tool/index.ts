@@ -4,6 +4,7 @@ import R from "./R"
 import build_tree from "./build_tree"
 import build_tree_ids from "./build_tree_ids"
 import build_tree_arr_flat from "./build_tree_arr_flat";
+import crypt_encode_md5 from "./crypt_encode_md5";
 
 //     树桩结构
 
@@ -17,6 +18,9 @@ let tool = {
     build_tree,
     build_tree_ids,
     build_tree_arr_flat,
+
+    // 加解密=========================
+    crypt_encode_md5
 
 }
 

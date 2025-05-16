@@ -4,7 +4,6 @@ import {ApiTags, ApiOperation, ApiResponse, ApiQuery} from '@nestjs/swagger';
 import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 // 自定义
 import {JwtService} from "@nestjs/jwt";
-import util from "../util/index";
 import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 import * as md5 from "md5";
 import {PrismaClient} from "@prisma/client";
@@ -33,8 +32,9 @@ export class auth {
         // 1.查询用户校验密码
         let user = await db.tb_user.findUnique({where: {tel: form.tel}})
         console.log(`111---user:`, user)
-        let md5_password = md5(form.password).toUpperCase()
-        console.log(`login---md5_password:`, md5_password) //todo 数据库密码方案使用md5加密
+        let password_encode = tool.crypt_encode_md5(form.password)
+
+        console.log(`login---password_encode:`, password_encode) //todo 数据库密码方案使用md5加密
         if (user?.password !== form.password) {
             throw new UnauthorizedException()
         }
@@ -48,12 +48,12 @@ export class auth {
         let tb_menu = await db.tb_menu.findMany()
         console.log(`111---tb_menu:`, tb_menu)
 
-        const menus_tree = tool.build_tree({ arr: tb_menu, key_id: 'id', key_parent: 'parent_id' })
+        const menus_tree = tool.build_tree({arr: tb_menu, key_id: 'id', key_parent: 'parent_id'})
         // build_tree({ arr: tb_depart, key_id: 'depart_id', key_parent: 'parent_id' })
 
         let result = {...user, token, menus_tree}
         // console.log(`111---result:`, result)
-        return {code: 200, msg: '成功/login', result};
+        return tool.R.ok({msg: "成功/login", result: result})
     }
 
     @ApiOperation({summary: 'admin_super'})
