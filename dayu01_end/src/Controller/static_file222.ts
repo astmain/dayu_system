@@ -25,27 +25,10 @@ export class static_file {
 
     @tool.Dec_public()
     @ApiOperation({summary: '单文件上传'})
-    @UseInterceptors(FileInterceptor("file",{
-        storage: diskStorage({
-            // 指定文件存储路径
-            destination: './src/static',
-            // 指定文件名
-            filename: (req, file, callback) => {
-                // 生成文件名: 时间戳 + 随机数 + 原文件扩展名
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-                callback(null, `${uniqueSuffix}${extname(file.originalname)}`);
-            },
-        }),
-        // 文件过滤器
-        fileFilter: (req, file, callback) => {
-            // 这里可以添加文件类型限制
-            // 例如只允许上传图片
-            if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-                return callback(new Error('只允许上传图片文件!'), false);
-            }
-            callback(null, true);
-        },
-    }))//单文件上传
+    @UseInterceptors(FileInterceptor("file",
+        )
+
+    )//单文件上传
     @Post("/upload_one")
     async upload_one(@UploadedFile() file) {
         console.log(`111---file:`, file)

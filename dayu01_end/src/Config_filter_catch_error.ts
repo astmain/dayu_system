@@ -2,7 +2,7 @@ import {ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus} from '
 
 import {Request, Response} from 'express'
 
-// import dayjs from 'dayjs'
+// import * as dayjs from 'dayjs'
 
 @Catch(HttpException)
 export class Config_filter_catch_error implements ExceptionFilter {
@@ -15,13 +15,12 @@ export class Config_filter_catch_error implements ExceptionFilter {
 
         response.status(status).json({
             result: {},
-
-            // time: new Date().toISOString(),
+            // time: new Date().getTime(),
+            time: new Date().toISOString(),
             // time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
             success: false,
             url: request.url,
             code: status,
-            time: new Date().getTime(),
             msg: this.getErrorName(status, exception) + "---错误原因:" + this.getErrorMessage(exception),
             err: this.getErrorName(status, exception) + "----" + this.getErrorMessage(exception),
         })
