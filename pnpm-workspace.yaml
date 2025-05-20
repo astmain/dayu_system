@@ -38,6 +38,16 @@ packages:
 
 #1绑定文件               git init && git remote add origin  git@github.com:astmain/dayu_system.git
 
-#强制上传                echo "确定:强制上传吗?" && TIMEOUT /T 60 && echo "如果确定:请回车" && git add . && git commit -m "强制上传" && git push -f origin  master
+#强制上传                echo "确定:强制上传吗?" && TIMEOUT /T 60 && echo "如果确定:请回车" && git add . && git commit -m "强制上传" && git push -f origin  template1
 
 #本地分支跟踪远程分支     git branch --set-upstream-to=origin/master master
+
+
+
+# 软路由
+# iStoreOS
+# 192.168.1.1
+# root
+# dayu*.*1688
+# 服务
+# metacubexd

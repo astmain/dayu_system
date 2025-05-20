@@ -24,12 +24,4 @@ https://blog.csdn.net/qq1195566313/category_11844396.html
 # Prisma中间件和集成
 https://chatgpt.com/share/6826f6ff-f6a0-800c-9288-244d6ac5ef0f
 
-# 软路由
-iStoreOS
-192.168.1.1
-root
-dayu*.*1688
-服务
-metacubexd
-
 
