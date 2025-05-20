@@ -1,0 +1,54 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\dayu02_end\prisma\dev.db           在家
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// 基础用户表
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  roleId   Int    @map("role_id") // 关联角色ID
+  deptId   Int    @map("dept_id") // 关联部门ID
+
+  // 关联字段
+  role Role @relation(fields: [roleId], references: [id])
+  dept Dept @relation(fields: [deptId], references: [id])
+
+  @@map("sys_user")
+}
+
+// 部门表
+model Dept {
+  id       Int    @id @default(autoincrement())
+  deptName String @map("dept_name")
+  parentId Int?   @map("parent_id") // 上级部门ID
+  roleId   Int    @map("role_id") // 部门默认角色ID
+
+  // 关联字段
+  parent   Dept?  @relation("DeptHierarchy", fields: [parentId], references: [id])
+  children Dept[] @relation("DeptHierarchy")
+  role     Role   @relation(fields: [roleId], references: [id])
+  users    User[] // 部门下的用户
+
+  @@map("sys_dept")
+}
+
+// 角色表
+model Role {
+  id       Int    @id @default(autoincrement())
+  roleName String @map("role_name")
+  roleKey  String @map("role_key") // 角色标识
+
+  // 关联字段
+  dept  Dept[] // 拥有此角色的部门
+  users User[] // 拥有此角色的用户
+
+  @@map("sys_role")
+}

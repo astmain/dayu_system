@@ -1,0 +1,64 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\dayu01_end\prisma\dev.db            在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// =======================================
+model tb_user {
+  id       Int    @id @default(autoincrement())
+  tel      String @unique
+  password String @default("123456")
+  username String @default("")
+}
+
+model tb_depart {
+  id        Int    @id @default(autoincrement())
+  depart    String @default("")
+  parent_id Int
+}
+
+model tb_menu {
+  id        Int    @id @default(autoincrement())
+  menu      String @default("")
+  path      String @default("")
+  parent_id Int
+}
+
+model ref_depart_user {
+  id        Int @id @default(autoincrement())
+  user_id   Int
+  depart_id Int
+}
+
+// 帮我生产数据
+// 用户有 许一,二狗,张三,李四,王五
+// 菜单有 首页,设置,关于
+// 部门有 泉州公司,德化公司        泉州公司下有部门:财务部,业务部,技术部     德化公司下有部门:财务部,业务部
+// 许一属于:泉州公司下:技术部,业务部,财务部门      德化公司下有部门:财务部,业务部
+// 二狗属于:泉州公司下:技术部
+// 张三数据:泉州公司下:财务部
+// 李四数据:泉州公司下:业务部
+// 王五数据:德化公司下:业务部
+
+model tb_account {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  rel_1 rel_1? // 一对一关系（可选）
+}
+
+model rel_1 {
+  id         Int    @id @default(autoincrement())
+  bio        String
+  tb_account User   @relation(fields: [acc_id], references: [id]) // 本表user_id         原表tb_account的id
+  acc_id     Int    @unique // 确保一对一
+}

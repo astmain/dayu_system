@@ -1,0 +1,60 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\dayu01_end\prisma\dev.db            在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// =======================================
+model tb_user {
+  id       Int    @id @default(autoincrement())
+  tel      String @unique
+  password String @default("123456")
+  username String @default("")
+}
+
+model tb_depart {
+  id        Int    @id @default(autoincrement())
+  depart    String @default("")
+  parent_id Int
+}
+
+model tb_menu {
+  id        Int    @id @default(autoincrement())
+  menu      String @default("")
+  path      String @default("")
+  parent_id Int
+}
+
+model ref_depart_user {
+  id        Int @id @default(autoincrement())
+  user_id   Int
+  depart_id Int
+}
+
+// 测试11111111111111111111111111111111
+// 测试一对一关系,111111==================================================
+// 测试一对一关系,111111==================================================
+// 测试一对一关系,111111==================================================
+
+model tb_account {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  rel_1 rel_1? // 一对一关系（可选）
+}
+
+model rel_1 {
+  id         Int        @id @default(autoincrement())
+  bio        String
+  tb_account tb_account @relation(fields: [account_id], references: [id])
+  account_id Int        @unique
+}
+

@@ -1,0 +1,29 @@
+{
+  "name": "render_admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "element-plus": "2.9.9",
+    "tool_vue": "workspace:^",
+    "tool_web": "workspace:^",
+    "pinyin-pro": "3.24.2",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue-jsx": "^4.1.2",
+    "@vue-macros/reactivity-transform": "^3.0.0-beta.10",
+    "unplugin-auto-import": "^19.1.2",
+    "unplugin-vue-components": "^28.5.0",
+    "vite": "^6.2.4",
+    "vite-plugin-require-transform": "1.0.21",
+    "vite-plugin-vue-devtools": "^7.7.2"
+  }
+}

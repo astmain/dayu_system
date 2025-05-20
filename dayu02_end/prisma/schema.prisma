@@ -1,0 +1,66 @@
+// D:\AAA\dayu_system_01\api_end\prisma\dev.db          公司
+// E:\AAA\dayu_system\dayu02_end\prisma\dev.db           在家
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  // provider = "postgresql"
+  // url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// =======================================
+model tb_user {
+  id       Int    @id @default(autoincrement())
+  tel      String @unique
+  password String @default("123456")
+  username String @default("")
+}
+
+// 绑定新菜单-紫鹏代码
+model tb_menu {
+  id        Int    @id @default(autoincrement())
+  menu      String @default("")
+  path      String @default("")
+  parent_id Int
+}
+
+model tb_depart {
+  id           Int            @id @default(autoincrement())
+  name         String         @default("")
+  is_depart    Boolean        @default(true)
+  parent_id    Int
+  ref_position ref_position[]
+  uuid         String         @default(uuid())
+}
+
+model ref_position {
+  id        Int       @id @default(autoincrement())
+  name      String    @default("")
+  is_depart Boolean   @default(false)
+  depart_id Int
+  tb_depart tb_depart @relation(fields: [depart_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  uuid      String    @default(uuid())
+}
+
+model ref_position_user {
+  id          Int @id @default(autoincrement())
+  position_id Int
+  user_id     Int
+}
+
+model ref_position_permiss {
+  id          Int     @id @default(autoincrement())
+  create      Boolean @default(false)
+  delete      Boolean @default(false)
+  update      Boolean @default(false)
+  find        Boolean @default(false)
+  view        Boolean @default(false)
+  menu_id     Int     @default(0)
+  position_id Int     @default(0)
+  uuid        String  @default(uuid())
+}

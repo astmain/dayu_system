@@ -1,0 +1,41 @@
+packages:
+  # orm数据库语法测试 =====================================================
+  - "orm/prisma01"     
+  - "orm/prisma02"     
+  - "orm/prisma03"  
+  - "orm/prisma04"  
+  # 系统模块 =====================================================
+  - "api_admin"     #后端接口
+  - "api_server"    #后端接口
+  - "render_admin"  #前段页面
+  - "vue_admin"     #前段页面
+
+    # 工具包 =====================================================
+  - "tool_web"
+  - "tool_vue"
+  
+  
+  - "api_end"       #前段页面
+  - "web_admin"     #前段页面
+  
+  
+  
+  - "dayu01_web"     #前端
+  - "dayu01_end"     #后端
+  
+  
+  - "dayu02_web"     #前端
+  - "dayu02_end"     #后端
+  
+  - "dayu03_web"     #前端
+  - "dayu03_end"     #后端
+
+  - "dayu04_web"     #前端
+  - "dayu04_end"     #后端
+
+
+
+
+# 1.绑定文件            git init && git remote add origin  git@github.com:astmain/dayu_system.git
+
+ echo "强制push?"  &&    TIMEOUT /T 60  &&   echo "强制push_等待"  &&      git add . &&  git commit -m "强制push"   &&  git push  -f   origin  master
