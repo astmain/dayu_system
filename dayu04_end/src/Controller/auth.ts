@@ -9,11 +9,10 @@ import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
 import {Qgetform} from "../util/Qgetform";
 import tool from "../tool";
 
-// 数据库
-import {PrismaClient} from "@prisma/client";
+
 import {DTO_role_id_menu_permiss} from "../DTO/DTO_role_id_menu_permiss";
 
-let db = new PrismaClient()
+
 
 
 @ApiTags('权限管理')
