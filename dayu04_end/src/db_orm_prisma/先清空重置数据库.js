@@ -2,12 +2,14 @@ const {execSync} = require('child_process');
 const {unlinkSync} = require("node:fs");
 
 
-
+// 先清空重置数据库()
 
 async function 先清空重置数据库() {
     // 1删除数据库==========================================
     try {
-        let path = "C:/db_dev_sqlited.db"
+        // let path = "C:/db_dev_sqlited.db"
+        // let path = "D:/db_dev_sqlited.db"
+        let path = "./db_dev_sqlited.db"
         unlinkSync(path);
         console.log('成功:1删除数据库:', path);
     } catch (err) {

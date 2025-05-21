@@ -6,7 +6,6 @@
   "private": true,
   "scripts": {
     "安装": "pnpm -F     api_end         add          lodash      -S  ",
-    "prisma.table.make": "node  弃用       prisma/table/make.js",
     "aaaa": "============================================",
     "dev": "nest start --watch",
     "build": "nest build",

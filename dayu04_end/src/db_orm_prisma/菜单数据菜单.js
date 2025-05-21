@@ -1,9 +1,10 @@
 let {PrismaClient} = require("@prisma/client")
 let prisma = new PrismaClient()
 
-a00_创建菜单()
+// a00_创建菜单()
+module.exports = 菜单数据菜单
 
-async function a00_创建菜单() {
+async function 菜单数据菜单() {
     let tb_menu = [
         {id: 1, menu: "首页", path: "/home",},
         {id: 2, menu: "关于", path: "/about",},
@@ -19,7 +20,7 @@ async function a00_创建菜单() {
         {id: 888, menu: "购物订单", path: "/mall_order",},
         // {id: 999, menu: "购物车", path: "/mall_car", parent_id: 0},
     ]
-    await prisma.tb_menu.deleteMany()
+    // await prisma.tb_menu.deleteMany()
     await prisma.tb_menu.createMany({data: tb_menu})
 
     console.log('成功:a00_创建菜单');

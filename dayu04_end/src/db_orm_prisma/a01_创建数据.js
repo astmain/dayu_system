@@ -4,7 +4,10 @@ let prisma = new PrismaClient()
 
 async function make() {
     await require("./先清空重置数据库")()
-    await require("./a00_创建菜单")
+    await require("./菜单数据菜单")()
+
+
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
 
     // 1. 角色=================================================================
