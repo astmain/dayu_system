@@ -10,7 +10,9 @@ import {Qgetform} from "../util/Qgetform";
 import {DTO_role_id_menu_permiss} from "../DTO/DTO_role_id_menu_permiss";
 import {DTO_user_create} from "../DTO/DTO_user_create";
 
+import {uniqBy} from 'lodash';
 
+import * as _ from 'lodash';
 
 
 @ApiTags('用户管理')
@@ -29,7 +31,7 @@ export class user {
     @tool.Get_form("create_user", "/新增用户", [{desc: "职位ids", key: 'depart_ids', val: [], type: String, required: true}, {desc: "电话", key: 'tel', val: "123", type: String, required: true}, {desc: "用户名", key: 'username', val: "111", type: String, required: true},])
     async create_user(@Query() form) {
         form.depart_ids = JSON.parse(form.depart_ids)
-        console.log(`111---form:`,     form        )
+        console.log(`111---form:`, form)
         let one = await this.db.tb_user.findUnique({where: {tel: form.tel}})
         console.log(`111---one:`, one)
         if (one) return tool.R.err({msg: "失败:手机号码已经被其他用户注册", result: {}})
@@ -73,35 +75,56 @@ export class user {
     @tool.Dec_public()
     @tool.Get_form("find_user_by_depart_id", "/查询_用户_根据部门id", [{desc: "部门id", key: 'depart_id', val: 0, type: Number, required: true}])
     async find_user_by_depart_id(@Query() form) {
-        // form.depart_id = Number(form.depart_id)
-        // console.log(`form`, form)
-        // let depart_list = await db.tb_depart.findMany()
-        // let ids = tool.build_tree_ids({list: depart_list, val: form.depart_id, key: "id", ref: "parent_id"})
-        // console.log(`111---ids:`, ids)
-        // let position = await db.tb_role.findMany({where: {depart_id: {in: ids}}})
-        // let position_ids = position.map(o => o.id)
-        // console.log(`111---position_ids:`, position_ids)
-        // let ref_position_user = await db.role_user.findMany({where: {role_id: {in: position_ids}}})
-        // console.log(`111---ref_position_user:`, ref_position_user)
-        // let user_ids = ref_position_user.map(o => o.user_id)
-        // console.log(`111---user_ids:`, user_ids)
-        // let user_list = await db.tb_user.findMany({where: {id: {in: user_ids}}})
-        // console.log(`111---user_list:`, user_list)
-        //
-        // // 查询角色回显
-        // let user_list2: any = []
-        // for (let i = 0; i < user_list.length; i++) {
-        //     let user = user_list[i]
-        //     let role_user = await db.role_user.findMany({where: {user_id: user.id}})
-        //     let role_ids = role_user.map(o => o.role_id)
-        //     let role_list = await db.tb_role.findMany({where: {id: {in: role_ids}}})
-        //     let role_uuids = role_list.map(o => o.uuid)
-        //     user['role_uuids'] = role_uuids
-        //     user_list2.push(user)
-        //
-        // }
-        // console.log(`111---user_list2:`, user_list2)
-        return tool.R.ok({msg: "成功/find_user_by_depart_id", result: {user_list: []}})
+        form.depart_id = Number(form.depart_id)
+        console.log(`form`, form)
+        // let user_list_findUnique = await this.db.tb_depart.findUnique(
+        //     {
+        //         where: {id: form.depart_id},
+        //         include: {tb_user: true}, // 关联查询部门下的所有用户
+        //     }
+        // )
+        // console.log(`111---user_list_findUnique:`, JSON.stringify(user_list_findUnique, null, 2))
+
+
+        // 要在 Prisma 中查询 generalManagement 部门及其所有子部门，您需要执行递归查询。由于 Prisma 本身不直接支持递归查询，您可能需要使用数据库特定的功能来实现这一点。
+        const query = `
+            WITH RECURSIVE department_tree AS (SELECT id, name, parent_id
+                                               FROM tb_depart
+                                               WHERE id = ${form.depart_id}
+
+                                               UNION ALL
+
+                                               SELECT d.id, d.name, d.parent_id
+                                               FROM tb_depart d
+                                                        INNER JOIN department_tree t ON d.parent_id = t.id)
+            SELECT *
+            FROM department_tree;
+        `;
+
+        const depart_list = await this.db.$queryRawUnsafe(query)
+        console.log(`111---depart_list:`,     depart_list        )
+        const depart_ids = depart_list.map(o => o.id)
+
+
+
+        let user_list_findMany = await this.db.tb_depart.findMany(
+            {
+                where: {id: {in: depart_ids}},
+                include: {tb_user: true}, // 关联查询部门下的所有用户
+            }
+        )
+
+
+        // const user_list = tool._.uniqBy(tool._.flatMap(user_list_findMany, 'tb_user'), 'id') //lodash从prisma的findMany结果中获取所有用户
+        const user_list = _.uniqBy(_.flatMap(user_list_findMany, 'tb_user'), 'id') //lodash从prisma的findMany结果中获取所有用户
+        console.log(`111---user_list:`, user_list)
+
+
+        // 隐身表怎么用????问紫鹏或者自己研究
+        // let user_list333 = await this.db._UserDepartRelation.findMany({where: {A: {in: departments_ids}}})
+        // console.log(`111---user_list333:`, user_list333)
+
+        return tool.R.ok({msg: "成功/find_user_by_depart_id", result: {user_list}})
     }
 
 

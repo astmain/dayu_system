@@ -65,3 +65,5 @@ model tb_menu {
   parent    tb_menu?  @relation("tb_menu_children", fields: [parent_id], references: [id])
   children  tb_menu[] @relation("tb_menu_children")
 }
+
+// prisma  tb_user  和 tb_depart 多对多关系

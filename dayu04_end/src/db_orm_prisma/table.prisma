@@ -12,24 +12,24 @@ datasource db {
   url      = "file:./db_dev_sqlited.db"
 }
 
-model tb_role {
-  id     Int    @id @default(autoincrement())
-  name   String
-  remark String @default("")
-
-  // depart_id Int
-  // tb_depart tb_depart @relation(fields: [depart_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  //
-
-  menu_id Int     @default(0)
-  role_id Int     @default(0)
-  uuid    String  @default(uuid())
-  create  Boolean @default(false)
-  delete  Boolean @default(false)
-  update  Boolean @default(false)
-  find    Boolean @default(false)
-  view    Boolean @default(false)
-}
+// model tb_role {
+//   id     Int    @id @default(autoincrement())
+//   name   String
+//   remark String @default("")
+//
+//   // depart_id Int
+//   // tb_depart tb_depart @relation(fields: [depart_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+//   //
+//
+//   menu_id Int     @default(0)
+//   role_id Int     @default(0)
+//   uuid    String  @default(uuid())
+//   create  Boolean @default(false)
+//   delete  Boolean @default(false)
+//   update  Boolean @default(false)
+//   find    Boolean @default(false)
+//   view    Boolean @default(false)
+// }
 
 model tb_permiss {
   id        Int     @id @default(autoincrement())
@@ -52,15 +52,19 @@ model tb_depart {
   parent_id Int? // 关联自身
   parent    tb_depart?  @relation("children", fields: [parent_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   children  tb_depart[] @relation("children")
-  // tb_role   tb_role[]
+  user_id   Int         @default(0) // 外键
+  tb_user   tb_user[]   @relation("UserDepartRelation") // 反向关联字段名
 }
 
+// https://www.doubao.com/thread/w936b86d7f118de51
+// https://lxblog.com/qianwen/share?shareId=9e9d117d-b2b3-48dd-8ce6-6b758c7b4b10
 model tb_user {
-  id       Int    @id @default(autoincrement())
-  tel      String @unique
-  password String @default("123456")
-  username String @default("")
-  remark   String @default("")
+  id        Int         @id @default(autoincrement())
+  tel       String      @unique
+  password  String      @default("123456")
+  username  String      @default("")
+  remark    String      @default("")
+  tb_depart tb_depart[] @relation("UserDepartRelation") // 正向关联字段名
 }
 
 model tb_menu {

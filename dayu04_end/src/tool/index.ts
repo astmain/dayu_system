@@ -7,6 +7,8 @@ import build_tree_arr_flat from "./build_tree_arr_flat";
 import crypt_encode_md5 from "./crypt_encode_md5";
 import build_tree_depart_role from "./build_tree_depart_role";
 
+import * as _ from "lodash";
+
 //     树桩结构
 
 let tool = {
@@ -22,7 +24,12 @@ let tool = {
     build_tree_depart_role,
 
     // 加解密=========================
-    crypt_encode_md5
+    crypt_encode_md5,
+
+
+    //好用的函数
+    _,//lodash
+
 
 }
 
