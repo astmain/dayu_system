@@ -15,15 +15,15 @@
                 <el-menu :default-active="$route.path" background-color="#24292E" active-text-color="#ffd04b"
                     text-color="#fff" class="menu_height" router>
                     <template v-for="ele in BUS.user.menus_tree">
-                        <el-menu-item class="没有子菜单" v-if="!ele.children || ele?.children?.length === 0" :index="ele.path_full">
+                        <el-menu-item class="没有子菜单" v-if="!ele.children || ele?.children?.length === 0" :index="ele.path_full   ||  ele.path">
                             <span>{{ ele.menu? ele.menu : ele.name }}</span>
                         </el-menu-item>
-                        <el-sub-menu class="拥有子菜单" v-else :index="ele.path_full">
+                        <el-sub-menu class="拥有子菜单" v-else :index="ele.path_full   ||  ele.path">
                             <template #title>
                                 <span>{{ ele.menu? ele.menu : ele.name }}</span>
                             </template>
                             <el-menu-item-group>
-                                <el-menu-item v-for="item in ele.children" :index="item.path_full">
+                                <el-menu-item v-for="item in ele.children" :index="item.path_full   ||  item.path ">
                                     <span>{{ item.menu? item.menu : item.name }}</span>
                                 </el-menu-item>
                             </el-menu-item-group>

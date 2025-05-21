@@ -26,17 +26,6 @@ model tb_user {
   tb_depart tb_depart @relation(fields: [depart_id], references: [id])
 }
 
-model tb_role {
-  id        Int     @id @default(autoincrement())
-  name      String
-  is_depart Boolean @default(false)
-
-  // 关联字段
-  depart_id Int // 外键
-  tb_depart tb_depart @relation(fields: [depart_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  tb_user   tb_user[]
-}
-
 model tb_depart {
   id        Int     @id @default(autoincrement())
   name      String
@@ -49,9 +38,18 @@ model tb_depart {
 
   // 外关联
   role_id Int
-  // tb_role tb_role   @relation(fields: [role_id], references: [id])
+  tb_role tb_role   @relation(fields: [role_id], references: [id])
   tb_user tb_user[] // 部门下的用户
-  tb_role tb_role[]
+}
+
+model tb_role {
+  id        Int     @id @default(autoincrement())
+  name      String
+  is_depart Boolean @default(false)
+
+  // 关联字段
+  tb_depart tb_depart[] // 拥有此角色的部门
+  tb_user   tb_user[] // 拥有此角色的用户
 }
 
 // 使用prisma  创建tb_menu 的数据

@@ -13,8 +13,6 @@ import tool from "../tool";
 import {DTO_role_id_menu_permiss} from "../DTO/DTO_role_id_menu_permiss";
 
 
-
-
 @ApiTags('权限管理')
 @ApiBearerAuth('Authorization')
 @Controller("auth")
@@ -40,13 +38,50 @@ export class auth {
         const payload = {username: user?.username, id: user?.id};
         const token = await this.jwt_service.signAsync(payload)
         console.log(`生成token:`, token)
-        let menus_tree = await this.db.tb_menu.findMany({include: {children: true},})
+        // 菜单树
+        // let menus_tree = await this.db.tb_menu.findMany({include: {children: true},})
+
+        // 菜单树
+        let tb_menu = await this.db.tb_menu.findMany()
+        tb_menu = tb_menu.map(o => {
+            if (o.parent_id === null) o.parent_id = 0
+            return o
+        })
+        const menus_tree = tool.build_tree({arr: tb_menu, key_id: 'id', key_parent: 'parent_id'})
         return tool.R.ok({msg: "成功/login", result: {...user, token, menus_tree}})
     }
 
 
     @tool.Get_form("find_permiss_depart_position_tree", "/查询_部门职位树", [])
     async find_permiss_depart_position_tree(@Query() form) {
+        let depart_role_list = await this.db.tb_depart.findMany({
+            where: {id: 1},
+            include: {
+                children: {
+                    include: {
+                        children: {
+                            include: {
+                                tb_role: {
+                                    include: true
+                                },
+                            }
+                        },
+                    }
+                },
+
+            },
+        })
+
+
+        console.log(`111---222:`, depart_role_list)
+
+
+        let depart_position1 = await this.db.tb_depart.findMany({include: {tb_role: true},})
+        let depart_position_tree1 = tool.build_tree({arr: depart_position1, key_id: 'id', key_parent: 'parent_id'})
+        let depart_position_tree = tool.build_tree_depart_role(depart_position_tree1)//修改数据库表名的时候,要修改tb_r
+
+
+        return tool.R.ok({msg: "成功/login", result: {depart_position_tree: depart_position_tree}})
     }
 
     @tool.Get_form("find_permiss_menu_tree", "查询_菜单树权限", [{desc: "角色id", key: 'position_id', val: "1", type: Number, required: true}])

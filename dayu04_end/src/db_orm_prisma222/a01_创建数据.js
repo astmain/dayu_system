@@ -48,27 +48,28 @@ async function make() {
                 create: [
                     {
                         name: '技术部',
-                        // tb_role: {connect: {id: deptAdminRole.id}},
+                        tb_role: {connect: {id: deptAdminRole.id}},
+
                     },
                     {
                         name: '泉州分公司',
-                        // tb_role: {connect: {id: deptAdminRole.id}},
-                        // children: {
-                        //     create: [
-                        //         {name: '财务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //         {name: '业务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //     ]
-                        // }
+                        tb_role: {connect: {id: deptAdminRole.id}},
+                        children: {
+                            create: [
+                                {name: '财务部', tb_role: {connect: {id: deptAdminRole.id}},},
+                                {name: '业务部', tb_role: {connect: {id: deptAdminRole.id}},},
+                            ]
+                        }
                     },//
                     {
                         name: '德化分公司',
-                        // tb_role: {connect: {id: deptAdminRole.id}},
-                        // children: {
-                        //     create: [
-                        //         {name: '财务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //         {name: '业务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //     ]
-                        // }
+                        tb_role: {connect: {id: deptAdminRole.id}},
+                        children: {
+                            create: [
+                                {name: '财务部', tb_role: {connect: {id: deptAdminRole.id}},},
+                                {name: '业务部', tb_role: {connect: {id: deptAdminRole.id}},},
+                            ]
+                        }
                     },//
 
 

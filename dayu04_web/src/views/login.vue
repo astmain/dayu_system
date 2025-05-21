@@ -72,6 +72,108 @@ export default {
         console.log(res)
         if (res?.code === 200) {
           localStorage.setItem('token', res.result.token)
+
+
+          // res.result.menus_tree = [
+          //   {
+          //     "id": 1,
+          //     "menu": "首页",
+          //     "path": "/home",
+          //     "parent_id": null,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 2,
+          //     "menu": "关于",
+          //     "path": "/about",
+          //     "parent_id": null,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 3,
+          //     "menu": "设置",
+          //     "path": "/setting",
+          //     "parent_id": null,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 4,
+          //     "menu": "订单管理",
+          //     "path": "/order_manage",
+          //     "parent_id": null,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 5,
+          //     "menu": "权限管理",
+          //     "path": "/system",
+          //     "parent_id": null,
+          //     "children": [
+          //       {
+          //         "id": 6,
+          //         "menu": "用户管理",
+          //         "path": "/user/user",
+          //         "parent_id": 5
+          //       },
+          //       {
+          //         "id": 7,
+          //         "menu": "菜单管理",
+          //         "path": "/menu/menu",
+          //         "parent_id": 5
+          //       },
+          //       {
+          //         "id": 9,
+          //         "menu": "部门角色管理",
+          //         "path": "/depart/depart",
+          //         "parent_id": 5
+          //       }
+          //     ]
+          //   },
+          //   {
+          //     "id": 6,
+          //     "menu": "用户管理",
+          //     "path": "/user/user",
+          //     "parent_id": 5,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 7,
+          //     "menu": "菜单管理",
+          //     "path": "/menu/menu",
+          //     "parent_id": 5,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 9,
+          //     "menu": "部门角色管理",
+          //     "path": "/depart/depart",
+          //     "parent_id": 5,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 666,
+          //     "menu": "商品管理",
+          //     "path": "/mall_goods",
+          //     "parent_id": null,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 777,
+          //     "menu": "商城购物",
+          //     "path": "/mall_shop",
+          //     "parent_id": null,
+          //     "children": []
+          //   },
+          //   {
+          //     "id": 888,
+          //     "menu": "购物订单",
+          //     "path": "/mall_order",
+          //     "parent_id": null,
+          //     "children": []
+          //   }
+          // ]
+
+
           BUS.user = res.result
           this.$router.push('/home')
         } else {

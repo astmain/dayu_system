@@ -18,6 +18,7 @@ import {Service_app} from './Service/Service_app'
 import {global_module} from "./Module/global_module";
 // import {orm} from "./Module/orm";
 import {db_prisma} from "./db_orm_prisma/db_prisma";
+import {db_all} from "./db_orm_prisma/db_all";
 
 // 资源文件模块
 import {__static_file} from "./Module/static_file";
@@ -40,6 +41,7 @@ import {__static_file} from "./Module/static_file";
         //     全局模块,
         global_module.make_path({path: "/app.json"}),
         db_prisma.make_path({path: "/app.json"}),
+        db_all.make_path({path: "/app.json"}),
 
 
     ],
