@@ -1,0 +1,42 @@
+{
+  "name": "prisma07",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "scripts": {
+
+  },
+  "dependencies": {
+
+
+
+    "dayjs": "1.10.7",
+    "md5": "^2.3.0",
+
+
+    "prisma": "^6.6.0"
+
+
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.6.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
