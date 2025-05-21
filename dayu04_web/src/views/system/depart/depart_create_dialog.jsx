@@ -32,7 +32,7 @@ const menu_dialog = defineComponent({
       if (!check_form()) return
       console.log('111---:', form)
       await api.depart_create(form)
-      await props.that.find_permiss_depart_position_tree()
+      await props.that.find_depart_role_tree()
     }
 
 

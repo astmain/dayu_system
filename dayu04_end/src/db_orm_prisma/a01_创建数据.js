@@ -7,108 +7,45 @@ async function make() {
     await require("./菜单数据菜单")()
 
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    let tb_depart = [
+        {id: 1, name: "大宇三维打印",}, //总公司
+        {id: 20000, name: "技术部", parent_id: 1},  //技术部
+        {is_depart: false, name: "主管", parent_id: 20000,},
+        {is_depart: false, name: "职员", parent_id: 20000,},
+        //
+        {id: 30000, name: "泉州分公司", parent_id: 1},//泉州分公司
+        {id: 30001, name: "财务部", parent_id: 30000},//财务部
+        {is_depart: false, name: "主管", parent_id: 30001,},
+        {is_depart: false, name: "职员", parent_id: 30001,},
+        {id: 30002, name: "业务部", parent_id: 30000},//业务部
+        {is_depart: false, name: "主管", parent_id: 30002,},
+        {is_depart: false, name: "职员", parent_id: 30002,},
+        //
+        {id: 40000, name: "德化分公司", parent_id: 1},//德化分公司
+        {id: 40001, name: "财务部", parent_id: 40000},//财务部
+        {is_depart: false, name: "主管", parent_id: 40001,},
+        {is_depart: false, name: "职员", parent_id: 40001,},
+        {id: 40002, name: "业务部", parent_id: 40000},//业务部
+        {is_depart: false, name: "主管", parent_id: 40002,},
+        {is_depart: false, name: "职员", parent_id: 40002,},
+    ]
+    await prisma.tb_depart.createMany({data: tb_depart})
 
 
-    // 1. 角色=================================================================
-    const adminRole = await prisma.tb_role.create({
-        data: {
-            name: '系统管理员',
-        },
-    });
+    let tb_user = [
+        {id: 1, username: '许鹏', tel: '111',},
+        {id: 2, username: '二狗', tel: '222',},
+        {id: 3, username: '张三', tel: '333',},
+        {id: 4, username: '李四', tel: '444',},
+        {id: 5, username: '王五', tel: '555',},
+        {id: 6, username: '赵六', tel: '666',},
+        {id: 7, username: '孙七', tel: '777',},
+    ]
 
-    const userRole = await prisma.tb_role.create({
-        data: {
-            name: '普通用户',
+    await prisma.tb_user.createMany({data: tb_user})
 
-        },
-    });
-
-    const deptAdminRole = await prisma.tb_role.create({
-        data: {
-            name: '部门管理员',
-        },
-    });
-
-    // 2. 部门=================================================================
-    // await prisma.tb_depart.deleteMany()
-    const hrDept = await prisma.tb_depart.create({
-        // data: {
-        //     name: '泉州分公司', tb_role: {connect: {id: userRole.id}}, children: {
-        //         create: [
-        //             {name: '财务部', tb_role: {connect: {id: deptAdminRole.id}},},
-        //             {name: '人事部', tb_role: {connect: {id: deptAdminRole.id}},},
-        //         ],
-        //     }
-        // },
-        data: {
-            name: '大宇三维打印',
-            tb_role: {connect: {id: userRole.id}},
-            children: {
-                create: [
-                    {
-                        name: '技术部',
-                        // tb_role: {connect: {id: deptAdminRole.id}},
-                    },
-                    {
-                        name: '泉州分公司',
-                        // tb_role: {connect: {id: deptAdminRole.id}},
-                        // children: {
-                        //     create: [
-                        //         {name: '财务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //         {name: '业务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //     ]
-                        // }
-                    },//
-                    {
-                        name: '德化分公司',
-                        // tb_role: {connect: {id: deptAdminRole.id}},
-                        // children: {
-                        //     create: [
-                        //         {name: '财务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //         {name: '业务部', tb_role: {connect: {id: deptAdminRole.id}},},
-                        //     ]
-                        // }
-                    },//
-
-
-                ],
-            }
-        },
-
-
-        include: {},
-    });
-
-
-    // const itDept = await prisma.tb_depart.create({
-    //     data: {
-    //         name: '技术部', tb_role: {connect: {id: deptAdminRole.id}},
-    //     },
-    // });
-
-    // 3. 用户=================================================================
-    const user1 = await prisma.tb_user.create({
-        data: {
-            username: '王一', tel: '111', tb_role: {connect: {id: adminRole.id}}, tb_depart: {connect: {id: hrDept.id}},
-        },
-    });
-    //
-    const user2 = await prisma.tb_user.create({
-        data: {
-            username: '二狗', tel: '222', tb_role: {connect: {id: userRole.id}}, tb_depart: {connect: {id: hrDept.id}},
-        },
-    });
-    const user3 = await prisma.tb_user.create({
-        data: {
-            username: '张三', tel: '333', tb_depart: {connect: {id: hrDept.id}}, tb_role: {connect: {id: deptAdminRole.id}},
-
-        },
-    });
 
     console.log('数据初始化完成');
-
-
     // 帮我用 prisma 创建数据库表关系  .   用户表,部门表,角色表.      用户表 关联 角色表.   用户表 关联 部门表.      部门表 关联 角色表.
 }
 

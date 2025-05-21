@@ -1,9 +1,9 @@
 import { ElMessage } from "element-plus";
 
 //查询_部门职位树
-async function find_permiss_depart_position_tree() {
-    let tag = "find_permiss_depart_position_tree"
-    let config = { method: "get", url: "/auth/find_permiss_depart_position_tree" }
+async function find_depart_role_tree() {
+    let tag = "find_depart_role_tree"
+    let config = { method: "get", url: "/auth/find_depart_role_tree" }
     console.log(tag, 'config:', config)
     const res = await axios_api(config)
     console.log(tag, 'res:', res)
@@ -12,9 +12,9 @@ async function find_permiss_depart_position_tree() {
 }
 
 //查询_菜单树权限
-async function find_permiss_menu_tree({ position_id = 0 }) {
+async function find_permiss_menu_tree({ depart_id = 0 }) {
     let tag = "find_permiss_menu_tree"
-    let config = { method: "get", url: "/auth/find_permiss_menu_tree", params: { position_id } }
+    let config = { method: "get", url: "/auth/find_permiss_menu_tree", params: { depart_id } }
     console.log(tag, 'config:', config)
     const res = await axios_api(config)
     console.log(tag, 'res:', res)
@@ -172,7 +172,7 @@ let api = {
     // tb_menu: require("./tb_menu"),
     // tb_role: require("./tb_role"),
     // 扁平化api=====================================
-    find_permiss_depart_position_tree,
+    find_depart_role_tree,
     find_permiss_menu_tree,
 
 

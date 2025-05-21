@@ -12,6 +12,32 @@ import tool from "../tool";
 
 import {DTO_role_id_menu_permiss} from "../DTO/DTO_role_id_menu_permiss";
 
+let children5 = {
+    include: {
+        // children==============
+        children: {
+            include: {
+                children: {
+                    include: {
+                        children: {
+                            include: {
+
+                                children: {
+                                    include: {
+
+                                        children: true,
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        },
+
+    }
+}
 
 @ApiTags('权限管理')
 @ApiBearerAuth('Authorization')
@@ -52,41 +78,41 @@ export class auth {
     }
 
 
-    @tool.Get_form("find_permiss_depart_position_tree", "/查询_部门职位树", [])
+    @tool.Get_form("find_depart_role_tree", "/查询_部门_角色_树", [])
     async find_permiss_depart_position_tree(@Query() form) {
-        let depart_role_list = await this.db.tb_depart.findMany({
-            where: {id: 1},
-            include: {
-                children: {
-                    include: {
-                        children: {
-                            include: {
-                                tb_role: {
-                                    include: true
-                                },
-                            }
-                        },
-                    }
-                },
-
-            },
-        })
-
-
-        console.log(`111---222:`, depart_role_list)
-
-
-        let depart_position1 = await this.db.tb_depart.findMany({include: {tb_role: true},})
-        let depart_position_tree1 = tool.build_tree({arr: depart_position1, key_id: 'id', key_parent: 'parent_id'})
-        let depart_position_tree = tool.build_tree_depart_role(depart_position_tree1)//修改数据库表名的时候,要修改tb_r
-
-
-        return tool.R.ok({msg: "成功/login", result: {depart_position_tree: depart_position_tree}})
+        let depart_position_tree = await this.db.tb_depart.findMany({where: {id: 1}, include: {children: children5}})
+        return tool.R.ok({msg: "成功/find_depart_role_tree", result: {depart_position_tree: depart_position_tree}})
     }
 
-    @tool.Get_form("find_permiss_menu_tree", "查询_菜单树权限", [{desc: "角色id", key: 'position_id', val: "1", type: Number, required: true}])
+    @tool.Get_form("find_permiss_menu_tree", "查询_菜单树权限", [{desc: "部门id其实就是职位", key: 'depart_id', val: 1, type: Number, required: true}])
     async find_permiss_menu_tree(@Query() form) {
+        form.depart_id = Number(form.depart_id)
+        console.log(`111---form:`, form)
 
+        let menu_list = await this.db.tb_menu.findMany()
+        console.log(`111---222:`,     menu_list        )
+        let tb_permiss = await this.db.tb_permiss.findMany({where: {depart_id: form.depart_id}})
+        console.log(`111---tb_permiss:`,     tb_permiss        )
+        let menu_list_permiss: any = []
+        for (let i = 0; i < menu_list.length; i++) {
+            let menu = JSON.parse(JSON.stringify(menu_list[i]))
+            let permiss = tb_permiss.find(o => o.menu_id === menu.id    && o.depart_id===form.depart_id)
+            if(!permiss){
+                menu_list_permiss.push(menu)
+            }else{
+                menu['create'] = permiss.create
+                menu['delete'] = permiss.delete
+                menu['update'] = permiss.update
+                menu['find'] = permiss.find
+                menu['view'] = permiss.view
+                menu_list_permiss.push(menu)
+            }
+
+        }
+
+
+        let menu_tree_permiss = tool.build_tree({arr: menu_list_permiss, key_id: 'id', key_parent: 'parent_id'})
+        return tool.R.ok({msg: "成功/find_permiss_menu_tree", result: {menu_tree_permiss}})
     }
 
     // 组织=========================================================================================

@@ -5,7 +5,7 @@
 
     <!-- 部门树 -->
     <div>
-      <el-button @click="find_permiss_depart_position_tree()">find_permiss_depart_position_tree</el-button>
+      <el-button @click="find_depart_role_tree()">find_depart_role_tree</el-button>
       <el-tree ref="tree_depart_ref" style="width:300px ;height: 500px; ;overflow: auto;" :data="tree_depart.data"
         :props="tree_depart.props" :node-key="tree_depart.props.nodeKey" :current-node-key="currentNodeKey"
         @node-click="tree_left_click" @node-contextmenu="tree_ritht_click" :expand-on-click-node="false"
@@ -126,8 +126,8 @@ export default {
   },
   methods: {
     //查询_部门职位树
-    async find_permiss_depart_position_tree() {
-      let depart_position_tree = await api.find_permiss_depart_position_tree()
+    async find_depart_role_tree() {
+      let depart_position_tree = await api.find_depart_role_tree()
       console.log('depart_position_tree---:', depart_position_tree)
       this.tree_depart.data = depart_position_tree
     },//
@@ -145,7 +145,7 @@ export default {
 
       // 职位情况
       if (node.is_depart === false) {
-        this.tree_permiss.data = await api.find_permiss_menu_tree({ position_id: node.id })
+        this.tree_permiss.data = await api.find_permiss_menu_tree({ depart_id: node.id })
         this.tree_depart.node = node
       } else {
       }
@@ -199,19 +199,19 @@ export default {
         let confirm = await ElMessageBox.confirm('确定删除吗', '删除提示', { cancelButtonText: '取消', confirmButtonText: '删除' })
         if (confirm != 'confirm') return
         await api.depart_delete({ id: this.tree_depart.node.id })
-        await this.find_permiss_depart_position_tree()
+        await this.find_depart_role_tree()
       }
       // 角色=================================================================
       //角色:修改-角色-权限
       else if (!item.is_depart && item.title === "修改-角色-权限") {
         this.tree_permiss.show = true
-        await this.find_permiss_depart_position_tree()
+        await this.find_depart_role_tree()
       }
       // 角色:删除-角色
       else if (!item.is_depart && item.title === "删除-角色") {
         if (await isok_delete_confirm() === false) return
         await api.role_delete({ id: this.tree_depart.node.id })
-        await this.find_permiss_depart_position_tree()
+        await this.find_depart_role_tree()
       } else {
         alert("等待开发!或者item.title有改动")
       }
@@ -226,7 +226,7 @@ export default {
       let name = this.tree_permiss.name
       let res = await api.role_save({ role_id, name, tree_data: this.tree_permiss.data })
       this.tree_permiss.show = false
-      await this.find_permiss_depart_position_tree()
+      await this.find_depart_role_tree()
     },//
 
 
@@ -242,7 +242,7 @@ export default {
   },////
 
   async mounted() {
-    this.find_permiss_depart_position_tree()
+    this.find_depart_role_tree()
     document.body.addEventListener("click", () => {
       this.menu_show = false
     })

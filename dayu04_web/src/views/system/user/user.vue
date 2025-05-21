@@ -179,7 +179,7 @@ export default {
         await api.delete_user({ user_id: row.id })
         await this.find_departs_tree()
       } else if (title === "修改") {
-        this.tree_depart_update_dialog.data = await api.find_permiss_depart_position_tree()
+        this.tree_depart_update_dialog.data = await api.find_depart_role_tree()
         this.show.update = true
         this.curr_user = row
         console.log('refs---:', this.$refs)
@@ -207,7 +207,7 @@ export default {
     //新增_用户_弹窗
     async create_user_dialog() {
       this.show.create = true
-      let depart_position_tree = await api.find_permiss_depart_position_tree()
+      let depart_position_tree = await api.find_depart_role_tree()
       console.log('depart_position_tree---:', depart_position_tree)
       this.tree_depart_dialog.data = depart_position_tree
     },//
