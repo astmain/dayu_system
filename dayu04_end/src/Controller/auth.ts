@@ -107,13 +107,59 @@ export class auth {
                 menu['view'] = permiss.view
                 menu_list_permiss.push(menu)
             }
+        }
+        let menu_tree_permiss = tool.build_tree({arr: menu_list_permiss, key_id: 'id', key_parent: 'parent_id'})
+        return tool.R.ok({msg: "成功/find_permiss_menu_tree", result: {menu_tree_permiss}})
+    }
+
+
+    @tool.Dec_public()
+    @ApiOperation({summary: '角色-保存'})
+    @Post("/role_save")
+    async role_save(@Body() form: DTO_role_id_menu_permiss) {
+        console.log(`111---form:`, form)
+        await this.db.tb_depart.update({where: {id: form.depart_id}, data: {name: form.name}})
+        let menu_list_flat = tool.build_tree_arr_flat(form.tree_data) //扁平化数据
+        // console.log(`111---menu_list_flat:`,     menu_list_flat        )
+        for (let i = 0; i < menu_list_flat.length; i++) {
+            let menu = menu_list_flat[i]
+            let one = await this.db.tb_permiss.findMany({where: {menu_id: menu.id, depart_id: form.depart_id}})
+            console.log(`111---one.length:`, one.length)
+            if (one.length >= 1) {
+                let data = {
+                    create: menu.create,
+                    delete: menu.delete,
+                    update: menu.update,
+                    find: menu.find,
+                    view: menu.view
+                }
+                // 应该是update   ,但是先使用updateMany
+                await this.db.tb_permiss.updateMany({where: {menu_id: menu.id, depart_id: form.depart_id}, data: data})
+            } else {
+                let data = {
+                    menu_id: menu.id,
+                    depart_id: form.depart_id,
+                    create: menu.create,
+                    delete: menu.delete,
+                    update: menu.update,
+                    find: menu.find,
+                    view: menu.view
+                }
+                await this.db.tb_permiss.create({data: data})
+            }
 
         }
 
 
-        let menu_tree_permiss = tool.build_tree({arr: menu_list_permiss, key_id: 'id', key_parent: 'parent_id'})
-        return tool.R.ok({msg: "成功/find_permiss_menu_tree", result: {menu_tree_permiss}})
+
+        return tool.R.ok({msg: "成功/role_save", result: {}})
     }
+
+
+
+
+
+
 
     // 组织=========================================================================================
     @tool.Get_form("depart_create", "新增_组织", [{desc: "组织名称", key: 'depart', val: "", type: String, required: true}, {desc: "父id", key: 'parent_id', val: "", type: Number, required: true}])
@@ -139,12 +185,7 @@ export class auth {
 
     }
 
-    @tool.Dec_public()
-    @ApiOperation({summary: '角色-保存'})
-    @Post("/role_save")
-    async role_save(@Body() form: DTO_role_id_menu_permiss) {
 
-    }
 
 
     @tool.Get_form("role_delete", "删除_角色", [{desc: "职位id", key: 'id', val: 0, type: Number, required: true}])

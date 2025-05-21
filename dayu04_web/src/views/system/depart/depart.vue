@@ -222,9 +222,9 @@ export default {
     //保存_职位_权限_数据
     async role_save() {
       console.error('111---tree_permiss.data:', JSON.parse(JSON.stringify(this.tree_permiss.data)))
-      let role_id = this.tree_depart.node.id
+      let depart_id = this.tree_depart.node.id//其实就是部门职位id
       let name = this.tree_permiss.name
-      let res = await api.role_save({ role_id, name, tree_data: this.tree_permiss.data })
+      let res = await api.role_save({ depart_id, name, tree_data: this.tree_permiss.data })
       this.tree_permiss.show = false
       await this.find_depart_role_tree()
     },//

@@ -25,9 +25,9 @@ async function find_permiss_menu_tree({ depart_id = 0 }) {
 
 
 //保存_职位_权限_数据
-async function role_save({ role_id, name, tree_data }) {
+async function role_save({ depart_id, name, tree_data }) {
     let tag = "role_save"
-    let config = { method: "post", url: "/auth/role_save", data: { role_id, name, tree_data } }
+    let config = { method: "post", url: "/auth/role_save", data: { depart_id, name, tree_data } }
     console.log(tag, 'config:', config)
     const res = await axios_api(config)
     console.log(tag, 'res:', res)

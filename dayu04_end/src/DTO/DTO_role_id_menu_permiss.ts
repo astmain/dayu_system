@@ -5,10 +5,10 @@ import {PartialType} from '@nestjs/swagger';
 
 
 export class DTO_role_id_menu_permiss extends PartialType(DTO_user) {
-    @ApiProperty({description: '角色id', default: 0, type: Number})
+    @ApiProperty({description: '部门id', default: 0, type: Number})
     @IsOptional()
     @IsNumber()
-    role_id: number = 0;
+    depart_id: number = 0;
 
 
     @ApiProperty({description: '角色名称', default: "职员", type: String})
