@@ -1,24 +1,24 @@
-import {Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters, ParseIntPipe, Query} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpException, HttpStatus, UseFilters, ParseIntPipe, Query, Inject} from '@nestjs/common';
 import {Put, Param, Delete, HttpCode} from '@nestjs/common';
 import {ParseArrayPipe} from '@nestjs/common/pipes/parse-array.pipe';
 import {ApiTags, ApiOperation, ApiResponse, ApiQuery} from '@nestjs/swagger';
 import {ApiBearerAuth, ApiBody, ApiParam} from '@nestjs/swagger';
 // 自定义
 import {HttpExceptionFilter} from "../config/exception/HttpExceptionFilter";
-import {PrismaClient} from "@prisma/client";
 import tool from "../tool";
 import {Qgetform} from "../util/Qgetform";
 import {DTO_role_id_menu_permiss} from "../DTO/DTO_role_id_menu_permiss";
 import {DTO_user_create} from "../DTO/DTO_user_create";
 
 
-let db = new PrismaClient()
 
 
 @ApiTags('用户管理')
 @ApiBearerAuth('Authorization')
 @Controller("user")
 export class user {
+    constructor(@Inject("db_prisma") private db: any) {
+    }
 
     @Qgetform("find_user_list", "查找_用户列表", [])
     async find_user_list(@Query() form) {
@@ -26,8 +26,15 @@ export class user {
     }
 
     @tool.Dec_public()
-    @tool.Get_form("create_user", "/新增用户", [{desc: "职位ids", key: 'position_ids', val: [], type: String, required: true}, {desc: "电话", key: 'tel', val: "123", type: String, required: true}, {desc: "用户名", key: 'username', val: "111", type: String, required: true},])
+    @tool.Get_form("create_user", "/新增用户", [{desc: "职位ids", key: 'depart_ids', val: [], type: String, required: true}, {desc: "电话", key: 'tel', val: "123", type: String, required: true}, {desc: "用户名", key: 'username', val: "111", type: String, required: true},])
     async create_user(@Query() form) {
+        form.depart_ids = JSON.parse(form.depart_ids)
+        console.log(`111---form:`,     form        )
+        let one = await this.db.tb_user.findUnique({where: {tel: form.tel}})
+        console.log(`111---one:`, one)
+        if (one) return tool.R.err({msg: "失败:手机号码已经被其他用户注册", result: {}})
+
+
         // form.position_ids = JSON.parse(form.position_ids)
         // console.log(`create_user---form:`, form)
         // let one = await db.tb_user.findUnique({where: {tel: form.tel}})

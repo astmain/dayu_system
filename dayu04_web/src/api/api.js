@@ -128,9 +128,9 @@ async function find_user_by_depart_id({ depart_id }) {
 
 
 //新增_用户
-async function create_user({ position_ids, username, tel }) {
+async function create_user({ depart_ids, username, tel }) {
     let tag = "create_user"
-    let config = { method: "get", url: "/user/create_user", params: { position_ids, username, tel } }
+    let config = { method: "get", url: "/user/create_user", params: { depart_ids, username, tel } }
     console.log(tag, 'config:', config)
     const res = await axios_api(config)
     console.log(tag, 'res:', res)

@@ -15,7 +15,7 @@
 
 
 
-    <user v-if="user_controler.show" :node="tree_depart.node"></user>
+
 
 
     <el-card v-show="menu_show" :style="{ position: 'fixed', left: menu_left + 'px', top: menu_top + 'px' }"
@@ -64,15 +64,9 @@
 <script>
 export default {
   components: {
-    user: defineAsyncComponent(() => import('./user.vue')),//
   },
   data() {
     return {
-      user_controler: {
-        show: false,
-      },
-
-
       currentNodeKey: null,
       // 数据_部门树
       tree_depart: {
@@ -151,10 +145,7 @@ export default {
       }
 
 
-      // 显示隐藏user_表格
-      this.user_controler.show = false
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      this.user_controler.show = true
+
 
       console.log('tree_depart.node.name---:', this.tree_depart.node)
 

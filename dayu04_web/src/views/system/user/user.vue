@@ -101,7 +101,7 @@ export default {
       form: {
         username: "",
         tel: "",
-        position_uuid_list: "",
+
       },
 
 
@@ -240,8 +240,8 @@ export default {
     async create_user_submit() {
       let aaa = JSON.parse(JSON.stringify(this.$refs.tree_depart_dialog_ref.getCheckedNodes()))
       console.log('aaat---:', aaa)
-      let position_ids = aaa.filter(item => item.is_depart == false).map(item => item.id)
-      console.log('position_ids---:', position_ids)
+      let depart_ids = aaa.filter(item => item.is_depart == false).map(item => item.id)
+      console.log('depart_ids---:', depart_ids)
       if (this.form.username.length == 0) {
         ElMessage.error('用户名不能为空')
         return
@@ -250,11 +250,11 @@ export default {
         ElMessage.error('电话不能为空')
         return
       }
-      if (position_ids.length <= 0) {
+      if (depart_ids.length <= 0) {
         ElMessage.error('部门职位不能为空')
         return
       }
-      let res = await api.create_user({ position_ids: JSON.stringify(position_ids), username: this.form.username, tel: this.form.tel })
+      let res = await api.create_user({ depart_ids: JSON.stringify(depart_ids), username: this.form.username, tel: this.form.tel })
       console.log('res---:', res)
       console.log('create_user---:', this.form)
     },//
