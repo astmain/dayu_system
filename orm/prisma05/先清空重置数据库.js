@@ -1,10 +1,11 @@
-const {execSync} = require('child_process');
-const {unlinkSync} = require("node:fs");
+
 
 
 
 
 async function 先清空重置数据库() {
+    const {execSync} = require('child_process');
+    const {unlinkSync} = require("node:fs");
     // 1删除数据库==========================================
     try {
         let path = "./dev.db"
@@ -17,7 +18,7 @@ async function 先清空重置数据库() {
 
     // 2生产数据库==============================================
     // execSync('npx prisma db push    ', {stdio: 'inherit'})
-    execSync('npx prisma db push    --schema=./schema22.prisma ', {stdio: 'inherit'})
+    execSync('npx prisma db push    --schema=./table.prisma ', {stdio: 'inherit'})
     console.error('成功:2生产数据库')
 
 
