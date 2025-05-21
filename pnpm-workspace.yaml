@@ -5,6 +5,7 @@ packages:
   - "orm/prisma03"  
   - "orm/prisma04"  
   - "orm/prisma05"  
+  - "orm/prisma06"  
   # 系统模块 =====================================================
   - "api_admin"     #后端接口
   - "api_server"    #后端接口
@@ -51,4 +52,5 @@ packages:
 # root
 # dayu*.*1688
 # 服务
+# 设置github放行端口     openClash-插件设置-流量控制-本地 IPv4 绕过地址-把IP地址粘贴过去-保存
 # metacubexd

@@ -34,45 +34,48 @@ async function make() {
         data: {name: 'User'}
     })
 
-    const role_泉州财务部门_主管 = await prisma.tb_role.create({data: {name: '主管', title: "泉州分公司-财务部-主管"}})
+    const role_泉州财务部门_主管 = await prisma.tb_role.create({data: {name: '主管', remark: "泉州分公司-财务部-主管"}})
 
 
-    // 创建顶级部门
-    const deptA = await prisma.tb_depart.create({
+    let tb_depart = [
+        {id: 1, name: "大宇三维打印", parent_id: 0}, //总公司
+        {id: 77777, name: "客户", parent_id: 1},        //客户
+        {id: 10000, name: "内部人员", parent_id: 1},    //内部人员
+        {id: 20000, name: "技术部", parent_id: 1},  //技术部
+        //
+        {id: 30000, name: "泉州分公司", parent_id: 1},//泉州分公司
+        {id: 30001, name: "财务部", parent_id: 30000},//财务部
+        {id: 30002, name: "业务部", parent_id: 30000},//业务部
+        //
+        {id: 40000, name: "德化分公司", parent_id: 1},//德化分公司
+        {id: 40001, name: "财务部", parent_id: 40000},//财务部
+        {id: 40002, name: "业务部", parent_id: 40000},//业务部
+    ]
+    let role_name = [{name: "主管"}, {name: "职员"},]
+    let role_temp = []
+    await prisma.tb_depart.create({
         data: {
-            name: '大宇三维打印', // tb_role: {
-            //     connect: [{id: roleAdmin.id}]
-            // }
-        }
-    })
-
-    // 创建子部门
-    const deptB = await prisma.tb_depart.create({
-        data: {
-            name: '泉州分公司', parent_id: deptA.id, // tb_role: {
-            //     connect: [{id: roleUser.id}]
-            // }
-
+            id: 1, name: "大宇三维打印",
             children: {
-                create: [{
-                    name: '财务部',
-                    tb_role: {connect: [{id: role_泉州财务部门_主管.id}]}
-                },
-
-
-                    {
-                        name: '业务部', // tb_role: {connect: [{id: roleAdmin.id}]}
-                        children: {
-                            create: [
-                                {
-                                    name: '业务电商部', // tb_role: {connect: [{id: roleAdmin.id}]}
-                                },
-
-                                {
-                                name: '业务厂家部', // tb_role: {connect: [{id: roleAdmin.id}]}
-                            },]
-                        }
-                    },]
+                create: [
+                    {name: "泉州分公司",
+                        children:{
+                        create: [
+                            {name: "财务部", children:{
+                                create: [
+                                    {name: "主管",is_depart:false, tb_role: {create: role_name}},
+                                    {name: "职员",is_depart:false, tb_role: {create: role_name}},
+                                ]
+                            }},
+                            {name: "业务部", children:{
+                                create: [
+                                    {name: "主管",is_depart:false, }
+                                ]
+                            }}
+                        ]
+                        } },
+                    {name: "德化分公司",},
+                ]
             }
         }
     })
