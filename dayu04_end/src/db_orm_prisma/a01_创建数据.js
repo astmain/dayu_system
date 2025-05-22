@@ -47,7 +47,7 @@ async function make() {
 
     await prisma.tb_user.update({
         where: {id: 1},
-        data: {tb_depart: {connect: [{id: 2000091}]      /*分配部门*/    }}
+        data: {tb_depart: {connect: [{id: 2000091},{id: 2000092}]      /*分配部门*/    }}
     })
 
     await prisma.tb_user.update({

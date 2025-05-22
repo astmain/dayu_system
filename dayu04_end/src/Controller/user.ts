@@ -9,9 +9,6 @@ import tool from "../tool";
 import {Qgetform} from "../util/Qgetform";
 import {DTO_role_id_menu_permiss} from "../DTO/DTO_role_id_menu_permiss";
 import {DTO_user_create} from "../DTO/DTO_user_create";
-
-import {uniqBy} from 'lodash';
-
 import * as _ from 'lodash';
 
 
@@ -32,43 +29,72 @@ export class user {
     async create_user(@Query() form) {
         form.depart_ids = JSON.parse(form.depart_ids)
         console.log(`111---form:`, form)
+
+        // 判断手机号码是否被其他用户注册
         let one = await this.db.tb_user.findUnique({where: {tel: form.tel}})
         console.log(`111---one:`, one)
         if (one) return tool.R.err({msg: "失败:手机号码已经被其他用户注册", result: {}})
 
 
-        // form.position_ids = JSON.parse(form.position_ids)
-        // console.log(`create_user---form:`, form)
-        // let one = await db.tb_user.findUnique({where: {tel: form.tel}})
-        // console.log(`111---one:`, one)
-        // if (one) return tool.R.err({msg: "失败:手机号码已经被其他用户注册", result: {}})
-        // let user = await db.tb_user.create({data: {username: form.username, tel: form.tel}})
-        // console.log(`111---user:`, user)
-        // for (let i = 0; i < form.position_ids.length; i++) {
-        //     let position_id = form.position_ids[i]
-        //     let one_position_user = await db.role_user.create({data: {user_id: user.id, role_id: position_id || 0}})
-        // }
+        //创建新用户并分配关联部门角色
+        let depart_ids_list = form.depart_ids.map(o => ({id: o}))
+        await this.db.tb_user.create({
+            data: {
+                username: form.username, tel: form.tel,
+                tb_depart: {connect: depart_ids_list}
+            },
+
+        })
         return tool.R.ok({msg: "成功/create_user", result: {}})
 
     }
 
 
     @tool.Dec_public()
-    @tool.Get_form("update_user", "/更新-用户", [{desc: "用户id", key: 'user_id', val: 0, type: Number, required: true}, {desc: "角色ids", key: 'role_ids', val: [], type: String, required: true}, {desc: "电话", key: 'tel', val: "123", type: String, required: true}, {
-        desc: "用户名",
-        key: 'username',
-        val: "111",
-        type: String,
-        required: true
-    },])
+    @tool.Get_form("update_user", "/更新-用户", [{desc: "用户id", key: 'user_id', val: 0, type: Number, required: true},
+        {desc: "部门角色ids", key: 'depart_ids', val: [], type: String, required: true}, {desc: "电话", key: 'tel', val: "123", type: String, required: true}, {
+            desc: "用户名",
+            key: 'username',
+            val: "111",
+            type: String,
+            required: true
+        },])
     async update_user(@Query() form) {
+        form.user_id = Number(form.user_id)
+        form.depart_ids = JSON.parse(form.depart_ids)
+        console.log(`111---form:`, form)
 
+        let one = await this.db.tb_user.findUnique({where: {tel: form.tel}})
+        console.log(`111---one:`, one)
+        if (!(one?.id === form.user_id)) return tool.R.err({msg: "失败:手机号码已经被其他用户注册", result: {}})
+
+
+        let depart_ids_list = form.depart_ids.map(o => ({id: o}))
+        console.log(`111---depart_ids_list:`, depart_ids_list)
+
+        await this.db.tb_user.update({
+            where: {id: form.user_id},
+            // data: {tb_depart: {connect: [{id: 2000092}]      /*分配部门*/    }}
+            data: {
+                username: form.username,
+                tel: form.tel,
+                tb_depart: {connect: depart_ids_list}  /*分配部门*/
+            }
+        })
+
+
+        return tool.R.ok({msg: "成功", result: {}})
     }
 
 
     @Qgetform("delete_user", "删除_用户", [{desc: "用户id", key: 'user_id', val: 0, type: Number, required: true},])
     async delete_user(@Query() form) {
+        form.user_id = Number(form.user_id)
+        console.log(`111---form:`, form)
+        await this.db.tb_user.deleteMany({where: {id: form.user_id}})
 
+
+        return tool.R.ok({msg: "成功", result: {}})
     }
 
 
@@ -102,9 +128,8 @@ export class user {
         `;
 
         const depart_list = await this.db.$queryRawUnsafe(query)
-        console.log(`111---depart_list:`,     depart_list        )
+        console.log(`111---depart_list:`, depart_list)
         const depart_ids = depart_list.map(o => o.id)
-
 
 
         let user_list_findMany = await this.db.tb_depart.findMany(
@@ -113,18 +138,18 @@ export class user {
                 include: {tb_user: true}, // 关联查询部门下的所有用户
             }
         )
-
-
-        // const user_list = tool._.uniqBy(tool._.flatMap(user_list_findMany, 'tb_user'), 'id') //lodash从prisma的findMany结果中获取所有用户
-        const user_list = _.uniqBy(_.flatMap(user_list_findMany, 'tb_user'), 'id') //lodash从prisma的findMany结果中获取所有用户
+        console.log(`user_list_findMany---user_list_findMany:`, 333)
+        let user_list = _.uniqBy(_.flatMap(user_list_findMany, 'tb_user'), 'id') //lodash从prisma的findMany结果中获取所有用户
+        for (let i = 0; i < user_list.length; i++) {
+            let user = user_list[i]
+            // console.log(`222---user:`, user)
+            let user_depart_obj = await this.db.tb_user.findUnique({where: {id: user.id}, include: {tb_depart: true}})
+            // console.log(`222---depart_list:`, JSON.stringify(depart_list, null, 2))
+            let depart_ids = user_depart_obj.tb_depart.map(o => o.id)
+            user_list[i]['depart_ids'] = depart_ids
+        }
         console.log(`111---user_list:`, user_list)
-
-
-        // 隐身表怎么用????问紫鹏或者自己研究
-        // let user_list333 = await this.db._UserDepartRelation.findMany({where: {A: {in: departments_ids}}})
-        // console.log(`111---user_list333:`, user_list333)
-
-        return tool.R.ok({msg: "成功/find_user_by_depart_id", result: {user_list}})
+        return tool.R.ok({msg: "成功", result: {user_list}})
     }
 
 

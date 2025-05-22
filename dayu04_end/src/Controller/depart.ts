@@ -51,7 +51,7 @@ export class depart {
         console.log(`form`, form)
         let departs_tree = await this.db.tb_depart.findMany({where: {id: 1}, include: {children: children5}})
 
-        console.log(`111---departs_tree:`, departs_tree)
+        // console.log(`111---departs_tree:`, departs_tree)
 
         // let departs_tree = tool.build_tree({arr: tb_depart, key_id: 'id', key_parent: 'parent_id'})
         // departs_tree = departs_tree.filter(o => o.id == form.id)

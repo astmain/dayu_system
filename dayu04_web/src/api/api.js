@@ -139,9 +139,9 @@ async function create_user({ depart_ids, username, tel }) {
 }
 
 //修改_用户
-async function update_user({ user_id, role_ids, username, tel }) {
+async function update_user({ user_id, depart_ids, username, tel }) {
     let tag = "update_user"
-    let config = { method: "get", url: "/user/update_user", params:{ user_id, role_ids, username, tel } }
+    let config = { method: "get", url: "/user/update_user", params:{ user_id, depart_ids, username, tel } }
     console.log(tag, 'config:', config)
     const res = await axios_api(config)
     console.log(tag, 'res:', res)

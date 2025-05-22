@@ -14,7 +14,7 @@ import {Config_filter_catch_error} from "./Config_filter_catch_error"
 async function bootstrap() {
     let app_http = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true})
     app_http.useStaticAssets(join(__dirname,  'static'),{prefix:"/static"})   //      http://127.0.0.1:3000/static/1747306430929.png
-    let main = config_docs(app_http, 40001)
+    let main = config_docs(app_http, 40003)
     main.app.use(Config_logger_global_middleware)
     main.app.useGlobalInterceptors(new Config_filter_response())
     main.app.useGlobalFilters(new Config_filter_catch_error())
