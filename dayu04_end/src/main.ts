@@ -33,9 +33,9 @@ async function bootstrap() {
 void bootstrap();
 console.log(`
       启动成功
-      http://127.0.0.1:40001/
-      http://127.0.0.1:40001/index
-      http://localhost:40001/api/swagger
-      http://127.0.0.1:40001/doc.html
+      http://127.0.0.1:40003/
+      http://127.0.0.1:40003/index
+      http://localhost:40003/api/swagger
+      http://127.0.0.1:40003/doc.html
     `);
 // http://127.0.0.1:3000/docs

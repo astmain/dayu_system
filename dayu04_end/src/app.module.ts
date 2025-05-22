@@ -7,6 +7,7 @@ import {__depart} from './Module/depart'
 import {__user} from './Module/user'
 import {__role} from './Module/role'
 import {__menu} from './Module/menu'
+import {__mall_order} from './Module/mall_order'
 
 
 //测试模块
@@ -35,6 +36,7 @@ import {__static_file} from "./Module/static_file";
         __user,
         __role,
         __menu,
+        __mall_order,
         // 资源文件模块
         __static_file,
         //
