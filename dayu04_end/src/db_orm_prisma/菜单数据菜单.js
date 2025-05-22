@@ -3,7 +3,7 @@ let prisma = new PrismaClient()
 
 // a00_创建菜单()
 module.exports = 菜单数据菜单
-
+// 菜单数据菜单()
 async function 菜单数据菜单() {
     let tb_menu = [
         {id: 1, menu: "首页", path: "/home",},
@@ -17,7 +17,7 @@ async function 菜单数据菜单() {
         {id: 9, menu: "部门角色管理", path: "/depart/depart", parent_id: 5},
         {id: 666, menu: "商品管理", path: "/mall_goods",},
         {id: 777, menu: "商城购物", path: "/mall_shop",},
-        {id: 888, menu: "购物订单", path: "/mall_order",},
+        {id: 888, menu: "商城订单3D打印", path: "/mall_order_3D_print",},
         // {id: 999, menu: "购物车", path: "/mall_car", parent_id: 0},
     ]
     await prisma.tb_menu.deleteMany()
