@@ -2,7 +2,7 @@
 import app from '@src/layout/app.js'
 
 // 注册axios拦截器               功能:全局axios,错误响应,取消网络请求 todo
-require('./config_axios_api')({name: 'axios_api', baseURL: 'http://127.0.0.1:40001', debug: false, timeout: 30000})
+require('./config_axios_api')({name: 'axios_api', baseURL: 'http://127.0.0.1:40003', debug: false, timeout: 30000})
 
 
 // 注册全局状态store
