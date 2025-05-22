@@ -10,7 +10,7 @@ let BUS = require('./BUS.js')
 require('./config_pinia')({app: app, name: BUS.name, state: BUS.state, persist: BUS.persist})
 
 // 注册全局组件
-
+require('./components/make_components.js')(app)
 
 
 // 注册多语言配置
@@ -24,6 +24,8 @@ require('./plugins/vue_open.js')(app)
 require('./plugins/vue_dialog.js')(app)
 require('./plugins/isok_delete_confirm.js')(app)
 require('@src/api/api.js')
+
+
 
 
 // 工具方法:构造菜单树

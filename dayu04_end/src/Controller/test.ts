@@ -25,8 +25,7 @@ export class test {
         @Inject("Service_data") private __Service_data: Object,
         @Inject("Service_factory") private __Service_factory: any,
         @Inject("global_module") private __global_module: any,
-        @Inject("db_prisma") private db:  any,
-
+        @Inject("db_prisma") private db: any,
         @Inject("db_all") private db_all: any,
         // @Inject("Service_db") private db: any,
     ) {
@@ -55,14 +54,14 @@ export class test {
 
         // let user_list3 =  await  this. db.tb_user.findMany()
 
-        let user_list111= await this.db_all.db1.tb_user.findMany()
-        let user_list1222= await this.db_all.db2.tb_user.findMany()
+        let user_list111 = await this.db_all.db1.tb_user.findMany()
+        let user_list1222 = await this.db_all.db2.tb_user.findMany()
 
 
-        console.log(`111---user_list111:`,     user_list111        )
-        console.log(`111---user_list1222:`,     user_list1222        )
+        console.log(`111---user_list111:`, user_list111)
+        console.log(`111---user_list1222:`, user_list1222)
 
-        return {code: 200, msg: "111", result: {}}
+        return {code: 200, msg: "111", result: {time: Date.now() + 1}}
     }
 
     @tool.Dec_public()
@@ -70,7 +69,7 @@ export class test {
     async Query(@Query() query, @Headers() header) {
         console.log(`111---query:`, query)
         console.log(`111---header:`, header)
-        return {code: 200}
+        return {code: 200, msg: "111", result: {time: Date.now() + 1}}
     }
 
     @tool.Dec_public()

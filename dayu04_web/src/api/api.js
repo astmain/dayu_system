@@ -123,7 +123,7 @@ async function find_user_by_depart_id({ depart_id }) {
     const res = await axios_api(config)
     console.log(tag, 'res:', res)
     res.code === 200 ? ElMessage.success({ message: res.msg, duration: 1 * 1000, showClose: true }) : 0
-    return res.result
+    return res.result.user_list
 }
 
 
