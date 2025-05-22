@@ -15,10 +15,9 @@ async function 菜单数据菜单() {
         {id: 7, menu: "菜单管理", path: "/menu/menu", parent_id: 5},
         // {id: 8, menu: "角色管理", path: "/role/role", parent_id: 5},
         {id: 9, menu: "部门角色管理", path: "/depart/depart", parent_id: 5},
-        {id: 666, menu: "商品管理", path: "/mall_goods",},
-        {id: 777, menu: "商城购物", path: "/mall_shop",},
-        {id: 888, menu: "商城订单3D打印", path: "/mall_order_3D_print",},
-        // {id: 999, menu: "购物车", path: "/mall_car", parent_id: 0},
+        {id: 8801, menu: "商城订单3D打印", path: "/mall_order_3D_print",},
+        {id: 8802, menu: "商城订单管理", path: "/mall_order_manage",},
+        {id: 8803, menu: "商城材料管理", path: "/mall_materials_manage",},
     ]
     await prisma.tb_menu.deleteMany()
     await prisma.tb_menu.createMany({data: tb_menu})

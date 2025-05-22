@@ -13,6 +13,14 @@
       data() {
         return {
           name: "数据1",
+    
+    
+    
+    
+    
+    
+    
+    
         }
     
     
@@ -22,6 +30,8 @@
         async met1() {
           console.log('met1      :', 111)
     
+    
+          await new Promise((resolve) => setTimeout(resolve, 1000))
     
         },//
     

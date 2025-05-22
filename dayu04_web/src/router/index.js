@@ -15,11 +15,9 @@ const menus = [
             // { path: '/system/depart/depart', name: '部门管理', component: () => import('@src/views/system/depart/depart.jsx') },
         ]
     },
-
     { path: '/mall_order_3D_print', name: '商城订单3D打印', component: () => import('@src/views/mall/mall_order_3D_print/mall_order_3D_print.vue') },
-    { path: '/mall_shop', name: '商城购物', component: () => import('@src/views/mall_shop.vue') },
-    { path: '/mall_goods', name: '商品管理', component: () => import('@src/views/mall_goods.vue') },
-    { path: '/mall_car', name: '购物车', component: () => import('@src/views/mall_car.vue') },
+    { path: '/mall_order_manage', name: '商城订单管理', component: () => import('@src/views/mall/mall_order_manage/mall_order_manage.vue') },
+    { path: '/mall_materials_manage', name: '商城材料管理', component: () => import('@src/views/mall/mall_materials_manage/mall_materials_manage.vue') },
 ]
 let routes = [
     { path: '/', redirect: '/login' },
