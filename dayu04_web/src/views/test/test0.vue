@@ -51,10 +51,10 @@ export default {
             controls.dampingFactor = 0.2   //惯性阻尼值
 
 
-            // ============================================================
-            // 结构-几何体 
+
+            // 创建结构-几何体 
             let my_Geometry = new THREE.BoxGeometry(5, 5, 5)
-            // 材质-外观
+            // 创建材质-外观
             let my_Material = new THREE.MeshBasicMaterial({ color: colorHex.green })
 
             // 结构材质组合,生成一个物件
@@ -67,7 +67,6 @@ export default {
 
 
 
-            // ============================================================
             // 动画
             function animate() {
                 requestAnimationFrame(animate)
