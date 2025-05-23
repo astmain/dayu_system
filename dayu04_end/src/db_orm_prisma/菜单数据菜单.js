@@ -30,6 +30,7 @@ async function 菜单数据菜单() {
         {id: 10006, menu: "test6_高光_亚光_粗糙度_金属度", path: "/test6", parent_id: 9999},
         {id: 10007, menu: "test7_贴图皮肤", path: "/test7", parent_id: 9999},
         {id: 10008, menu: "test8_贴图皮肤2", path: "/test8", parent_id: 9999},
+        {id: 10009, menu: "test9_加载stl文件", path: "/test9", parent_id: 9999},
     ]
     await prisma.tb_menu.deleteMany()
     await prisma.tb_menu.createMany({data: tb_menu})

@@ -31,6 +31,7 @@ const menus = [
             { path: '/test/test6', name: 'test6_高光_亚光_粗糙度_金属度', component: () => import('@src/views/test/test6.vue') },
             { path: '/test/test7', name: 'test7_贴图皮肤', component: () => import('@src/views/test/test7.vue') },
             { path: '/test/test8', name: 'test8_贴图皮肤2', component: () => import('@src/views/test/test8.vue') },
+            { path: '/test/test9', name: 'test9_加载stl文件', component: () => import('@src/views/test/test9.vue') },
         ]
     },
 ]
