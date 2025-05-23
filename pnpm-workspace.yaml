@@ -35,6 +35,9 @@ packages:
 
   - "dayu04_web"     #前端
   - "dayu04_end"     #后端
+  
+  
+#git取消追踪文件          git rm --cached *.db 
 
 
 
