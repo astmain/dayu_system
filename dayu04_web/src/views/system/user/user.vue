@@ -123,8 +123,6 @@ export default {
           this.show.create = false
           this.show.update = false
         },
-
-
       },
       table_data_user_list: [],
       show: {
