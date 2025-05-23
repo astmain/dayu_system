@@ -101,7 +101,9 @@ export default {
             let depart_list = this.$refs.tree_depart_update_dialog_ref.getCheckedNodes()
             let depart_ids = depart_list.filter(item => item.is_depart == false).map(item => item.id)
             if (depart_ids.length <= 0) return ElMessage.error('部门角色不能为空')
-            let res = await api.update_user({ user_id: this.curr_user.id, depart_ids: JSON.stringify(depart_ids), username: this.$refs.com_form_ref.data.username, tel: this.$refs.com_form_ref.data.tel, })
+            console.log('this.$refs.com_form_ref.data---:', this.$refs.com_form_ref.data)
+            let {username,tel} = this.$refs.com_form_ref.get_data()
+            let res = await api.update_user({ user_id: this.curr_user.id, depart_ids: JSON.stringify(depart_ids), username, tel, })
             console.log('res---:', res)
           }
           // 新增用户

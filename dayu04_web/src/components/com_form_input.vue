@@ -70,6 +70,10 @@ export default {
       }
     },
 
+    get_data(){
+      return  JSON.parse(JSON.stringify(this.form_obj.data))
+    }
+
 
   }
 }
