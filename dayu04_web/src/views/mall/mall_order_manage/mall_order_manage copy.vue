@@ -2,11 +2,7 @@
   <div>
     <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
     <el-button @click="met1()">met1</el-button>
-    <div class="div_container" style="width: 100px;height: 100px; background-color: rgba(255, 224, 135,0.1);">
-      1
-    </div>
-
-    <div class="div_container" style="width: 100px;height: 100px; background-color:#c89e06;">
+    <div class="div_container" style="width: 100px;height: 100px; background-color: rgb(255,0,0,0.5);">
       1
     </div>
 
@@ -58,13 +54,13 @@ export default {
         绿透明: 0xc89e06b,
         灰色aa: 0x323232,
         红色透: 0x00000000,
-        红色透2: 0xff0000,
+        红色透2: 0xff00007f,
       }
 
       // 创建场景
       let scene = new THREE.Scene();
-      // scene.background = new THREE.Color(colorHex.绿透明)
-      scene.background = new THREE.Color('rgba(255, 224, 135,0.1)')
+      scene.background = new THREE.Color(colorHex.红色透2)
+      // scene.background = new THREE.Color('rgba(255, 224, 135,0.1)')
       console.log('scene', scene)
 
 
@@ -117,9 +113,6 @@ export default {
       cube.material.color.setRGB(0, 0, 255);//蓝色
       cube.material.color.setRGB(255, 255, 0);//黄色
       cube.material.color.setHex(colorHex.red);
-
-
-
 
 
 
