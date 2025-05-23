@@ -9,6 +9,10 @@ async function make() {
 
     let tb_depart = [
         {id: 1, name: "大宇三维打印",}, //总公司
+        {id: 10000, name: "客户", parent_id: 1},  //客户
+        {is_depart: false, name: "vip1", id: 1000091, parent_id: 10000,},
+        {is_depart: false, name: "vip2", id: 1000092, parent_id: 10000,},
+
         {id: 20000, name: "技术部", parent_id: 1},  //技术部
         {is_depart: false, name: "主管", id: 2000091, parent_id: 20000,},
         {is_depart: false, name: "职员", id: 2000092, parent_id: 20000,},

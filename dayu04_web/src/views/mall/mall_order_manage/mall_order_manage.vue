@@ -21,6 +21,7 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import png from '@src/assets/png.png'
 import png2 from '@src/public/png.png'
+import { grayscale } from 'three/webgpu';
 function rgbToHex(r, g, b) {
   return "#" + [r, g, b].map(x => {
     const hex = x.toString(16).padStart(2, '0');
@@ -45,6 +46,8 @@ export default {
       let width = 800
       let height = 400
       let colorHex = {
+        white: 0xffffff,
+        gray: 0x808080,
         red: 0xff0000,
         green: 0x00ff00,
         blue: 0x0000ff,

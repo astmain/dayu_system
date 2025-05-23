@@ -38,8 +38,7 @@ packages:
   
   
 #git取消追踪文件          git rm --cached *.db 
-
-
+#git取消追踪文件          git rm --cached D:\AAA\dayu_system_03\dayu04_end\src\db_orm_prisma\db_dev_sqlited.db
 
 
 #1绑定文件               git init && git remote add origin  git@github.com:astmain/dayu_system.git

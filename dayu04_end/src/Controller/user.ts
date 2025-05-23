@@ -51,18 +51,15 @@ export class user {
 
 
     @tool.Dec_public()
-    @tool.Get_form("update_user", "/更新-用户", [{desc: "用户id", key: 'user_id', val: 0, type: Number, required: true},
-        {desc: "部门角色ids", key: 'depart_ids', val: [], type: String, required: true}, {desc: "电话", key: 'tel', val: "123", type: String, required: true}, {
-            desc: "用户名",
-            key: 'username',
-            val: "111",
-            type: String,
-            required: true
-        },])
+    @tool.Get_form("update_user", "/更新-用户", [
+        {desc: "用户id", key: 'user_id', val: 0, type: Number, required: true},
+        {desc: "部门角色ids", key: 'depart_ids', val: [], type: String, required: true},
+        {desc: "电话", key: 'tel', val: "123", type: String, required: true},
+        {desc: "用户名", key: 'username', val: "111", type: String, required: true},])
     async update_user(@Query() form) {
         form.user_id = Number(form.user_id)
         form.depart_ids = JSON.parse(form.depart_ids)
-        console.log(`111---form:`, form)
+        console.log(`222---form:`, form)
 
         let one = await this.db.tb_user.findUnique({where: {tel: form.tel}})
         console.log(`111---one:`, one)
