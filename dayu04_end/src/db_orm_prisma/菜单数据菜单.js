@@ -3,7 +3,8 @@ let prisma = new PrismaClient()
 
 // a00_创建菜单()
 module.exports = 菜单数据菜单
-// 菜单数据菜单()
+菜单数据菜单()
+
 async function 菜单数据菜单() {
     let tb_menu = [
         {id: 1, menu: "首页", path: "/home",},
@@ -18,6 +19,17 @@ async function 菜单数据菜单() {
         {id: 8801, menu: "商城订单3D打印", path: "/mall_order_3D_print",},
         {id: 8802, menu: "商城订单管理", path: "/mall_order_manage",},
         {id: 8803, menu: "商城材料管理", path: "/mall_materials_manage",},
+        // 测试
+        {id: 9999, menu: "测试", path: "/test",},
+        {id: 10000, menu: "测试0_原始模版", path: "/test0", parent_id: 9999},
+        {id: 10001, menu: "测试1_渲染器_动画", path: "/test1", parent_id: 9999},
+        {id: 10002, menu: "测试2_轨迹_鼠标旋转", path: "/test2", parent_id: 9999},
+        {id: 10003, menu: "测试3_OrbitControls", path: "/test3", parent_id: 9999},
+        {id: 10004, menu: "测试4_绘制物件", path: "/test4", parent_id: 9999},
+        {id: 10005, menu: "测试5_贴图自发光", path: "/test5", parent_id: 9999},
+        {id: 10006, menu: "test6_高光_亚光_粗糙度_金属度", path: "/test6", parent_id: 9999},
+        {id: 10007, menu: "test7_贴图皮肤", path: "/test7", parent_id: 9999},
+        {id: 10008, menu: "test8_贴图皮肤2", path: "/test8", parent_id: 9999},
     ]
     await prisma.tb_menu.deleteMany()
     await prisma.tb_menu.createMany({data: tb_menu})

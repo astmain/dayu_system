@@ -21,7 +21,6 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import png from '@src/assets/png.png'
 import png2 from '@src/public/png.png'
-import { grayscale } from 'three/webgpu';
 function rgbToHex(r, g, b) {
   return "#" + [r, g, b].map(x => {
     const hex = x.toString(16).padStart(2, '0');

@@ -83,9 +83,11 @@ export default {
         0.1,
         1000
       );
-      camera.position.z = 3;
-      camera.position.x = 2;
-      camera.lookAt(0, 0, 0);
+      // camera.position.x = 2;
+      // camera.position.z = 3;
+      camera.position.set(2, 0, 3)          //看的角度  1倾斜 2 旋转 3远近
+      camera.lookAt(0, 0, 0); //看的角度  1倾斜 2 旋转 3 移动
+      camera.lookAt(0, 0, 0); //看的角度  1倾斜 2 旋转 3 移动
 
 
       // 创建渲染器
@@ -99,22 +101,38 @@ export default {
 
       // 创建一个立方体
       let cube = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshBasicMaterial({ color: colorHex.red1 }),
+        new THREE.BoxGeometry(0.5, 0.5, 0.5),
+        new THREE.MeshBasicMaterial({ color: colorHex.red }),
       );
+      cube.position.set(-1.5, 0, 0);
+      let cube2 = new THREE.Mesh(
+        new THREE.BoxGeometry(0.5, 0.5, 0.5),
+        new THREE.MeshBasicMaterial({ color: colorHex.green }),
+      );
+      cube2.position.set(0.5, 0, -1);
 
-      cube.position.set(0, 0, 0);
-      scene.add(cube);
+
+
+
+      scene.add(cube, cube2);
 
 
 
       //渲染器把场景和相机结合在一起渲染到dom容器中
       renderer.render(scene, camera);
+
+      // 动画相机
+      let angle = 0
       function animate() {
-        window.requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        renderer.render(scene, camera);
+        // requestAnimationFrame(animate);
+        // cube.rotation.x += 0.01;
+        // cube.rotation.y += 0.01;
+        // const radius = 3
+        // angle += 0.01
+        // camera.position.x = Math.cos(angle) * radius
+        // camera.position.z = Math.sin(angle) * radius
+        // camera.lookAt(0, 0, 0)
+        // renderer.render(scene, camera);
       }
       animate()
 
