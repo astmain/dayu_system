@@ -18,6 +18,21 @@ const menus = [
     { path: '/mall_order_3D_print', name: '商城订单3D打印', component: () => import('@src/views/mall/mall_order_3D_print/mall_order_3D_print.vue') },
     { path: '/mall_order_manage', name: '商城订单管理', component: () => import('@src/views/mall/mall_order_manage/mall_order_manage.vue') },
     { path: '/mall_materials_manage', name: '商城材料管理', component: () => import('@src/views/mall/mall_materials_manage/mall_materials_manage.vue') },
+
+
+    {
+        path: '/test', name: '测试', children: [
+            { path: '/test/test0', name: '测试0_原始模版', component: () => import('@src/views/test/test0.vue') },
+            { path: '/test/test1', name: '测试1_渲染器_动画', component: () => import('@src/views/test/test0.vue') },
+            { path: '/test/test2', name: '测试2_轨迹_鼠标旋转', component: () => import('@src/views/test/test2.vue') },
+            { path: '/test/test3', name: '测试3_OrbitControls', component: () => import('@src/views/test/test3.vue') },
+            { path: '/test/test4', name: '测试4_绘制物件', component: () => import('@src/views/test/test4.vue') },
+            { path: '/test/test5', name: '测试5_贴图自发光', component: () => import('@src/views/test/test5.vue') },
+            { path: '/test/test6', name: 'test6_高光_亚光_粗糙度_金属度', component: () => import('@src/views/test/test6.vue') },
+            { path: '/test/test7', name: 'test7_贴图皮肤', component: () => import('@src/views/test/test7.vue') },
+            { path: '/test/test8', name: 'test8_贴图皮肤2', component: () => import('@src/views/test/test8.vue') },
+        ]
+    },
 ]
 let routes = [
     { path: '/', redirect: '/login' },
