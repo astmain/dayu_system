@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // 自定义
-async function my_STLLoader_blobURL(blobURL) {
+async function 得到geometry数据(blobURL) {
     return new Promise(async (resolve, reject) => {
         const loader = new STLLoader();
         loader.load(blobURL, (geometry) => {
@@ -31,8 +31,12 @@ export default {
             let blobURL = URL.createObjectURL(event.target.files[0])
             event.target.value = ''; // 清空 input 的值，确保再次选相同文件仍能触发
             let canvas = document.querySelector('.canvasContainer')
-            console.log("canvas.clientWidth", canvas.clientWidth)
-            console.log("canvas.clientHeight", canvas.clientHeight)
+            console.log("canvas", canvas)
+            console.log("clientWidth", canvas.clientWidth)
+            console.log("clientHeight", canvas.clientHeight)
+
+
+
 
             // 渲染器
             let renderer = window.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, });//antialias是否执行抗锯齿。默认为false
@@ -55,6 +59,7 @@ export default {
             camera.position.set(0, 0, 100);  // 临时初始位置
 
 
+
             // 控制器
             let controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
@@ -65,7 +70,7 @@ export default {
             const my_material = new THREE.MeshStandardMaterial({ color: 0xbabcbd });
 
             // 结构-几何
-            let my_geometry = await my_STLLoader_blobURL(blobURL)
+            let my_geometry = await 得到geometry数据(blobURL);
 
             // 动态-自动居中 & 缩放场景
             my_geometry.computeBoundingBox();
@@ -92,6 +97,7 @@ export default {
             const mesh = new THREE.Mesh(my_geometry, my_material);
             scene.add(mesh);
             scene.add(new THREE.AxesHelper(maxDim * 1.5));//xyz坐标
+
 
 
             // 渲染循环

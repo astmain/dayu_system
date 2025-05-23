@@ -1,7 +1,7 @@
 <template>
-    <div style="display: flex; flex-direction: column;">
-        <input type="file" @change="on_change_file_111" accept=".stl" />
-        <canvas class="canvasContainer" style="width:600px;height:600px;border:1px solid red;" />
+    <div>
+        <input type="file" @change="on_change_file222" accept=".stl" />
+        <div ref="canvasContainer" class="canvasContainer"></div>
     </div>
 </template>
 
@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // 自定义
-async function my_STLLoader_blobURL(blobURL) {
+async function 得到geometry数据(blobURL) {
     return new Promise(async (resolve, reject) => {
         const loader = new STLLoader();
         loader.load(blobURL, (geometry) => {
@@ -27,45 +27,45 @@ export default {
     },
 
     methods: {
-        async on_change_file_111(event) {
-            let blobURL = URL.createObjectURL(event.target.files[0])
-            event.target.value = ''; // 清空 input 的值，确保再次选相同文件仍能触发
-            let canvas = document.querySelector('.canvasContainer')
-            console.log("canvas.clientWidth", canvas.clientWidth)
-            console.log("canvas.clientHeight", canvas.clientHeight)
+        async on_change_file222(event) {
+            const blobURL = URL.createObjectURL(event.target.files[0]);
+            let container = this.$refs.canvasContainer;
 
-            // 渲染器
-            let renderer = window.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, });//antialias是否执行抗锯齿。默认为false
-            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            renderer.setClearColor(0xeeeeee);
-            console.log("渲染器-renderer", renderer)
 
+            container.innerHTML = '';
 
             // 场景
             let scene = new THREE.Scene();
             // 光照
-            let ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
             scene.add(ambientLight);
-            let directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
             directionalLight.position.set(1, 1, 1).normalize();
             scene.add(directionalLight);
 
             // 相机
-            let camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 10000);
+            let camera = new THREE.PerspectiveCamera(75, 800 / 800, 0.1, 10000);
             camera.position.set(0, 0, 100);  // 临时初始位置
 
-
+            // 渲染器
+            let renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(800, 800);
+            renderer.setClearColor(0xeeeeee);
+            container.appendChild(renderer.domElement)
             // 控制器
-            let controls = new OrbitControls(camera, renderer.domElement);
+            const controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.2;
+            // controls.update();
             // controls.addEventListener('change', () => console.log("控制器改变时查看相机位置", camera.position))
 
-            // 材料-外观
+
+            // 材料外观
             const my_material = new THREE.MeshStandardMaterial({ color: 0xbabcbd });
 
-            // 结构-几何
-            let my_geometry = await my_STLLoader_blobURL(blobURL)
+
+            // 结构
+            let my_geometry = await 得到geometry数据(blobURL);
 
             // 动态-自动居中 & 缩放场景
             my_geometry.computeBoundingBox();
@@ -76,7 +76,6 @@ export default {
             boundingBox.getSize(size);
 
             // 动态-设置结构居中
-            // my_geometry.translate(-center.x, -center.y, -center.z);
             my_geometry.translate(-center.x, -center.y, -center.z);
 
             // 动态-设置相机位置：距离 = 模型最大尺寸的倍数
@@ -91,10 +90,15 @@ export default {
             // 网状物
             const mesh = new THREE.Mesh(my_geometry, my_material);
             scene.add(mesh);
-            scene.add(new THREE.AxesHelper(maxDim * 1.5));//xyz坐标
 
 
-            // 渲染循环
+
+            //如何设置 my_geometry 的中心点 为xyz的中心
+
+
+
+
+            // ✅ 渲染循环
             function animate() {
                 requestAnimationFrame(animate);
                 controls.update();
@@ -110,4 +114,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.canvasContainer {
+    width: 800px;
+    height: 800px;
+    border: 1px solid red;
+}
+</style>
