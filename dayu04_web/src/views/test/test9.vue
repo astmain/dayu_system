@@ -40,7 +40,6 @@ export default {
             renderer.setClearColor(0xeeeeee);
             console.log("渲染器-renderer", renderer)
 
-
             // 场景
             let scene = new THREE.Scene();
             // 光照
@@ -53,7 +52,6 @@ export default {
             // 相机
             let camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 10000);
             camera.position.set(0, 0, 100);  // 临时初始位置
-
 
             // 控制器
             let controls = new OrbitControls(camera, renderer.domElement);
@@ -95,13 +93,14 @@ export default {
 
 
             // 渲染循环
+            animate()
             function animate() {
                 requestAnimationFrame(animate);
                 controls.update();
                 renderer.render(scene, camera);
             }
 
-            animate();
+
         }
 
 
