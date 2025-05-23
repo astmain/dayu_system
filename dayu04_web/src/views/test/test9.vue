@@ -10,14 +10,7 @@ import * as THREE from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // 自定义
-async function my_STLLoader_blobURL(blobURL) {
-    return new Promise(async (resolve, reject) => {
-        const loader = new STLLoader();
-        loader.load(blobURL, (geometry) => {
-            resolve(geometry)
-        })
-    })
-}
+
 
 export default {
     data() {
@@ -28,9 +21,16 @@ export default {
 
     methods: {
         async on_change_file_111(event) {
-            let blobURL = URL.createObjectURL(event.target.files[0])
-            event.target.value = ''; // 清空 input 的值，确保再次选相同文件仍能触发
-            let canvas = document.querySelector('.canvasContainer')
+            let blobURL = URL.createObjectURL(event.target.files[0])//得到blobURL
+            event.target.value = ''; // 清空input的值
+
+            await this.three_parse_show({ canvas: document.querySelector('.canvasContainer'), blobURL })
+        },
+
+
+        // three解析器显示
+        async three_parse_show({ canvas, blobURL }) {
+            // let canvas = document.querySelector('.canvasContainer')
             console.log("canvas.clientWidth", canvas.clientWidth)
             console.log("canvas.clientHeight", canvas.clientHeight)
 
@@ -100,7 +100,15 @@ export default {
                 renderer.render(scene, camera);
             }
 
-
+            // stl_解析blobURL
+            async function my_STLLoader_blobURL(blobURL) {
+                return new Promise(async (resolve, reject) => {
+                    const loader = new STLLoader();
+                    loader.load(blobURL, (geometry) => {
+                        resolve(geometry)
+                    })
+                })
+            }
         }
 
 
