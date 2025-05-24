@@ -33,6 +33,7 @@ const menus = [
             { path: '/test/test8', name: 'test8_贴图皮肤2', component: () => import('@src/views/test/test8.vue') },
             { path: '/test/test9', name: 'test9_加载stl文件', component: () => import('@src/views/test/test9.vue') },
             { path: '/test/test10', name: 'test10_光源_环境光_平行光_半球光_点光源', component: () => import('@src/views/test/test10.vue') },
+            { path: '/test/test11', name: 'test11_投影效果', component: () => import('@src/views/test/test11.vue') },
         ]
     },
 ]
