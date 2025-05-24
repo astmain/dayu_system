@@ -2,6 +2,7 @@
 # three.js视频教程
 https://www.bilibili.com/video/BV1Zm421g7oi?p=2
 https://www.bilibili.com/video/BV1Zm421g7oi?p=8
+https://www.bilibili.com/video/BV1Zm421g7oi?p=11
 https://bx2eq6ulg18.feishu.cn/docx/EtsodJe5loGKy2xa0iVcq49WnRb
 
 
