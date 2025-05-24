@@ -7,6 +7,8 @@ packages:
   - "orm/prisma05"  
   - "orm/prisma06"  
   - "orm/prisma07"  
+  # threejs
+  - "threejs_01"
   # 系统模块 =====================================================
   - "api_admin"     #后端接口
   - "api_server"    #后端接口
