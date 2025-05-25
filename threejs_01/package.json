@@ -13,21 +13,22 @@
         "element-plus": "2.9.9",
         "pinia": "2.3.1",
         "pinia-plugin-persist": "1.0.0",
-        "vue-simple-context-menu": "^4.1.0",
+        "pinyin-pro": "3.24.2",
         "three": "^0.170.0",
         "vue": "^3.5.13",
-        "pinyin-pro": "3.24.2",
-        "vue-router": "^4.5.1"
+        "vue-router": "^4.5.1",
+        "vue-simple-context-menu": "^4.1.0"
     },
     "devDependencies": {
+        "@types/three": "^0.169.0",
         "@vitejs/plugin-vue": "^5.2.3",
         "@vitejs/plugin-vue-jsx": "^4.1.2",
         "@vue-macros/reactivity-transform": "1.1.6",
+        "cannon": "^0.6.2",
         "unplugin-auto-import": "^19.1.2",
         "unplugin-vue-components": "^28.5.0",
         "vite": "^6.2.4",
         "vite-plugin-require-transform": "1.0.21",
-        "vite-plugin-vue-devtools": "^7.7.2",
-        "@types/three": "^0.169.0"
+        "vite-plugin-vue-devtools": "^7.7.2"
     }
 }

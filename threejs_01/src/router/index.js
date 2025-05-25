@@ -14,9 +14,26 @@ const routes = [//
     {
         path: '/a02_射线', name: 'a02_射线', children: [
             { path: '/b01_射线_时间器不断改变物件位置', name: 'b01_射线_时间器不断改变物件位置', component: () => import('@src/views/a02_射线/b01_射线_时间器不断改变物件位置.vue') },
-
+            { path: '/b02_射线_时间器不断改变物件位置_点击', name: 'b02_射线_时间器不断改变物件位置_点击', component: () => import('@src/views/a02_射线/b02_射线_时间器不断改变物件位置_点击.vue') },
         ]
     },
+
+
+    {
+        path: '/a03_物理', name: 'a03_物理', children: [
+            { path: '/b01_小球下落_物理运动', name: 'b01_小球下落_物理运动', component: () => import('@src/views/a03_物理/b01_小球下落_物理运动.vue') },
+            { path: '/b02_小球抛物线_物理运动', name: 'b02_小球抛物线_物理运动', component: () => import('@src/views/a03_物理/b02_小球抛物线_物理运动.vue') },
+            { path: '/b03_小球发射', name: 'b03_小球发射', component: () => import('@src/views/a03_物理/b03_小球发射.vue') },
+        ]
+    },
+
+
+    {
+        path: '/a04_加载3D模型', name: 'a04_加载3D模型', children: [
+            { path: '/b01_加载glTF', name: 'b01_加载glTF', component: () => import('@src/views/a04_加载3D模型/b01_加载glTF.vue') },
+        ]
+    },
+
 
     {
         path: '/test', name: '测试', children: [
