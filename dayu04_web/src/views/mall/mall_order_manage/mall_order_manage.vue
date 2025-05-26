@@ -2,13 +2,6 @@
   <div>
     <h3 style="padding:0;margin: 0">路由:{{ this.$route.name }}</h3>
     <el-button @click="met1()">met1</el-button>
-    <div class="div_container" style="width: 100px;height: 100px; background-color: rgba(255, 224, 135,0.1);">
-      1
-    </div>
-
-    <div class="div_container" style="width: 100px;height: 100px; background-color:#c89e06;">
-      1
-    </div>
 
 
     <div class="dom_container"></div>
@@ -42,8 +35,8 @@ export default {
       console.log("图片png路径", png)
       //   let width=window.innerWidth
       //  let height= window.innerHeight
-      let width = 800
-      let height = 400
+      let width = 500
+      let height = 300
       let colorHex = {
         white: 0xffffff,
         gray: 0x808080,
@@ -70,22 +63,8 @@ export default {
       console.log('scene', scene)
 
 
-      // // 贴图
-      // let texture = new THREE.TextureLoader()
-      // // texture.load(png, function (img) {
-      // texture.load('/src/public/png.png', function (img) {
-      //   scene.background = img
-      //   renderer.render(scene, camera);//设置完贴图还在渲染一次
-      // })
-
       //创建相机
-      let camera = new THREE.PerspectiveCamera(
-        45,
-        width / height,
-        0.1,
-        1000
-      );
-
+      let camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
 
       //  设置相机位置
       // camera.position.set(0, 0, 100);
@@ -109,21 +88,11 @@ export default {
       //创建物件-立方体
       let cube = new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),
-        // new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
         new THREE.MeshBasicMaterial(),
       );
 
       //cube设置外表颜色
-      cube.material.color.setRGB(255, 0, 0);//红色
-      cube.material.color.setRGB(0, 255, 0);//绿色
-      cube.material.color.setRGB(0, 0, 255);//蓝色
-      cube.material.color.setRGB(255, 255, 0);//黄色
       cube.material.color.setHex(colorHex.red);
-
-
-
-
-
 
 
       let cube2 = new THREE.Mesh(
@@ -137,8 +106,6 @@ export default {
 
       //物件添加到场景中
       scene.add(cube, cube2);
-      // scene.add(cube);
-      // scene.add(cube2);
 
 
       // 渲染器把场景和相机结合在一起渲染到dom容器中

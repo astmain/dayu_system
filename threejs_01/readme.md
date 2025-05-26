@@ -5,6 +5,11 @@ https://www.bilibili.com/video/BV1Zm421g7oi?p=8
 https://www.bilibili.com/video/BV1Zm421g7oi?p=11
 https://bx2eq6ulg18.feishu.cn/docx/EtsodJe5loGKy2xa0iVcq49WnRb
 
+# 模型网站
+中望cad     https://www.vx.com/
+https://www.aigei.com/3d/model/gltf_1/
+
+
 
 # three.js中文文档
 http://www.yanhuangxueyuan.com/threejs/docs/index.html?q=sc#api/zh/scenes/Scene

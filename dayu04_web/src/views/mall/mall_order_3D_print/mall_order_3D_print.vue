@@ -3,7 +3,7 @@
     <h3>STL 文件查看器</h3>
     <input type="file" @change="on_change_file" accept=".stl" />
     <p>{{ state.msg }}</p>
-    <div ref="canvasContainer" class="canvasContainer"></div>
+    <div ref="canvasContainer" class="canvasContainer" style="width: 300px;height: 200px;border: 1px solid red;"></div>
   </div>
 </template>
 
@@ -46,17 +46,7 @@ export default {
 
       // 设置_相机_场景
       设置_相机_场景({ camera, scene: scene, object: res.mesh })
-
-
-
-
-
-
       this.state.msg = res.msg
-
-
-
-
       async function 初始化three({ dom }) {
         const container = dom;
         // 创建场景、相机、渲染器（不放在 data 中，避免 Vue 响应式代理）
@@ -170,8 +160,8 @@ export default {
 
 <style scoped>
 .canvasContainer {
-  width: 100%;
-  height: 600px;
+  width: 300px;
+  height: 200px;
   border: 1px solid red;
 }
 </style>

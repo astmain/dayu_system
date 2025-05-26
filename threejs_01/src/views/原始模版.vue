@@ -43,7 +43,7 @@ export default {
 
             // 相机
             let camera = window.camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-            camera.position.set(16, 18, 30)          //看的角度  1倾斜 2 旋转 3远近
+            camera.position.set(1, 5, 30)          //看的角度  1倾斜 2 旋转 3远近
             camera.lookAt(0, 0, 0); //看的角度  1倾斜 2 旋转 3 移动
 
             // 渲染器
@@ -102,12 +102,12 @@ export default {
             let light_point = new THREE.PointLight(0xff0000, 100, 1000, 2)//颜色,光照强度,光照的最大距离,沿着光照距离的衰退量默认值为 2
             light_point.position.set(0, 5, 0)
             let light_point_help = new THREE.PointLightHelper(light_point, 1);//球形辅助对象的尺寸. 默认为 1.
-            // scene.add(light_ambient)
+            scene.add(light_ambient)
             // scene.add(light_directional)
             // scene.add(light_directional_help)
             // scene.add(light_hemi)
-            scene.add(light_point)
-            scene.add(light_point_help);
+            // scene.add(light_point)
+            // scene.add(light_point_help);
 
 
             //阴影投射： 光源 物体渲染器==================================================
@@ -125,7 +125,7 @@ export default {
             const controls = new OrbitControls(camera, renderer.domElement)
             controls.enableDamping = true  //enableDamping设置为true的时候，阻尼惯性有多大。 Default is 0.05.
             controls.dampingFactor = 0.2   //惯性阻尼值
-
+            controls.addEventListener('change', () => console.log("控制器改变时查看相机位置", camera.position))
             // 动画
             function animate() {
                 requestAnimationFrame(animate)
